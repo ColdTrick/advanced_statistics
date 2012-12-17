@@ -9,14 +9,11 @@ elgg.advanced_statistics.init = function(){
 	// initialize the plots
 	$(".advanced-statistics-plot-container").each(function(){
 		var target = $(this).attr("id");
-		elgg.action("advanced_statistics/get_chart_data", {
-			// have to use synchronous here, else the function
-			// will return before the data is fetched
-			data: {
-				chart_id: target,
-			},
+		var parts = target.split("-");
+		
+		elgg.getJSON("advanced_statistics/" + parts[2] + "/" + target, {
 			success: function(result){
-				var options = result.output.options;
+				var options = result.options;
 				if(options["seriesDefaults"]){
 					options["seriesDefaults"]["renderer"] = eval(options["seriesDefaults"]["renderer"]);
 				}
@@ -36,7 +33,7 @@ elgg.advanced_statistics.init = function(){
 					options["axesDefaults"]["tickRenderer"] = eval(options["axesDefaults"]["tickRenderer"]);
 				}
 				
-				$.jqplot(target, result.output.data, options);
+				$.jqplot(target, result.data, options);
 				// hide loader
 				$("#"+ target).next().hide();
 			}

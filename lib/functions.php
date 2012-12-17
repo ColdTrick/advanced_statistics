@@ -1,12 +1,12 @@
 <?php
 
-	function advanced_statistics_get_chart_data($chart_id){
+	function advanced_statistics_get_users_data($chart_id){
 		$result = array("data" => array(), "options" => array());
 		
 		$dbprefix = elgg_get_config("dbprefix");
 		$current_site_guid = elgg_get_site_entity()->getGUID();
 		
-		switch ($chart_id){
+		switch($chart_id){
 			case "advanced-statistics-users-language-distribution":
 				$data = array();
 				
@@ -41,6 +41,7 @@
 					foreach($query_result as $row){
 						$date_total = (int) $row->total;
 						$total += $date_total; 
+						
 						$data[] = array($row->date_created , $date_total); 
 						$data2[] = array($row->date_created , $total); 
 					}
@@ -146,7 +147,6 @@
 				$result["options"] = advanced_statistics_get_default_chart_options("pie");
 				
 				break;
-			default:
 			case "advanced-statistics-users-profile-field-usage":
 				$data = array();
 				$ticks = array();
@@ -198,12 +198,116 @@
 				
 				break;
 			default:
-				// dummy data
-				$result["data"] = array(array(1, 3, 2, 4, 6, 9));
+				$params = array(
+					"chart_id" => $chart_id,
+					"default_result" => $result
+				);
+				
+				$result = elgg_trigger_plugin_hook("users", "advanced_statistics", $params, $result);
 				break;
 		}
 		
-		return $result;
+		return json_encode($result);
+	}
+	
+	function advanced_statistics_get_groups_data($chart_id){
+		$result = array("data" => array(), "options" => array());
+	
+		$dbprefix = elgg_get_config("dbprefix");
+		$current_site_guid = elgg_get_site_entity()->getGUID();
+	
+		switch($chart_id){
+			default:
+				$params = array(
+					"chart_id" => $chart_id,
+					"default_result" => $result
+				);
+	
+			$result = elgg_trigger_plugin_hook("groups", "advanced_statistics", $params, $result);
+			break;
+		}
+	
+		return json_encode($result);
+	}
+	
+	function advanced_statistics_get_activity_data($chart_id){
+		$result = array("data" => array(), "options" => array());
+	
+		$dbprefix = elgg_get_config("dbprefix");
+		$current_site_guid = elgg_get_site_entity()->getGUID();
+	
+		switch($chart_id){
+			default:
+				$params = array(
+					"chart_id" => $chart_id,
+					"default_result" => $result
+				);
+	
+			$result = elgg_trigger_plugin_hook("activity", "advanced_statistics", $params, $result);
+			break;
+		}
+	
+		return json_encode($result);
+	}
+	
+	function advanced_statistics_get_widgets_data($chart_id){
+		$result = array("data" => array(), "options" => array());
+	
+		$dbprefix = elgg_get_config("dbprefix");
+		$current_site_guid = elgg_get_site_entity()->getGUID();
+	
+		switch($chart_id){
+			default:
+				$params = array(
+					"chart_id" => $chart_id,
+					"default_result" => $result
+				);
+	
+			$result = elgg_trigger_plugin_hook("widgets", "advanced_statistics", $params, $result);
+			break;
+		}
+	
+		return json_encode($result);
+	}
+	
+	function advanced_statistics_get_content_data($chart_id){
+		$result = array("data" => array(), "options" => array());
+	
+		$dbprefix = elgg_get_config("dbprefix");
+		$current_site_guid = elgg_get_site_entity()->getGUID();
+	
+		switch($chart_id){
+			default:
+				$params = array(
+					"chart_id" => $chart_id,
+					"default_result" => $result
+				);
+	
+			$result = elgg_trigger_plugin_hook("content", "advanced_statistics", $params, $result);
+			break;
+		}
+	
+		return json_encode($result);
+	}
+	
+	function advanced_statistics_get_system_data($chart_id){
+		$result = array("data" => array(), "options" => array());
+	
+		$dbprefix = elgg_get_config("dbprefix");
+		$current_site_guid = elgg_get_site_entity()->getGUID();
+	
+		switch($chart_id){
+			default:
+				$params = array(
+					"chart_id" => $chart_id,
+					"default_result" => $result
+				);
+	
+			$result = elgg_trigger_plugin_hook("system", "advanced_statistics", $params, $result);
+			break;
+		}
+	
+		return json_encode($result);
 	}
 	
 	function advanced_statistics_get_default_chart_options($type){

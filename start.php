@@ -1,7 +1,15 @@
-<?php 
+<?php
+ 
 	require_once(dirname(__FILE__) . "/lib/functions.php");
+	require_once(dirname(__FILE__) . "/lib/page_handlers.php");
 
+	// register default Elgg event
+	elgg_register_event_handler("init", "system", "advanced_statistics_init");
+	
 	function advanced_statistics_init(){
+		// register page handler for nice URLs
+		elgg_register_page_handler("advanced_statistics", "advanced_statistics_page_handler");
+		
 		if (elgg_is_admin_logged_in()) {
 			elgg_register_admin_menu_item('administer', 'users', 'advanced_statistics');
 			elgg_register_admin_menu_item('administer', 'groups', 'advanced_statistics');
@@ -29,10 +37,6 @@
 			elgg_register_simplecache_view("css/advanced_statistics/jqplot");
 			elgg_register_css("jquery.jqplot", elgg_get_simplecache_url("css", "advanced_statistics/jqplot"));
 			
-			// register actions
-			elgg_register_action("advanced_statistics/get_chart_data", dirname(__FILE__) . "/actions/get_chart_data.php", "admin");
 		}
 	}
 	
-	// register default Elgg event
-	elgg_register_event_handler("init", "system", "advanced_statistics_init");
