@@ -19,10 +19,26 @@ elgg.advanced_statistics.init = function(){
 				var options = result.output.options;
 				if(options["seriesDefaults"]){
 					options["seriesDefaults"]["renderer"] = eval(options["seriesDefaults"]["renderer"]);
-					
 				}
-//				console.log(result.output.data);
+				if(options["axes"]){
+					if(options["axes"]["xaxis"]){
+						options["axes"]["xaxis"]["renderer"] = eval(options["axes"]["xaxis"]["renderer"]);
+						options["axes"]["xaxis"]["tickRenderer"] = eval(options["axes"]["xaxis"]["tickRenderer"]);
+					}
+					if(options["axes"]["yaxis"]){
+						options["axes"]["yaxis"]["renderer"] = eval(options["axes"]["yaxis"]["renderer"]);
+					}
+					if(options["axes"]["y2axis"]){
+						options["axes"]["y2axis"]["renderer"] = eval(options["axes"]["y2axis"]["renderer"]);
+					}
+				}
+				if(options["axesDefaults"]){
+					options["axesDefaults"]["tickRenderer"] = eval(options["axesDefaults"]["tickRenderer"]);
+				}
+				
 				$.jqplot(target, result.output.data, options);
+				// hide loader
+				$("#"+ target).next().hide();
 			}
 		});
 	});

@@ -1,4 +1,5 @@
 <?php 
+	require_once(dirname(__FILE__) . "/lib/functions.php");
 
 	function advanced_statistics_init(){
 		if (elgg_is_admin_logged_in()) {
@@ -18,7 +19,12 @@
 			// jqplot plugins
 			elgg_register_js("jquery.jqplot.barRenderer", $vendors . "jqplot/plugins/jqplot.barRenderer.js");
 			elgg_register_js("jquery.jqplot.pieRenderer", $vendors . "jqplot/plugins/jqplot.pieRenderer.js");
+			elgg_register_js("jquery.jqplot.canvasAxisTickRenderer", $vendors . "jqplot/plugins/jqplot.canvasAxisTickRenderer.js");
+			elgg_register_js("jquery.jqplot.canvasTextRenderer", $vendors . "jqplot/plugins/jqplot.canvasTextRenderer.js");
 			elgg_register_js("jquery.jqplot.categoryAxisRenderer", $vendors . "jqplot/plugins/jqplot.categoryAxisRenderer.js");
+			elgg_register_js("jquery.jqplot.dateAxisRenderer", $vendors . "jqplot/plugins/jqplot.dateAxisRenderer.js");
+			elgg_register_js("jquery.jqplot.pointLabels", $vendors . "jqplot/plugins/jqplot.pointLabels.js");
+			elgg_register_js("jquery.jqplot.highlighter", $vendors . "jqplot/plugins/jqplot.highlighter.js");
 			
 			elgg_register_simplecache_view("css/advanced_statistics/jqplot");
 			elgg_register_css("jquery.jqplot", elgg_get_simplecache_url("css", "advanced_statistics/jqplot"));
