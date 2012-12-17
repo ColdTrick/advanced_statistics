@@ -32,8 +32,11 @@ elgg.advanced_statistics.init = function(){
 				if(options["axesDefaults"]){
 					options["axesDefaults"]["tickRenderer"] = eval(options["axesDefaults"]["tickRenderer"]);
 				}
-				
-				$.jqplot(target, result.data, options);
+				if(result.data.length){
+					$.jqplot(target, result.data, options);
+				} else {
+					$("#"+ target).html(elgg.echo("notfound"));
+				}
 				// hide loader
 				$("#"+ target).next().hide();
 			}

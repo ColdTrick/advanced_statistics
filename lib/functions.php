@@ -76,6 +76,27 @@
 				$result["options"] = advanced_statistics_get_default_chart_options("pie");
 				
 				break;
+			case "advanced-statistics-users-account-activity":
+				$data = array();
+				
+				$query = "SELECT FROM_UNIXTIME(e.last_action, '%Y-%m-01') as month, count(*) as total";
+				$query .= " FROM " . $dbprefix . "entities e";
+				$query .= " JOIN " . $dbprefix . "entity_relationships r ON r.guid_one = e.guid";
+				$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
+				$query .= " AND e.type = 'user'";
+				$query .= " GROUP BY FROM_UNIXTIME(e.last_action, '%Y-%m')";
+				
+				if($query_result = get_data($query)){
+					foreach($query_result as $row){
+						$total = (int) $row->total;
+						$data[] = array($row->month, $total); 
+					}
+				}
+				
+				$result["data"] = array($data);
+				$result["options"] = advanced_statistics_get_default_chart_options("date");
+				
+				break;
 			case "advanced-statistics-users-account-status":
 				$data = array();
 				
