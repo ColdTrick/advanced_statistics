@@ -55,8 +55,8 @@
 				$result["data"] = array($data, $data2);
 				$result["options"] = advanced_statistics_get_default_chart_options("date");
 				$result["options"]["series"] = array(
-					array("label" => elgg_echo("admin:widget:new_users")),
-					array("label" => elgg_echo("total") . " " . strtolower(elgg_echo("item:user")), "yaxis" => "y2axis")
+					array("showMarker" => false, "label" => elgg_echo("admin:widget:new_users")),
+					array("showMarker" => false, "label" => elgg_echo("total") . " " . strtolower(elgg_echo("item:user")), "yaxis" => "y2axis")
 				);
 				$result["options"]["legend"] = array("show" => true, "position" => "e");
 				
@@ -88,7 +88,7 @@
 				$query .= " FROM " . $dbprefix . "entities e";
 				$query .= " JOIN " . $dbprefix . "entity_relationships r ON r.guid_one = e.guid";
 				$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
-				$query .= " AND e.type = 'user'";
+				$query .= " AND e.type = 'user' AND e.last_action > 0";
 				$query .= " GROUP BY FROM_UNIXTIME(e.last_action, '%Y-%m')";
 				
 				if($query_result = get_data($query)){
@@ -406,10 +406,12 @@
 								"renderer" => "$.jqplot.DateAxisRenderer"
 							),
 							"yaxis" => array (
-								"autoscale" => true
+								"autoscale" => true,
+								"min" => 0
 							),
 							"y2axis" => array (
 								"autoscale" => true,
+								"min" => 0,
 								"tickOptions" => array(
 									"showGridline" => false	
 								)
