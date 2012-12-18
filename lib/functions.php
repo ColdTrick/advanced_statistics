@@ -280,7 +280,6 @@
 		switch($chart_id){
 			case "popular":
 				$data = array();
-				$ticks = array();
 				
 				$query = "SELECT ge.name, count(*) AS total";
 				$query .= " FROM " . $dbprefix . "groups_entity ge";
@@ -297,16 +296,15 @@
 				
 				if($query_result = get_data($query)){
 					foreach($query_result as $row){
-						$data[] = (int) $row->total;
-						$ticks[] = $row->name;
+						$total = (int) $row->total;
 						
+						$data[] = array($row->name, $total);
 					}
 				}
 				
 				$result["data"] = array($data);
 				
 				$options = advanced_statistics_get_default_chart_options("bar");
-				$options["axes"]["xaxis"]["ticks"] = $ticks;
 				$options["axes"]["xaxis"]["tickRenderer"] = "$.jqplot.CanvasAxisTickRenderer";
 				$options["axes"]["xaxis"]["tickOptions"] = array("angle" => "-30", "fontSize" => "8pt");
 				
@@ -341,6 +339,139 @@
 					$result["options"] = advanced_statistics_get_default_chart_options("pie");
 				}
 				
+				break;
+			case "most-active":
+				$data = array();
+				
+				$week_ago = time() - (7 * 24 * 60 * 60);
+				
+				$query = "SELECT ge.name, count(*) AS total";
+				$query .= " FROM " . $dbprefix . "river r";
+				$query .= " JOIN " . $dbprefix . "entities e ON r.object_guid = e.guid";
+				$query .= " JOIN " . $dbprefix . "entities eg ON e.container_guid = eg.guid";
+				$query .= " JOIN " . $dbprefix . "groups_entity ge ON eg.guid = ge.guid";
+				$query .= " WHERE e.enabled = 'yes' AND e.site_guid = " . $current_site_guid;
+				$query .= " AND eg.type = 'group' AND eg.enabled = 'yes' AND eg.site_guid = " . $current_site_guid;
+				$query .= " AND r.posted > " . $week_ago;
+				$query .= " GROUP BY ge.name";
+				$query .= " ORDER BY total DESC";
+				$query .= " LIMIT 0, 10";
+				
+				if($query_result = get_data($query)){
+					foreach($query_result as $row){
+						$total = (int) $row->total;
+						
+						$data[] = array($row->name, $total);
+					}
+					
+					$result["data"] = array($data);
+					
+					$options = advanced_statistics_get_default_chart_options("bar");
+					$options["axes"]["xaxis"]["tickRenderer"] = "$.jqplot.CanvasAxisTickRenderer";
+					$options["axes"]["xaxis"]["tickOptions"] = array("angle" => "-30", "fontSize" => "8pt");
+					
+					$result["options"] = $options;
+				}
+				
+				break;
+			case "least-active":
+				$data = array();
+				
+				$week_ago = time() - (7 * 24 * 60 * 60);
+				
+				$query = "SELECT ge.name, count(*) AS total";
+				$query .= " FROM " . $dbprefix . "river r";
+				$query .= " JOIN " . $dbprefix . "entities e ON r.object_guid = e.guid";
+				$query .= " JOIN " . $dbprefix . "entities eg ON e.container_guid = eg.guid";
+				$query .= " JOIN " . $dbprefix . "groups_entity ge ON eg.guid = ge.guid";
+				$query .= " WHERE e.enabled = 'yes' AND e.site_guid = " . $current_site_guid;
+				$query .= " AND eg.type = 'group' AND eg.enabled = 'yes' AND eg.site_guid = " . $current_site_guid;
+				$query .= " GROUP BY ge.name";
+				$query .= " ORDER BY total ASC";
+				$query .= " LIMIT 0, 10";
+				
+				if($query_result = get_data($query)){
+					foreach($query_result as $row){
+						$total = (int) $row->total;
+						
+						$data[] = array($row->name, $total);
+					}
+					
+					$result["data"] = array($data);
+					
+					$options = advanced_statistics_get_default_chart_options("bar");
+					$options["axes"]["xaxis"]["tickRenderer"] = "$.jqplot.CanvasAxisTickRenderer";
+					$options["axes"]["xaxis"]["tickOptions"] = array("angle" => "-30", "fontSize" => "8pt");
+					
+					$result["options"] = $options;
+				}
+				
+				break;
+			case "dead-vs-alive":
+				$data = array();
+				$guids = array();
+				
+				$month = time() - (30 * 24 * 60 * 60);
+				
+				$base_query = "SELECT DISTINCT eg.guid";
+				$base_query .= " FROM " . $dbprefix . "river r";
+				$base_query .= " JOIN " . $dbprefix . "entities e ON r.object_guid = e.guid";
+				$base_query .= " JOIN " . $dbprefix . "entities eg ON e.container_guid = eg.guid";
+				$base_query .= " WHERE e.enabled = 'yes' AND e.site_guid = " . $current_site_guid;
+				$base_query .= " AND eg.enabled = 'yes' AND eg.site_guid = " . $current_site_guid;
+				
+				// activity in last month
+				$month_query = $base_query . " AND r.posted >= " . $month;
+				
+				if($query_result = get_data($month_query)){
+					$total = count($query_result);
+					$data[] = array(elgg_echo("advanced_statistics:groups:dead_vs_alive:last_month", array($total)), $total);
+				}
+				
+				// activity in last 3 months
+				$threemonth =  time() - (90 * 24 * 60 * 60);
+				
+				$threemonth_query_base = $base_query . " AND r.posted >= " . $threemonth;
+				$query = $threemonth_query_base . " AND eg.guid NOT IN (" . $month_query . ")";
+				
+				if($query_result = get_data($query)){
+					$total = count($query_result);
+					$data[] = array(elgg_echo("advanced_statistics:groups:dead_vs_alive:3_months", array($total)), $total);
+				}
+				
+				// activity in last 6 months
+				$sixmonth =  time() - (180 * 24 * 60 * 60);
+				
+				$sixmonth_query_base = $base_query . " AND r.posted >= " . $sixmonth;
+				$query = $sixmonth_query_base . " AND eg.guid NOT IN (" . $threemonth_query_base . ")";
+				
+				if($query_result = get_data($query)){
+					$total = count($query_result);
+					$data[] = array(elgg_echo("advanced_statistics:groups:dead_vs_alive:6_months", array($total)), $total);
+				}
+				
+				// activity in last year
+				$year =  time() - (365 * 24 * 60 * 60);
+				
+				$year_query_base = $base_query . " AND r.posted >= " . $year;
+				$query = $year_query_base . " AND eg.guid NOT IN (" . $sixmonth_query_base . ")";
+				
+				if($query_result = get_data($query)){
+					$total = count($query_result);
+					$data[] = array(elgg_echo("advanced_statistics:groups:dead_vs_alive:year", array($total)), $total);
+				}
+				
+				// activity < last year
+				$query = $base_query . " AND r.posted < " . $year;
+				$query .= " AND eg.guid NOT IN (" . $year_query_base . ")";
+				
+				if($query_result = get_data($query)){
+					$total = count($query_result);
+					$data[] = array(elgg_echo("advanced_statistics:groups:dead_vs_alive:more_year", array($total)), $total);
+				}
+				
+				$result["data"] = array($data);
+				$result["options"] = advanced_statistics_get_default_chart_options("pie");
 				break;
 			default:
 				$params = array(
