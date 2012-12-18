@@ -698,6 +698,7 @@
 				if($query_result = get_data($query)){
 					foreach($query_result as $row){
 						$subtype = get_subtype_from_id($row->subtype);
+						$subtype = elgg_echo("item:object:" . $subtype);
 						
 						$total = (int) $row->total;
 						$data[] = array($subtype, $total);
@@ -707,6 +708,14 @@
 				$result["data"] = array($data);
 				$result["options"] = advanced_statistics_get_default_chart_options("bar");
 				$result["options"]["seriesDefaults"]["rendererOptions"] = array("varyBarColor" => true);
+				
+				$result["options"]["highlighter"] = array (
+											"show" => true,
+											"sizeAdjust" => 7.5,
+											"tooltipAxes" => "y" 
+				);
+				$result["options"]["axes"]["xaxis"]["tickRenderer"] = "$.jqplot.CanvasAxisTickRenderer";
+				$result["options"]["axes"]["xaxis"]["tickOptions"] = array("angle" => "-30", "fontSize" => "8pt");
 			
 				break;
 			case "distribution":
