@@ -233,8 +233,10 @@
 				$query = "SELECT ue.name, count(*) AS total";
 				$query .= " FROM " . $dbprefix . "users_entity ue";
 				$query .= " JOIN " . $dbprefix . "entity_relationships r ON ue.guid = r.guid_one";
+				$query .= " JOIN " . $dbprefix . "entity_relationships r2 ON ue.guid = r2.guid_one";
 				$query .= " JOIN " . $dbprefix . "entities e ON ue.guid = e.guid";
 				$query .= " WHERE r.relationship = 'friend'";
+				$query .= " AND r2.relationship = 'member_of_site' AND r2.guid_two = " . $current_site_guid;
 				$query .= " AND e.enabled = 'yes' AND ue.banned = 'no'";
 				$query .= " GROUP BY ue.name";
 				$query .= " ORDER BY total desc";
@@ -276,6 +278,8 @@
 		$current_site_guid = elgg_get_site_entity()->getGUID();
 	
 		switch($chart_id){
+			
+			
 			default:
 				$params = array(
 					"chart_id" => $chart_id,
