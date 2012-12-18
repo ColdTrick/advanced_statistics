@@ -226,6 +226,36 @@
 				$result["options"] = $options;
 				
 				break;
+			case "popular":
+				$data = array();
+				$ticks = array();
+				
+				$query = "SELECT ue.name, count(*) AS total";
+				$query .= " FROM " . $dbprefix . "users_entity ue";
+				$query .= " JOIN " . $dbprefix . "entity_relationships r ON ue.guid = r.guid_one";
+				$query .= " JOIN " . $dbprefix . "entities e ON ue.guid = e.guid";
+				$query .= " WHERE r.relationship = 'friend'";
+				$query .= " AND e.enabled = 'yes' AND ue.banned = 'no'";
+				$query .= " GROUP BY ue.name";
+				$query .= " ORDER BY total desc";
+				$query .= " LIMIT 0, 10";
+				
+				if($query_result = get_data($query)){
+					foreach($query_result as $row){
+						$data[] = (int) $row->total;
+						$ticks[] = $row->name;
+					}
+				}
+				
+				$result["data"] = array($data);
+				
+				$options = advanced_statistics_get_default_chart_options("bar");
+				$options["axes"]["xaxis"]["ticks"] = $ticks;
+				$options["axes"]["xaxis"]["tickRenderer"] = "$.jqplot.CanvasAxisTickRenderer";
+				$options["axes"]["xaxis"]["tickOptions"] = array("angle" => "-30", "fontSize" => "8pt");
+				
+				$result["options"] = $options;
+				break;
 			default:
 				$params = array(
 					"chart_id" => $chart_id,
