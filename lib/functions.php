@@ -313,6 +313,35 @@
 				$result["options"] = $options;
 				
 				break;
+			case "popular-tools":
+				
+				if($group_tools = elgg_get_config("group_tool_options")){
+					$yes_id = add_metastring("yes");
+					
+					$data = array();
+					
+					foreach($group_tools as $tool){
+						$tool_id = add_metastring($tool->name . "_enable");
+						
+						$query = "SELECT md.name_id, count(*) AS total";
+						$query .= " FROM " . $dbprefix . "metadata md";
+						$query .= " JOIN " . $dbprefix . "entities e ON md.entity_guid = e.guid";
+						$query .= " WHERE md.name_id = " . $tool_id;
+						$query .= " AND e.type = 'group' AND e.enabled = 'yes'";
+						$query .= " AND md.value_id = " . $yes_id;
+						
+						if($query_result = get_data_row($query)){
+							$total = (int) $query_result->total;
+							
+							$data[] = array($tool->name . " [" . $total . "]", $total);
+						}
+					}
+					
+					$result["data"] = array($data);
+					$result["options"] = advanced_statistics_get_default_chart_options("pie");
+				}
+				
+				break;
 			default:
 				$params = array(
 					"chart_id" => $chart_id,
