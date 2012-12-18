@@ -40,6 +40,7 @@
 				$query .= " JOIN " . $dbprefix . "entity_relationships r ON r.guid_one = e.guid";
 				$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
 				$query .= " AND e.type = 'user'";
+				$query .= " AND r.time_created > 0";
 				$query .= " GROUP BY FROM_UNIXTIME(r.time_created, '%Y-%m-%d')";
 				
 				if($query_result = get_data($query)){
@@ -210,7 +211,7 @@
 						if($query_result = get_data_row($query)){
 							$total = (int) $query_result->total;
 							
-							$ticks[] = elgg_echo("profile:" . $field_name);
+							$ticks[] = elgg_get_excerpt(elgg_echo("profile:" . $field_name), 25);
 							$data[] = round(($total * 100) / $total_users_count);
 						}	
 						
@@ -247,7 +248,7 @@
 				if($query_result = get_data($query)){
 					foreach($query_result as $row){
 						$data[] = (int) $row->total;
-						$ticks[] = $row->name;
+						$ticks[] = elgg_get_excerpt($row->name, 25);
 					}
 				}
 				
@@ -256,7 +257,7 @@
 				$options = advanced_statistics_get_default_chart_options("bar");
 				$options["axes"]["xaxis"]["ticks"] = $ticks;
 				$options["axes"]["xaxis"]["tickRenderer"] = "$.jqplot.CanvasAxisTickRenderer";
-				$options["axes"]["xaxis"]["tickOptions"] = array("angle" => "-30", "fontSize" => "8pt");
+				$options["axes"]["xaxis"]["tickOptions"] = array("angle" => "-70", "fontSize" => "8pt");
 				
 				$result["options"] = $options;
 				break;
@@ -300,7 +301,7 @@
 					foreach($query_result as $row){
 						$total = (int) $row->total;
 						
-						$data[] = array($row->name, $total);
+						$data[] = array(elgg_get_excerpt($row->name, 25), $total);
 					}
 				}
 				
@@ -319,8 +320,9 @@
 					$yes_id = add_metastring("yes");
 					
 					$data = array();
+					$order = array();
 					
-					foreach($group_tools as $tool){
+					foreach($group_tools as $key => $tool){
 						$tool_id = add_metastring($tool->name . "_enable");
 						
 						$query = "SELECT md.name_id, count(*) AS total";
@@ -332,10 +334,12 @@
 						
 						if($query_result = get_data_row($query)){
 							$total = (int) $query_result->total;
-							
-							$data[] = array($tool->name . " [" . $total . "]", $total);
+							$order[$key] = $total;
+							$data[$key] = array($tool->name . " [" . $total . "]", $total);
 						}
 					}
+					
+					array_multisort($order, $data);
 					
 					$result["data"] = array($data);
 					$result["options"] = advanced_statistics_get_default_chart_options("pie");
@@ -363,7 +367,7 @@
 					foreach($query_result as $row){
 						$total = (int) $row->total;
 						
-						$data[] = array($row->name, $total);
+						$data[] = array(elgg_get_excerpt($row->name, 25), $total);
 					}
 					
 					$result["data"] = array($data);
@@ -396,7 +400,7 @@
 					foreach($query_result as $row){
 						$total = (int) $row->total;
 						
-						$data[] = array($row->name, $total);
+						$data[] = array(elgg_get_excerpt($row->name, 25), $total);
 					}
 					
 					$result["data"] = array($data);
@@ -421,6 +425,7 @@
 				$base_query .= " JOIN " . $dbprefix . "entities eg ON e.container_guid = eg.guid";
 				$base_query .= " WHERE e.enabled = 'yes' AND e.site_guid = " . $current_site_guid;
 				$base_query .= " AND eg.enabled = 'yes' AND eg.site_guid = " . $current_site_guid;
+				$base_query .= " AND eg.type = 'group'";
 				
 				// activity in last month
 				$month_query = $base_query . " AND r.posted >= " . $month;
@@ -614,6 +619,7 @@
 				$result["data"] = array($data);
 				$result["options"] = advanced_statistics_get_default_chart_options("bar");
 				
+				$result["options"]["seriesDefaults"]["rendererOptions"] = array("barMargin" => "2");
 				$result["options"]["axes"]["xaxis"]["tickRenderer"] = "$.jqplot.CanvasAxisTickRenderer";
 				$result["options"]["axes"]["xaxis"]["tickOptions"] = array("angle" => "-70", "fontSize" => "8pt");
 				
@@ -717,7 +723,7 @@
 							$user = $row->user;
 								
 							$total = (int) $row->total;
-							$data[] = array($user, $total);
+							$data[] = array(elgg_get_excerpt($user, 25), $total);
 						}
 					}
 						
@@ -725,7 +731,7 @@
 					$result["options"] = advanced_statistics_get_default_chart_options("bar");
 				
 					$result["options"]["axes"]["xaxis"]["tickRenderer"] = "$.jqplot.CanvasAxisTickRenderer";
-					$result["options"]["axes"]["xaxis"]["tickOptions"] = array("angle" => "-30", "fontSize" => "8pt");
+					$result["options"]["axes"]["xaxis"]["tickOptions"] = array("angle" => "-70", "fontSize" => "8pt");
 				}
 				break;
 			case "files-groups":
@@ -755,7 +761,7 @@
 							$user = $row->user;
 								
 							$total = (int) $row->total;
-							$data[] = array($user, $total);
+							$data[] = array(elgg_get_excerpt($user, 25), $total);
 						}
 					}
 						
@@ -763,7 +769,7 @@
 					$result["options"] = advanced_statistics_get_default_chart_options("bar");
 				
 					$result["options"]["axes"]["xaxis"]["tickRenderer"] = "$.jqplot.CanvasAxisTickRenderer";
-					$result["options"]["axes"]["xaxis"]["tickOptions"] = array("angle" => "-30", "fontSize" => "8pt");
+					$result["options"]["axes"]["xaxis"]["tickOptions"] = array("angle" => "-70", "fontSize" => "8pt");
 				}
 				break;
 			default:
