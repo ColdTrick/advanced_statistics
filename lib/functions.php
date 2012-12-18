@@ -296,6 +296,73 @@
 		$current_site_guid = elgg_get_site_entity()->getGUID();
 	
 		switch($chart_id){
+			case "day":
+				$data = array();
+			
+				$query = "SELECT DAYOFWEEK(FROM_UNIXTIME(posted)) AS day_of_the_week, count(*) as total";
+				$query .= " FROM " . $dbprefix . "river";
+				$query .= " GROUP BY DAYOFWEEK(FROM_UNIXTIME(posted))";
+			
+				if($query_result = get_data($query)){
+					foreach($query_result as $row){
+						$dotw = $row->day_of_the_week;
+						$dotw = elgg_echo("advanced_statistics:activity:day:" . $dotw);
+						
+						$total = (int) $row->total;
+						$data[] = array($dotw . " [" . $total . "]"  , $total);
+					}
+				}
+			
+				$result["data"] = array($data);
+				$result["options"] = advanced_statistics_get_default_chart_options("bar");
+			
+				break;
+			case "hour":
+				$data = array();
+			
+				$query = "SELECT FROM_UNIXTIME(posted, '%k') AS hour_of_the_day, count(*) as total";
+				$query .= " FROM " . $dbprefix . "river";
+				$query .= " GROUP BY FROM_UNIXTIME(posted, '%k')";
+			
+				for($i = 0; $i < 24; $i++){
+					$data[$i] = array("$i", 0);
+				}
+				
+				if($query_result = get_data($query)){
+					foreach($query_result as $row){
+						$hotd = $row->hour_of_the_day;
+						
+						$total = (int) $row->total;
+						$data[(int)$hotd] = array($hotd, $total);
+					}
+				}
+			
+				$result["data"] = array($data);
+				$result["options"] = advanced_statistics_get_default_chart_options("bar");
+			
+				break;
+			case "timeline":
+				$data = array();
+			
+				$query = "SELECT FROM_UNIXTIME(posted, '%Y-%m-%d') AS date_created, count(*) as total";
+				$query .= " FROM " . $dbprefix . "river";
+				$query .= " GROUP BY FROM_UNIXTIME(posted, '%Y-%m-%d')";
+							
+				if($query_result = get_data($query)){
+					foreach($query_result as $row){
+						$date_created = $row->date_created;
+						
+						$total = (int) $row->total;
+						$data[] = array($date_created, $total);
+					}
+				}
+			
+				$result["data"] = array($data);
+				
+				$result["options"] = advanced_statistics_get_default_chart_options("date");
+				$result["options"]["series"] = array(array("showMarker" => false));
+				
+				break;
 			default:
 				$params = array(
 					"chart_id" => $chart_id,
