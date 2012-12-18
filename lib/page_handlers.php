@@ -1,6 +1,7 @@
 <?php
 
 	function advanced_statistics_page_handler($page){
+		admin_gatekeeper();
 		
 		switch($page[0]){
 			case "users":
