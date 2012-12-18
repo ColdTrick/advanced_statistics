@@ -31,11 +31,12 @@
 				$data = array();
 				$data2 = array();
 				
-				$query = "SELECT FROM_UNIXTIME(e.time_created, '%Y-%m-%d') as date_created, count(*) as total";
+				$query = "SELECT FROM_UNIXTIME(r.time_created, '%Y-%m-%d') as date_created, count(*) as total";
 				$query .= " FROM " . $dbprefix . "entities e";
 				$query .= " JOIN " . $dbprefix . "entity_relationships r ON r.guid_one = e.guid";
 				$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
-				$query .= " GROUP BY FROM_UNIXTIME(e.time_created, '%Y-%m-%d')";
+				$query .= " AND e.type = 'user'";
+				$query .= " GROUP BY FROM_UNIXTIME(r.time_created, '%Y-%m-%d')";
 				
 				if($query_result = get_data($query)){
 					foreach($query_result as $row){
