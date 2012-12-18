@@ -21,7 +21,6 @@
 		'advanced_statistics:users:profile_field_usage' => 'Profile field usage',
 		
 		// activity
-	
 		'advanced_statistics:activity:day' => 'Activity per day',
 		'advanced_statistics:activity:hour' => 'Activity per hour',
 		'advanced_statistics:activity:timeline' => 'Activity over time',
@@ -40,6 +39,18 @@
 		// system
 		'advanced_statistics:system:files:users' => 'Users with the most files and photos',
 		'advanced_statistics:system:files:groups' => 'Groups with the most files and photos',
+		
+		// groups
+		'advanced_statistics:groups:popular' => "Popular groups",
+		'advanced_statistics:groups:popular_tools' => "Popular group tools",
+		'advanced_statistics:groups:most_active' => "Most active groups (last week)",
+		'advanced_statistics:groups:least_active' => "Least active groups",
+		'advanced_statistics:groups:dead_vs_alive' => "Dead vs. Alive",
+		'advanced_statistics:groups:dead_vs_alive:last_month' => "< 1 month [%d]",
+		'advanced_statistics:groups:dead_vs_alive:3_months' => "< 3 months [%d]",
+		'advanced_statistics:groups:dead_vs_alive:6_months' => "< 6 months [%d]",
+		'advanced_statistics:groups:dead_vs_alive:year' => "< 1 year [%d]",
+		'advanced_statistics:groups:dead_vs_alive:more_year' => "> 1 year [%d]",
 	);
 	
 	add_translation('en', $english);
