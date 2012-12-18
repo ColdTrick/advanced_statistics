@@ -36,6 +36,10 @@
 		'advanced_statistics:widgets:handlers' => 'Widget handlers',
 		'advanced_statistics:widgets:context' => 'Widget context',
 
+		// content
+		'advanced_statistics:content:totals' => 'Content totals',
+		'advanced_statistics:content:distribution' => 'Content container distribution',
+
 		// system
 		'advanced_statistics:system:files:users' => 'Users with the most files and photos',
 		'advanced_statistics:system:files:groups' => 'Groups with the most files and photos',

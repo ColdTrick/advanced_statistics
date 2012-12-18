@@ -676,6 +676,70 @@
 		$current_site_guid = elgg_get_site_entity()->getGUID();
 	
 		switch($chart_id){
+			case "totals":
+				$data = array();
+			
+				$subtype_ids = array();
+				$subtypes = get_registered_entity_types("object");
+				
+				foreach($subtypes as $subtype){
+					if($subtype_id = get_subtype_id("object", $subtype)){
+						$subtype_ids[] = $subtype_id;
+					}
+				}
+				$query = "SELECT e.subtype as subtype, count(*) as total";
+				$query .= " FROM " . $dbprefix . "entities e";
+				$query .= " WHERE e.type = 'object'";
+				$query .= " AND e.subtype IN (" . implode(",", $subtype_ids) . ")";
+				$query .= " AND e.site_guid = " . $current_site_guid;
+				$query .= " GROUP BY e.subtype";
+				$query .= " ORDER BY total DESC";
+					
+				if($query_result = get_data($query)){
+					foreach($query_result as $row){
+						$subtype = get_subtype_from_id($row->subtype);
+						
+						$total = (int) $row->total;
+						$data[] = array($subtype, $total);
+					}
+				}
+					
+				$result["data"] = array($data);
+				$result["options"] = advanced_statistics_get_default_chart_options("bar");
+				$result["options"]["seriesDefaults"]["rendererOptions"] = array("varyBarColor" => true);
+			
+				break;
+			case "distribution":
+				$data = array();
+			
+				$subtype_ids = array();
+				$subtypes = get_registered_entity_types("object");
+				
+				foreach($subtypes as $subtype){
+					if($subtype_id = get_subtype_id("object", $subtype)){
+						$subtype_ids[] = $subtype_id;
+					}
+				}
+				$query = "SELECT e2.type as type, count(*) as total";
+				$query .= " FROM " . $dbprefix . "entities e";
+				$query .= " JOIN " . $dbprefix . "entities e2 ON e.container_guid = e2.guid";
+				$query .= " WHERE e.type = 'object'";
+				$query .= " AND e.subtype IN (" . implode(",", $subtype_ids) . ")";
+				$query .= " AND e.site_guid = " . $current_site_guid;
+				$query .= " GROUP BY e2.type";
+				$query .= " ORDER BY total DESC";
+					
+				if($query_result = get_data($query)){
+					foreach($query_result as $row){
+						$total = (int) $row->total;
+						$data[] = array($row->type, $total);
+					}
+				}
+					
+				$result["data"] = array($data);
+				$result["options"] = advanced_statistics_get_default_chart_options("pie");
+			
+				break;
 			default:
 				$params = array(
 					"chart_id" => $chart_id,
