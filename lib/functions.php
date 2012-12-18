@@ -383,6 +383,66 @@
 		$current_site_guid = elgg_get_site_entity()->getGUID();
 	
 		switch($chart_id){
+			case "handlers":
+				$data = array();
+
+				$widget_subtype = get_subtype_id("object", "widget");
+				
+				$query = "SELECT ps.value as handler, count(*) as total";
+				$query .= " FROM " . $dbprefix . "entities e";
+				$query .= " JOIN " . $dbprefix . "private_settings ps ON e.guid = ps.entity_guid";
+				$query .= " WHERE e.type = 'object' AND e.subtype = " . $widget_subtype;
+				$query .= " AND ps.name = 'handler'";
+				$query .= " GROUP BY ps.value";
+				$query .= " ORDER BY total DESC";
+					
+				if($query_result = get_data($query)){
+					foreach($query_result as $row){
+						$handler = $row->handler;
+			
+						$total = (int) $row->total;
+						$data[] = array($handler, $total);
+					}
+				}
+					
+				$result["data"] = array($data);
+				$result["options"] = advanced_statistics_get_default_chart_options("bar");
+				
+				$result["options"]["axes"]["xaxis"]["tickRenderer"] = "$.jqplot.CanvasAxisTickRenderer";
+				$result["options"]["axes"]["xaxis"]["tickOptions"] = array("angle" => "-70", "fontSize" => "8pt");
+				
+				break;
+			case "context":
+				$data = array();
+
+				$widget_subtype = get_subtype_id("object", "widget");
+				
+				$query = "SELECT ps.value as context, count(*) as total";
+				$query .= " FROM " . $dbprefix . "entities e";
+				$query .= " JOIN " . $dbprefix . "private_settings ps ON e.guid = ps.entity_guid";
+				$query .= " WHERE e.type = 'object' AND e.subtype = " . $widget_subtype;
+				$query .= " AND ps.name = 'context'";
+				$query .= " GROUP BY ps.value";
+				$query .= " ORDER BY total DESC";
+					
+				if($query_result = get_data($query)){
+					foreach($query_result as $row){
+						$context = $row->context;
+						if(!$context){
+							$context = elgg_echo("unknown");
+						} else {
+							$context = elgg_echo($context);
+						}
+						$total = (int) $row->total;
+						$data[] = array($context, $total);
+					}
+				}
+					
+				$result["data"] = array($data);
+				$result["options"] = advanced_statistics_get_default_chart_options("pie");
+				
+				
+				break;
 			default:
 				$params = array(
 					"chart_id" => $chart_id,

@@ -33,6 +33,9 @@
 		'advanced_statistics:activity:day:6' => 'Friday',
 		'advanced_statistics:activity:day:7' => 'Saturday',
 		
+		// widgets
+		'advanced_statistics:widgets:handlers' => 'Widget handlers',
+		'advanced_statistics:widgets:context' => 'Widget context',
 	);
 	
 	add_translation('en', $english);
