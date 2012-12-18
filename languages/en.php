@@ -36,6 +36,10 @@
 		// widgets
 		'advanced_statistics:widgets:handlers' => 'Widget handlers',
 		'advanced_statistics:widgets:context' => 'Widget context',
+
+		// system
+		'advanced_statistics:system:files:users' => 'Users with the most files and photos',
+		'advanced_statistics:system:files:groups' => 'Groups with the most files and photos',
 	);
 	
 	add_translation('en', $english);
