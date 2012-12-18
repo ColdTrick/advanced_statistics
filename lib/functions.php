@@ -10,8 +10,10 @@
 			case "language-distribution":
 				$data = array();
 				
-				$query = "SELECT language, count(*) AS total";
-				$query .= " FROM " . $dbprefix . "users_entity";
+				$query = "SELECT ue.language, count(*) AS total";
+				$query .= " FROM " . $dbprefix . "users_entity ue";
+				$query .= " JOIN " . $dbprefix . "entity_relationships r ON r.guid_one = ue.guid";
+				$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
 				$query .= " GROUP BY language";
 				
 				if($query_result = get_data($query)){
@@ -493,6 +495,79 @@
 		$current_site_guid = elgg_get_site_entity()->getGUID();
 	
 		switch($chart_id){
+			case "day":
+				$data = array();
+			
+				$query = "SELECT DAYOFWEEK(FROM_UNIXTIME(r.posted)) AS day_of_the_week, count(*) as total";
+				$query .= " FROM " . $dbprefix . "entities e";
+				$query .= " JOIN " . $dbprefix . "river r ON e.guid = r.object_guid";
+				$query .= " WHERE e.site_guid = " . $current_site_guid;
+				$query .= " GROUP BY DAYOFWEEK(FROM_UNIXTIME(posted))";
+			
+				if($query_result = get_data($query)){
+					foreach($query_result as $row){
+						$dotw = $row->day_of_the_week;
+						$dotw = elgg_echo("advanced_statistics:activity:day:" . $dotw);
+						
+						$total = (int) $row->total;
+						$data[] = array($dotw . " [" . $total . "]"  , $total);
+					}
+				}
+			
+				$result["data"] = array($data);
+				$result["options"] = advanced_statistics_get_default_chart_options("bar");
+			
+				break;
+			case "hour":
+				$data = array();
+			
+				$query = "SELECT FROM_UNIXTIME(r.posted, '%k') AS hour_of_the_day, count(*) as total";
+				$query .= " FROM " . $dbprefix . "entities e";
+				$query .= " JOIN " . $dbprefix . "river r ON e.guid = r.object_guid";
+				$query .= " WHERE e.site_guid = " . $current_site_guid;
+				$query .= " GROUP BY FROM_UNIXTIME(r.posted, '%k')";
+			
+				for($i = 0; $i < 24; $i++){
+					$data[$i] = array("$i", 0);
+				}
+				
+				if($query_result = get_data($query)){
+					foreach($query_result as $row){
+						$hotd = $row->hour_of_the_day;
+						
+						$total = (int) $row->total;
+						$data[(int)$hotd] = array($hotd, $total);
+					}
+				}
+			
+				$result["data"] = array($data);
+				$result["options"] = advanced_statistics_get_default_chart_options("bar");
+			
+				break;
+			case "timeline":
+				$data = array();
+			
+				$query = "SELECT FROM_UNIXTIME(r.posted, '%Y-%m-%d') AS date_created, count(*) as total";
+				$query .= " FROM " . $dbprefix . "entities e";
+				$query .= " JOIN " . $dbprefix . "river r ON e.guid = r.object_guid";
+				$query .= " WHERE e.site_guid = " . $current_site_guid;
+				$query .= " GROUP BY FROM_UNIXTIME(r.posted, '%Y-%m-%d')";
+							
+				if($query_result = get_data($query)){
+					foreach($query_result as $row){
+						$date_created = $row->date_created;
+						
+						$total = (int) $row->total;
+						$data[] = array($date_created, $total);
+					}
+				}
+			
+				$result["data"] = array($data);
+				
+				$result["options"] = advanced_statistics_get_default_chart_options("date");
+				$result["options"]["series"] = array(array("showMarker" => false));
+				
+				break;
 			default:
 				$params = array(
 					"chart_id" => $chart_id,
@@ -513,6 +588,68 @@
 		$current_site_guid = elgg_get_site_entity()->getGUID();
 	
 		switch($chart_id){
+			case "handlers":
+				$data = array();
+
+				$widget_subtype = get_subtype_id("object", "widget");
+				
+				$query = "SELECT ps.value as handler, count(*) as total";
+				$query .= " FROM " . $dbprefix . "entities e";
+				$query .= " JOIN " . $dbprefix . "private_settings ps ON e.guid = ps.entity_guid";
+				$query .= " WHERE e.type = 'object' AND e.subtype = " . $widget_subtype;
+				$query .= " AND ps.name = 'handler'";
+				$query .= " AND e.site_guid = " . $current_site_guid;
+				$query .= " GROUP BY ps.value";
+				$query .= " ORDER BY total DESC";
+					
+				if($query_result = get_data($query)){
+					foreach($query_result as $row){
+						$handler = $row->handler;
+			
+						$total = (int) $row->total;
+						$data[] = array($handler, $total);
+					}
+				}
+					
+				$result["data"] = array($data);
+				$result["options"] = advanced_statistics_get_default_chart_options("bar");
+				
+				$result["options"]["axes"]["xaxis"]["tickRenderer"] = "$.jqplot.CanvasAxisTickRenderer";
+				$result["options"]["axes"]["xaxis"]["tickOptions"] = array("angle" => "-70", "fontSize" => "8pt");
+				
+				break;
+			case "context":
+				$data = array();
+
+				$widget_subtype = get_subtype_id("object", "widget");
+				
+				$query = "SELECT ps.value as context, count(*) as total";
+				$query .= " FROM " . $dbprefix . "entities e";
+				$query .= " JOIN " . $dbprefix . "private_settings ps ON e.guid = ps.entity_guid";
+				$query .= " WHERE e.type = 'object' AND e.subtype = " . $widget_subtype;
+				$query .= " AND ps.name = 'context'";
+				$query .= " AND e.site_guid = " . $current_site_guid;
+				$query .= " GROUP BY ps.value";
+				$query .= " ORDER BY total DESC";
+					
+				if($query_result = get_data($query)){
+					foreach($query_result as $row){
+						$context = $row->context;
+						if(!$context){
+							$context = elgg_echo("unknown");
+						} else {
+							$context = elgg_echo($context);
+						}
+						$total = (int) $row->total;
+						$data[] = array($context, $total);
+					}
+				}
+					
+				$result["data"] = array($data);
+				$result["options"] = advanced_statistics_get_default_chart_options("pie");
+				
+				
+				break;
 			default:
 				$params = array(
 					"chart_id" => $chart_id,
@@ -553,6 +690,82 @@
 		$current_site_guid = elgg_get_site_entity()->getGUID();
 	
 		switch($chart_id){
+			case "files-users":
+				$data = array();
+			
+				$subtype_ids = array();
+				if($subtype_id = get_subtype_id("object", "file")){
+					$subtype_ids[] = $subtype_id;
+				}
+				if($subtype_id = get_subtype_id("object", "images")){
+					$subtype_ids[] = $subtype_id;
+				}
+			
+				if(!empty($subtype_ids)){
+				
+					$query = "SELECT ue.name as user, count(*) as total";
+					$query .= " FROM " . $dbprefix . "entities e";
+					$query .= " JOIN " . $dbprefix . "users_entity ue ON e.owner_guid = ue.guid";
+					$query .= " WHERE e.type = 'object' AND e.subtype IN (" . implode(", ", $subtype_ids) . ")";
+					$query .= " AND e.site_guid = " . $current_site_guid;
+					$query .= " GROUP BY e.owner_guid";
+					$query .= " ORDER BY total DESC";
+					$query .= " LIMIT 0, 25";
+						
+					if($query_result = get_data($query)){
+						foreach($query_result as $row){
+							$user = $row->user;
+								
+							$total = (int) $row->total;
+							$data[] = array($user, $total);
+						}
+					}
+						
+					$result["data"] = array($data);
+					$result["options"] = advanced_statistics_get_default_chart_options("bar");
+				
+					$result["options"]["axes"]["xaxis"]["tickRenderer"] = "$.jqplot.CanvasAxisTickRenderer";
+					$result["options"]["axes"]["xaxis"]["tickOptions"] = array("angle" => "-30", "fontSize" => "8pt");
+				}
+				break;
+			case "files-groups":
+				$data = array();
+			
+				$subtype_ids = array();
+				if($subtype_id = get_subtype_id("object", "file")){
+					$subtype_ids[] = $subtype_id;
+				}
+				if($subtype_id = get_subtype_id("object", "images")){
+					$subtype_ids[] = $subtype_id;
+				}
+			
+				if(!empty($subtype_ids)){
+				
+					$query = "SELECT ge.name as user, count(*) as total";
+					$query .= " FROM " . $dbprefix . "entities e";
+					$query .= " JOIN " . $dbprefix . "groups_entity ge ON e.container_guid = ge.guid";
+					$query .= " WHERE e.type = 'object' AND e.subtype IN (" . implode(", ", $subtype_ids) . ")";
+					$query .= " AND e.site_guid = " . $current_site_guid;
+					$query .= " GROUP BY e.container_guid";
+					$query .= " ORDER BY total DESC";
+					$query .= " LIMIT 0, 25";
+						
+					if($query_result = get_data($query)){
+						foreach($query_result as $row){
+							$user = $row->user;
+								
+							$total = (int) $row->total;
+							$data[] = array($user, $total);
+						}
+					}
+						
+					$result["data"] = array($data);
+					$result["options"] = advanced_statistics_get_default_chart_options("bar");
+				
+					$result["options"]["axes"]["xaxis"]["tickRenderer"] = "$.jqplot.CanvasAxisTickRenderer";
+					$result["options"]["axes"]["xaxis"]["tickOptions"] = array("angle" => "-30", "fontSize" => "8pt");
+				}
+				break;
 			default:
 				$params = array(
 					"chart_id" => $chart_id,

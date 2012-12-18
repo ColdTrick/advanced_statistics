@@ -14,6 +14,7 @@
 			elgg_register_admin_menu_item('administer', 'users', 'advanced_statistics');
 			elgg_register_admin_menu_item('administer', 'groups', 'advanced_statistics');
 			elgg_register_admin_menu_item('administer', 'content', 'advanced_statistics');
+			elgg_register_admin_menu_item('administer', 'activity', 'advanced_statistics');
 			elgg_register_admin_menu_item('administer', 'widgets', 'advanced_statistics');
 			elgg_register_admin_menu_item('administer', 'system', 'advanced_statistics');
 			
