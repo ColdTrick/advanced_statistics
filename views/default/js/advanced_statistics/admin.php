@@ -10,8 +10,15 @@ elgg.advanced_statistics.init = function(){
 	$(".advanced-statistics-plot-container").each(function(){
 		var target = $(this).attr("id");
 		var parts = target.split("-");
+		var chart_id = new Array();
+
+		for(var i = 3; i < parts.length; i++){
+			chart_id.push(parts[i]);
+		}
+
+		chart_id = chart_id.join("-");
 		
-		elgg.getJSON("advanced_statistics/" + parts[2] + "/" + target, {
+		elgg.getJSON("advanced_statistics/" + parts[2] + "/" + chart_id, {
 			success: function(result){
 				var options = result.options;
 				if(options["seriesDefaults"]){

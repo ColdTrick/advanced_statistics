@@ -7,7 +7,7 @@
 		$current_site_guid = elgg_get_site_entity()->getGUID();
 		
 		switch($chart_id){
-			case "advanced-statistics-users-language-distribution":
+			case "language-distribution":
 				$data = array();
 				
 				$query = "SELECT language, count(*) as total FROM " . $dbprefix . "users_entity GROUP BY language";
@@ -27,7 +27,7 @@
 				$result["options"] = advanced_statistics_get_default_chart_options("pie");
 				
 				break;
-			case "advanced-statistics-users-account-creation":
+			case "account-creation":
 				$data = array();
 				$data2 = array();
 				
@@ -56,7 +56,7 @@
 				$result["options"]["legend"] = array("show" => true, "position" => "e");
 				
 				break;
-			case "advanced-statistics-users-most-used-domains":
+			case "most-used-domains":
 				$data = array();
 				
 				$query = "SELECT SUBSTRING_INDEX(ue.email, '@', -1) as domain, count(*) as total";
@@ -76,7 +76,7 @@
 				$result["options"] = advanced_statistics_get_default_chart_options("pie");
 				
 				break;
-			case "advanced-statistics-users-account-activity":
+			case "account-activity":
 				$data = array();
 				
 				$query = "SELECT FROM_UNIXTIME(e.last_action, '%Y-%m-01') as month, count(*) as total";
@@ -97,7 +97,7 @@
 				$result["options"] = advanced_statistics_get_default_chart_options("date");
 				
 				break;
-			case "advanced-statistics-users-account-status":
+			case "account-status":
 				$data = array();
 				
 				// banned users
@@ -168,7 +168,7 @@
 				$result["options"] = advanced_statistics_get_default_chart_options("pie");
 				
 				break;
-			case "advanced-statistics-users-profile-field-usage":
+			case "profile-field-usage":
 				$data = array();
 				$ticks = array();
 				
