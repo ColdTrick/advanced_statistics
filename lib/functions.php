@@ -299,8 +299,10 @@
 			case "day":
 				$data = array();
 			
-				$query = "SELECT DAYOFWEEK(FROM_UNIXTIME(posted)) AS day_of_the_week, count(*) as total";
-				$query .= " FROM " . $dbprefix . "river";
+				$query = "SELECT DAYOFWEEK(FROM_UNIXTIME(r.posted)) AS day_of_the_week, count(*) as total";
+				$query .= " FROM " . $dbprefix . "entities e";
+				$query .= " JOIN " . $dbprefix . "river r ON e.guid = r.object_guid";
+				$query .= " WHERE e.site_guid = " . $current_site_guid;
 				$query .= " GROUP BY DAYOFWEEK(FROM_UNIXTIME(posted))";
 			
 				if($query_result = get_data($query)){
@@ -320,9 +322,11 @@
 			case "hour":
 				$data = array();
 			
-				$query = "SELECT FROM_UNIXTIME(posted, '%k') AS hour_of_the_day, count(*) as total";
-				$query .= " FROM " . $dbprefix . "river";
-				$query .= " GROUP BY FROM_UNIXTIME(posted, '%k')";
+				$query = "SELECT FROM_UNIXTIME(r.posted, '%k') AS hour_of_the_day, count(*) as total";
+				$query .= " FROM " . $dbprefix . "entities e";
+				$query .= " JOIN " . $dbprefix . "river r ON e.guid = r.object_guid";
+				$query .= " WHERE e.site_guid = " . $current_site_guid;
+				$query .= " GROUP BY FROM_UNIXTIME(r.posted, '%k')";
 			
 				for($i = 0; $i < 24; $i++){
 					$data[$i] = array("$i", 0);
@@ -344,9 +348,11 @@
 			case "timeline":
 				$data = array();
 			
-				$query = "SELECT FROM_UNIXTIME(posted, '%Y-%m-%d') AS date_created, count(*) as total";
-				$query .= " FROM " . $dbprefix . "river";
-				$query .= " GROUP BY FROM_UNIXTIME(posted, '%Y-%m-%d')";
+				$query = "SELECT FROM_UNIXTIME(r.posted, '%Y-%m-%d') AS date_created, count(*) as total";
+				$query .= " FROM " . $dbprefix . "entities e";
+				$query .= " JOIN " . $dbprefix . "river r ON e.guid = r.object_guid";
+				$query .= " WHERE e.site_guid = " . $current_site_guid;
+				$query .= " GROUP BY FROM_UNIXTIME(r.posted, '%Y-%m-%d')";
 							
 				if($query_result = get_data($query)){
 					foreach($query_result as $row){
@@ -393,6 +399,7 @@
 				$query .= " JOIN " . $dbprefix . "private_settings ps ON e.guid = ps.entity_guid";
 				$query .= " WHERE e.type = 'object' AND e.subtype = " . $widget_subtype;
 				$query .= " AND ps.name = 'handler'";
+				$query .= " AND e.site_guid = " . $current_site_guid;
 				$query .= " GROUP BY ps.value";
 				$query .= " ORDER BY total DESC";
 					
@@ -422,6 +429,7 @@
 				$query .= " JOIN " . $dbprefix . "private_settings ps ON e.guid = ps.entity_guid";
 				$query .= " WHERE e.type = 'object' AND e.subtype = " . $widget_subtype;
 				$query .= " AND ps.name = 'context'";
+				$query .= " AND e.site_guid = " . $current_site_guid;
 				$query .= " GROUP BY ps.value";
 				$query .= " ORDER BY total DESC";
 					
