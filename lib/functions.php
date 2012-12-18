@@ -10,7 +10,9 @@
 			case "language-distribution":
 				$data = array();
 				
-				$query = "SELECT language, count(*) as total FROM " . $dbprefix . "users_entity GROUP BY language";
+				$query = "SELECT language, count(*) AS total";
+				$query .= " FROM " . $dbprefix . "users_entity";
+				$query .= " GROUP BY language";
 				
 				if($query_result = get_data($query)){
 					foreach($query_result as $row){
@@ -31,7 +33,7 @@
 				$data = array();
 				$data2 = array();
 				
-				$query = "SELECT FROM_UNIXTIME(r.time_created, '%Y-%m-%d') as date_created, count(*) as total";
+				$query = "SELECT FROM_UNIXTIME(r.time_created, '%Y-%m-%d') AS date_created, count(*) AS total";
 				$query .= " FROM " . $dbprefix . "entities e";
 				$query .= " JOIN " . $dbprefix . "entity_relationships r ON r.guid_one = e.guid";
 				$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
@@ -39,6 +41,8 @@
 				$query .= " GROUP BY FROM_UNIXTIME(r.time_created, '%Y-%m-%d')";
 				
 				if($query_result = get_data($query)){
+					$total = 0;
+					
 					foreach($query_result as $row){
 						$date_total = (int) $row->total;
 						$total += $date_total; 
@@ -60,7 +64,7 @@
 			case "most-used-domains":
 				$data = array();
 				
-				$query = "SELECT SUBSTRING_INDEX(ue.email, '@', -1) as domain, count(*) as total";
+				$query = "SELECT SUBSTRING_INDEX(ue.email, '@', -1) AS domain, count(*) AS total";
 				$query .= " FROM " . $dbprefix . "users_entity ue";
 				$query .= " JOIN " . $dbprefix . "entity_relationships r ON r.guid_one = ue.guid";
 				$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
@@ -80,7 +84,7 @@
 			case "account-activity":
 				$data = array();
 				
-				$query = "SELECT FROM_UNIXTIME(e.last_action, '%Y-%m-01') as month, count(*) as total";
+				$query = "SELECT FROM_UNIXTIME(e.last_action, '%Y-%m-01') AS month, count(*) AS total";
 				$query .= " FROM " . $dbprefix . "entities e";
 				$query .= " JOIN " . $dbprefix . "entity_relationships r ON r.guid_one = e.guid";
 				$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
@@ -102,15 +106,15 @@
 				$data = array();
 				
 				// banned users
-				$query = "SELECT count(*) as total";
+				$query = "SELECT count(*) AS total";
 				$query .= " FROM " . $dbprefix . "entities e";
 				$query .= " JOIN " . $dbprefix . "users_entity ue ON e.guid = ue.guid";
 				$query .= " JOIN " . $dbprefix . "entity_relationships r ON r.guid_one = e.guid";
 				$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
 				$query .= " AND e.type = 'user' AND ue.banned = 'yes' AND e.enabled = 'yes'";
 				
-				if($query_result = get_data($query)){
-					$banned = (int) $query_result[0]->total;
+				if($query_result = get_data_row($query)){
+					$banned = (int) $query_result->total;
 					
 					$data[] = array("banned [" . $banned . "]", $banned);
 				}
@@ -120,7 +124,7 @@
 				$validated_id = add_metastring('validated');
 				$one_id = add_metastring('1');
 				
-				$query = "SELECT count(*) as total";
+				$query = "SELECT count(*) AS total";
 				$query .= " FROM " . $dbprefix . "entities e";
 				$query .= " JOIN " . $dbprefix . "entity_relationships r ON r.guid_one = e.guid";
 				$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
@@ -131,35 +135,35 @@
 								AND md.name_id = $validated_id
 								AND md.value_id = $one_id)";
 				
-				if($query_result = get_data($query)){
-					$unvalidated = (int) $query_result[0]->total;
+				if($query_result = get_data_row($query)){
+					$unvalidated = (int) $query_result->total;
 						
 					$data[] = array("unvalidated [" . $unvalidated . "]", $unvalidated);
 				}
 				
 				// disabled
-				$query = "SELECT count(*) as total";
+				$query = "SELECT count(*) AS total";
 				$query .= " FROM " . $dbprefix . "entities e";
 				$query .= " JOIN " . $dbprefix . "entity_relationships r ON r.guid_one = e.guid";
 				$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
 				$query .= " AND e.type = 'user' AND e.enabled = 'no'";
 				
-				if($query_result = get_data($query)){
-					$disabled = (int) $query_result[0]->total;
+				if($query_result = get_data_row($query)){
+					$disabled = (int) $query_result->total;
 					$disabled = $disabled - $unvalidated;
 						
 					$data[] = array("disabled [" . $disabled . "]", $disabled);
 				}
 				
 				// total
-				$query = "SELECT count(*) as total";
+				$query = "SELECT count(*) AS total";
 				$query .= " FROM " . $dbprefix . "entities e";
 				$query .= " JOIN " . $dbprefix . "entity_relationships r ON r.guid_one = e.guid";
 				$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
 				$query .= " AND e.type = 'user'";
 				
-				if($query_result = get_data($query)){
-					$active = (int) $query_result[0]->total;
+				if($query_result = get_data_row($query)){
+					$active = (int) $query_result->total;
 					$active = $active - $disabled - $unvalidated - $banned;
 						
 					$data[] = array("active [" . $active . "]", $active);
@@ -175,32 +179,35 @@
 				
 				if($profile_fields = elgg_get_config("profile_fields")){
 					$total_users_count = 0;
-				
+					$empty_id = add_metastring("");
+					
 					// total for this field
-					$query = "SELECT count(*) as total";
+					$query = "SELECT count(*) AS total";
 					$query .= " FROM " . $dbprefix . "entities e";
 					$query .= " JOIN " . $dbprefix . "entity_relationships r ON r.guid_one = e.guid";
 					$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
 					$query .= " AND e.type = 'user'";
 						
-					if($query_result = get_data($query)){
-						$total_users_count = (int) $query_result[0]->total;
+					if($query_result = get_data_row($query)){
+						$total_users_count = (int) $query_result->total;
 					}
 					
 					foreach($profile_fields as $field_name => $type){
 						$name_id = add_metastring($field_name);
 						
 						// total for this field
-						$query = "SELECT count(distinct e.guid) as total";
+						$query = "SELECT count(distinct e.guid) AS total";
 						$query .= " FROM " . $dbprefix . "entities e";
 						$query .= " JOIN " . $dbprefix . "entity_relationships r ON r.guid_one = e.guid";
 						$query .= " JOIN " . $dbprefix . "metadata md ON e.guid = md.entity_guid";
 						$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
 						$query .= " AND e.type = 'user'";
 						$query .= " AND md.name_id = '" . $name_id . "'";
+						$query .= " AND md.value_id <> " . $empty_id;
 							
-						if($query_result = get_data($query)){
-							$total = (int) $query_result[0]->total;
+						if($query_result = get_data_row($query)){
+							$total = (int) $query_result->total;
+							
 							$ticks[] = elgg_echo("profile:" . $field_name);
 							$data[] = round(($total * 100) / $total_users_count);
 						}	
