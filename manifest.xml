@@ -13,6 +13,11 @@
 		<version>1.8</version>
 	</requires>
 	
+	<screenshot>
+		<description>Sample Users statistics</description>
+		<path>screenshots/users_stats.png</path>
+	</screenshot>
+	
  	<category>ColdTrick</category>
  	<category>Statistics</category>
 </plugin_manifest>

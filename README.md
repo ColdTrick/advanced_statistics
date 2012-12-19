@@ -15,6 +15,7 @@ Shows the following statistics
 - Users
 - Groups
 - Content
+- Activity
 - Widgets
 - System
 
