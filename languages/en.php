@@ -1,7 +1,7 @@
 <?php
 
 	$english = array(
-		
+
 		// admin menu items
 		'admin:advanced_statistics' => 'Advanced Statistics',
 		'admin:advanced_statistics:users' => 'Users',
@@ -10,7 +10,7 @@
 		'admin:advanced_statistics:activity' => 'Activity',
 		'admin:advanced_statistics:widgets' => 'Widgets',
 		'admin:advanced_statistics:system' => 'System',
-	
+
 		// users
 		'advanced_statistics:users:popular' => 'Popular Users',
 		'advanced_statistics:users:most_used_domains' => 'Most used email domains',
@@ -19,7 +19,7 @@
 		'advanced_statistics:users:account_activity' => 'Account activity',
 		'advanced_statistics:users:language_distribution' => 'Language distribution',
 		'advanced_statistics:users:profile_field_usage' => 'Profile field usage',
-		
+
 		// activity
 		'advanced_statistics:activity:day' => 'Activity per day',
 		'advanced_statistics:activity:hour' => 'Activity per hour',
@@ -31,7 +31,7 @@
 		'advanced_statistics:activity:day:5' => 'Thursday',
 		'advanced_statistics:activity:day:6' => 'Friday',
 		'advanced_statistics:activity:day:7' => 'Saturday',
-		
+
 		// widgets
 		'advanced_statistics:widgets:handlers' => 'Widget handlers',
 		'advanced_statistics:widgets:context' => 'Widget context',
@@ -43,7 +43,7 @@
 		// system
 		'advanced_statistics:system:files:users' => 'Users with the most files and photos',
 		'advanced_statistics:system:files:groups' => 'Groups with the most files and photos',
-		
+
 		// groups
 		'advanced_statistics:groups:popular' => "Popular groups",
 		'advanced_statistics:groups:popular_tools' => "Popular group tools",
@@ -55,6 +55,13 @@
 		'advanced_statistics:groups:dead_vs_alive:6_months' => "< 6 months [%d]",
 		'advanced_statistics:groups:dead_vs_alive:year' => "< 1 year [%d]",
 		'advanced_statistics:groups:dead_vs_alive:more_year' => "> 1 year [%d]",
+
+		// widgets
+		'advanced_statistics:widgets:advanced_statistics:title' => "Advanced Statistics",
+		'advanced_statistics:widgets:advanced_statistics:description' => "Show some advanced statistics",
+		'advanced_statistics:widgets:advanced_statistics:content:no_chart' => "Edit the widget to select a chart.",
+		'advanced_statistics:widgets:advanced_statistics:content:no_jqplot' => "Please refresh the page to make this widget work.",
+			
 	);
-	
+
 	add_translation('en', $english);

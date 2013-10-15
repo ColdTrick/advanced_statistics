@@ -23,7 +23,7 @@
 							$language = "unknown";
 						}
 						$total = (int) $row->total;
-						$data[] = array(elgg_echo($language) . " [" . $total . "]"  , $total); 
+						$data[] = array(elgg_echo($language) . " [" . $total . "]"  , $total);
 					}
 				}
 				
@@ -48,10 +48,10 @@
 					
 					foreach($query_result as $row){
 						$date_total = (int) $row->total;
-						$total += $date_total; 
+						$total += $date_total;
 						
-						$data[] = array($row->date_created , $date_total); 
-						$data2[] = array($row->date_created , $total); 
+						$data[] = array($row->date_created , $date_total);
+						$data2[] = array($row->date_created , $total);
 					}
 				}
 				
@@ -76,7 +76,7 @@
 				if($query_result = get_data($query)){
 					foreach($query_result as $row){
 						$total = (int) $row->total;
-						$data[] = array($row->domain . " [" . $total . "]"  , $total); 
+						$data[] = array($row->domain . " [" . $total . "]"  , $total);
 					}
 				}
 				
@@ -97,7 +97,7 @@
 				if($query_result = get_data($query)){
 					foreach($query_result as $row){
 						$total = (int) $row->total;
-						$data[] = array($row->month, $total); 
+						$data[] = array($row->month, $total);
 					}
 				}
 				
@@ -213,7 +213,7 @@
 							
 							$ticks[] = elgg_get_excerpt(elgg_echo("profile:" . $field_name), 25);
 							$data[] = round(($total * 100) / $total_users_count);
-						}	
+						}
 						
 					}
 				}
@@ -712,7 +712,7 @@
 				$result["options"]["highlighter"] = array (
 											"show" => true,
 											"sizeAdjust" => 7.5,
-											"tooltipAxes" => "y" 
+											"tooltipAxes" => "y"
 				);
 				$result["options"]["axes"]["xaxis"]["tickRenderer"] = "$.jqplot.CanvasAxisTickRenderer";
 				$result["options"]["axes"]["xaxis"]["tickOptions"] = array("angle" => "-30", "fontSize" => "8pt");
@@ -876,7 +876,7 @@
 						"seriesDefaults" => array (
 							"renderer" => "$.jqplot.BarRenderer",
 							"pointLabels" => array (
-								"show" => true, 
+								"show" => true,
 								"stackedValue" => true
 							)
 						),
@@ -902,7 +902,7 @@
 								"autoscale" => true,
 								"min" => 0,
 								"tickOptions" => array(
-									"showGridline" => false	
+									"showGridline" => false
 								)
 							)
 						),
@@ -915,4 +915,20 @@
 			);
 		
 		return $defaults[$type];
+	}
+	
+	function advanced_statistics_load_externals() {
+		
+		elgg_load_js("jquery.jqplot");
+		elgg_load_css("jquery.jqplot");
+		
+		// extra jqplot plugins
+		elgg_load_js("jquery.jqplot.pieRenderer");
+		elgg_load_js("jquery.jqplot.barRenderer");
+		elgg_load_js("jquery.jqplot.categoryAxisRenderer");
+		elgg_load_js("jquery.jqplot.canvasAxisTickRenderer");
+		elgg_load_js("jquery.jqplot.canvasTextRenderer");
+		elgg_load_js("jquery.jqplot.dateAxisRenderer");
+		elgg_load_js("jquery.jqplot.pointLabels");
+		elgg_load_js("jquery.jqplot.highlighter");
 	}
