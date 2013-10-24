@@ -5,8 +5,10 @@
 	<version>0.1</version>
 	<description>Shows advanced statistics for your site</description>
 	<website>http://www.coldtrick.com/</website>
-	<copyright>(C) ColdTrick IT Solutions 2009 - 2012</copyright>
-	<license>GNU Public License version 2</license>
+	<repository>https://github.com/ColdTrick/advanced_statistics</repository>
+	<bugtracker>https://github.com/ColdTrick/advanced_statistics/issues</bugtracker>
+	<copyright>(C) ColdTrick IT Solutions 2012</copyright>
+	<license>GNU General Public License version 2</license>
 	
 	<requires>
 		<type>elgg_release</type>
