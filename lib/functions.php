@@ -402,9 +402,7 @@ function advanced_statistics_get_groups_data($chart_id) {
 			break;
 		case "least-active":
 			$data = array();
-			
-			$week_ago = time() - (7 * 24 * 60 * 60);
-			
+						
 			$query = "SELECT ge.name, count(*) AS total";
 			$query .= " FROM " . $dbprefix . "river r";
 			$query .= " JOIN " . $dbprefix . "entities e ON r.object_guid = e.guid";
@@ -435,7 +433,6 @@ function advanced_statistics_get_groups_data($chart_id) {
 			break;
 		case "dead-vs-alive":
 			$data = array();
-			$guids = array();
 			
 			$month = time() - (30 * 24 * 60 * 60);
 			
@@ -456,7 +453,7 @@ function advanced_statistics_get_groups_data($chart_id) {
 			}
 			
 			// activity in last 3 months
-			$threemonth =  time() - (90 * 24 * 60 * 60);
+			$threemonth = time() - (90 * 24 * 60 * 60);
 			
 			$threemonth_query_base = $base_query . " AND r.posted >= " . $threemonth;
 			$query = $threemonth_query_base . " AND eg.guid NOT IN (" . $month_query . ")";
@@ -467,7 +464,7 @@ function advanced_statistics_get_groups_data($chart_id) {
 			}
 			
 			// activity in last 6 months
-			$sixmonth =  time() - (180 * 24 * 60 * 60);
+			$sixmonth = time() - (180 * 24 * 60 * 60);
 			
 			$sixmonth_query_base = $base_query . " AND r.posted >= " . $sixmonth;
 			$query = $sixmonth_query_base . " AND eg.guid NOT IN (" . $threemonth_query_base . ")";
@@ -478,7 +475,7 @@ function advanced_statistics_get_groups_data($chart_id) {
 			}
 			
 			// activity in last year
-			$year =  time() - (365 * 24 * 60 * 60);
+			$year = time() - (365 * 24 * 60 * 60);
 			
 			$year_query_base = $base_query . " AND r.posted >= " . $year;
 			$query = $year_query_base . " AND eg.guid NOT IN (" . $sixmonth_query_base . ")";
@@ -506,8 +503,8 @@ function advanced_statistics_get_groups_data($chart_id) {
 				"default_result" => $result
 			);
 
-		$result = elgg_trigger_plugin_hook("groups", "advanced_statistics", $params, $result);
-		break;
+			$result = elgg_trigger_plugin_hook("groups", "advanced_statistics", $params, $result);
+			break;
 	}
 
 	return json_encode($result);
@@ -606,8 +603,8 @@ function advanced_statistics_get_activity_data($chart_id) {
 				"default_result" => $result
 			);
 
-		$result = elgg_trigger_plugin_hook("activity", "advanced_statistics", $params, $result);
-		break;
+			$result = elgg_trigger_plugin_hook("activity", "advanced_statistics", $params, $result);
+			break;
 	}
 
 	return json_encode($result);
@@ -696,8 +693,8 @@ function advanced_statistics_get_widgets_data($chart_id) {
 				"default_result" => $result
 			);
 
-		$result = elgg_trigger_plugin_hook("widgets", "advanced_statistics", $params, $result);
-		break;
+			$result = elgg_trigger_plugin_hook("widgets", "advanced_statistics", $params, $result);
+			break;
 	}
 
 	return json_encode($result);
@@ -796,8 +793,8 @@ function advanced_statistics_get_content_data($chart_id) {
 				"default_result" => $result
 			);
 
-		$result = elgg_trigger_plugin_hook("content", "advanced_statistics", $params, $result);
-		break;
+			$result = elgg_trigger_plugin_hook("content", "advanced_statistics", $params, $result);
+			break;
 	}
 
 	return json_encode($result);
@@ -899,8 +896,8 @@ function advanced_statistics_get_system_data($chart_id) {
 				"default_result" => $result
 			);
 
-		$result = elgg_trigger_plugin_hook("system", "advanced_statistics", $params, $result);
-		break;
+			$result = elgg_trigger_plugin_hook("system", "advanced_statistics", $params, $result);
+			break;
 	}
 
 	return json_encode($result);
