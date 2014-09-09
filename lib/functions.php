@@ -6,11 +6,11 @@
 /**
  * Returns data for a given chart id
  * 
- * @param string $chart_id
+ * @param string $chart_id chart id
  * 
  * @return string
  */
-function advanced_statistics_get_users_data($chart_id){
+function advanced_statistics_get_users_data($chart_id) {
 	$result = array("data" => array(), "options" => array());
 	
 	$dbprefix = elgg_get_config("dbprefix");
@@ -26,10 +26,10 @@ function advanced_statistics_get_users_data($chart_id){
 			$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
 			$query .= " GROUP BY language";
 			
-			if($query_result = get_data($query)){
-				foreach($query_result as $row){
+			if ($query_result = get_data($query)) {
+				foreach ($query_result as $row) {
 					$language = $row->language;
-					if(empty($language)){
+					if (empty($language)) {
 						$language = "unknown";
 					}
 					$total = (int) $row->total;
@@ -53,10 +53,10 @@ function advanced_statistics_get_users_data($chart_id){
 			$query .= " AND r.time_created > 0";
 			$query .= " GROUP BY FROM_UNIXTIME(r.time_created, '%Y-%m-%d')";
 			
-			if($query_result = get_data($query)){
+			if ($query_result = get_data($query)) {
 				$total = 0;
 				
-				foreach($query_result as $row){
+				foreach ($query_result as $row) {
 					$date_total = (int) $row->total;
 					$total += $date_total;
 					
@@ -83,8 +83,8 @@ function advanced_statistics_get_users_data($chart_id){
 			$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
 			$query .= " GROUP BY SUBSTRING_INDEX(ue.email, '@', -1) ORDER BY total DESC LIMIT 0,10";
 			
-			if($query_result = get_data($query)){
-				foreach($query_result as $row){
+			if ($query_result = get_data($query)) {
+				foreach ($query_result as $row) {
 					$total = (int) $row->total;
 					$data[] = array($row->domain . " [" . $total . "]"  , $total);
 				}
@@ -104,8 +104,8 @@ function advanced_statistics_get_users_data($chart_id){
 			$query .= " AND e.type = 'user' AND e.last_action > 0";
 			$query .= " GROUP BY FROM_UNIXTIME(e.last_action, '%Y-%m')";
 			
-			if($query_result = get_data($query)){
-				foreach($query_result as $row){
+			if ($query_result = get_data($query)) {
+				foreach ($query_result as $row) {
 					$total = (int) $row->total;
 					$data[] = array($row->month, $total);
 				}
@@ -126,7 +126,7 @@ function advanced_statistics_get_users_data($chart_id){
 			$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
 			$query .= " AND e.type = 'user' AND ue.banned = 'yes' AND e.enabled = 'yes'";
 			
-			if($query_result = get_data_row($query)){
+			if ($query_result = get_data_row($query)) {
 				$banned = (int) $query_result->total;
 				
 				$data[] = array("banned [" . $banned . "]", $banned);
@@ -136,6 +136,9 @@ function advanced_statistics_get_users_data($chart_id){
 			
 			$validated_id = add_metastring('validated');
 			$one_id = add_metastring('1');
+			$unvalidated = 0;
+			$disabled = 0;
+			$banned = 0;
 			
 			$query = "SELECT count(*) AS total";
 			$query .= " FROM " . $dbprefix . "entities e";
@@ -148,7 +151,7 @@ function advanced_statistics_get_users_data($chart_id){
 							AND md.name_id = $validated_id
 							AND md.value_id = $one_id)";
 			
-			if($query_result = get_data_row($query)){
+			if ($query_result = get_data_row($query)) {
 				$unvalidated = (int) $query_result->total;
 					
 				$data[] = array("unvalidated [" . $unvalidated . "]", $unvalidated);
@@ -161,7 +164,7 @@ function advanced_statistics_get_users_data($chart_id){
 			$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
 			$query .= " AND e.type = 'user' AND e.enabled = 'no'";
 			
-			if($query_result = get_data_row($query)){
+			if ($query_result = get_data_row($query)) {
 				$disabled = (int) $query_result->total;
 				$disabled = $disabled - $unvalidated;
 					
@@ -175,7 +178,7 @@ function advanced_statistics_get_users_data($chart_id){
 			$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
 			$query .= " AND e.type = 'user'";
 			
-			if($query_result = get_data_row($query)){
+			if ($query_result = get_data_row($query)) {
 				$active = (int) $query_result->total;
 				$active = $active - $disabled - $unvalidated - $banned;
 					
@@ -190,7 +193,7 @@ function advanced_statistics_get_users_data($chart_id){
 			$data = array();
 			$ticks = array();
 			
-			if($profile_fields = elgg_get_config("profile_fields")){
+			if ($profile_fields = elgg_get_config("profile_fields")) {
 				$total_users_count = 0;
 				$empty_id = add_metastring("");
 				
@@ -201,11 +204,11 @@ function advanced_statistics_get_users_data($chart_id){
 				$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
 				$query .= " AND e.type = 'user'";
 					
-				if($query_result = get_data_row($query)){
+				if ($query_result = get_data_row($query)) {
 					$total_users_count = (int) $query_result->total;
 				}
 				
-				foreach($profile_fields as $field_name => $type){
+				foreach ($profile_fields as $field_name => $type) {
 					$name_id = add_metastring($field_name);
 					
 					// total for this field
@@ -218,7 +221,7 @@ function advanced_statistics_get_users_data($chart_id){
 					$query .= " AND md.name_id = '" . $name_id . "'";
 					$query .= " AND md.value_id <> " . $empty_id;
 						
-					if($query_result = get_data_row($query)){
+					if ($query_result = get_data_row($query)) {
 						$total = (int) $query_result->total;
 						
 						$ticks[] = elgg_get_excerpt(elgg_echo("profile:" . $field_name), 25);
@@ -255,8 +258,8 @@ function advanced_statistics_get_users_data($chart_id){
 			$query .= " ORDER BY total desc";
 			$query .= " LIMIT 0, 10";
 			
-			if($query_result = get_data($query)){
-				foreach($query_result as $row){
+			if ($query_result = get_data($query)) {
+				foreach ($query_result as $row) {
 					$data[] = (int) $row->total;
 					$ticks[] = elgg_get_excerpt($row->name, 25);
 				}
@@ -287,11 +290,11 @@ function advanced_statistics_get_users_data($chart_id){
 /**
  * Returns data for a given chart id
  *
- * @param string $chart_id
+ * @param string $chart_id chart id
  *
  * @return string
  */
-function advanced_statistics_get_groups_data($chart_id){
+function advanced_statistics_get_groups_data($chart_id) {
 	$result = array("data" => array(), "options" => array());
 
 	$dbprefix = elgg_get_config("dbprefix");
@@ -314,8 +317,8 @@ function advanced_statistics_get_groups_data($chart_id){
 			$query .= " ORDER BY total DESC";
 			$query .= " LIMIT 0, 10";
 			
-			if($query_result = get_data($query)){
-				foreach($query_result as $row){
+			if ($query_result = get_data($query)) {
+				foreach ($query_result as $row) {
 					$total = (int) $row->total;
 					
 					$data[] = array(elgg_get_excerpt($row->name, 25), $total);
@@ -333,13 +336,13 @@ function advanced_statistics_get_groups_data($chart_id){
 			break;
 		case "popular-tools":
 			
-			if($group_tools = elgg_get_config("group_tool_options")){
+			if ($group_tools = elgg_get_config("group_tool_options")) {
 				$yes_id = add_metastring("yes");
 				
 				$data = array();
 				$order = array();
 				
-				foreach($group_tools as $key => $tool){
+				foreach ($group_tools as $key => $tool) {
 					$tool_id = add_metastring($tool->name . "_enable");
 					
 					$query = "SELECT md.name_id, count(*) AS total";
@@ -349,7 +352,7 @@ function advanced_statistics_get_groups_data($chart_id){
 					$query .= " AND e.type = 'group' AND e.enabled = 'yes'";
 					$query .= " AND md.value_id = " . $yes_id;
 					
-					if($query_result = get_data_row($query)){
+					if ($query_result = get_data_row($query)) {
 						$total = (int) $query_result->total;
 						$order[$key] = $total;
 						$data[$key] = array($tool->name . " [" . $total . "]", $total);
@@ -380,8 +383,8 @@ function advanced_statistics_get_groups_data($chart_id){
 			$query .= " ORDER BY total DESC";
 			$query .= " LIMIT 0, 10";
 			
-			if($query_result = get_data($query)){
-				foreach($query_result as $row){
+			if ($query_result = get_data($query)) {
+				foreach ($query_result as $row) {
 					$total = (int) $row->total;
 					
 					$data[] = array(elgg_get_excerpt($row->name, 25), $total);
@@ -413,8 +416,8 @@ function advanced_statistics_get_groups_data($chart_id){
 			$query .= " ORDER BY total ASC";
 			$query .= " LIMIT 0, 10";
 			
-			if($query_result = get_data($query)){
-				foreach($query_result as $row){
+			if ($query_result = get_data($query)) {
+				foreach ($query_result as $row) {
 					$total = (int) $row->total;
 					
 					$data[] = array(elgg_get_excerpt($row->name, 25), $total);
@@ -447,7 +450,7 @@ function advanced_statistics_get_groups_data($chart_id){
 			// activity in last month
 			$month_query = $base_query . " AND r.posted >= " . $month;
 			
-			if($query_result = get_data($month_query)){
+			if ($query_result = get_data($month_query)) {
 				$total = count($query_result);
 				$data[] = array(elgg_echo("advanced_statistics:groups:dead_vs_alive:last_month", array($total)), $total);
 			}
@@ -458,7 +461,7 @@ function advanced_statistics_get_groups_data($chart_id){
 			$threemonth_query_base = $base_query . " AND r.posted >= " . $threemonth;
 			$query = $threemonth_query_base . " AND eg.guid NOT IN (" . $month_query . ")";
 			
-			if($query_result = get_data($query)){
+			if ($query_result = get_data($query)) {
 				$total = count($query_result);
 				$data[] = array(elgg_echo("advanced_statistics:groups:dead_vs_alive:3_months", array($total)), $total);
 			}
@@ -469,7 +472,7 @@ function advanced_statistics_get_groups_data($chart_id){
 			$sixmonth_query_base = $base_query . " AND r.posted >= " . $sixmonth;
 			$query = $sixmonth_query_base . " AND eg.guid NOT IN (" . $threemonth_query_base . ")";
 			
-			if($query_result = get_data($query)){
+			if ($query_result = get_data($query)) {
 				$total = count($query_result);
 				$data[] = array(elgg_echo("advanced_statistics:groups:dead_vs_alive:6_months", array($total)), $total);
 			}
@@ -480,7 +483,7 @@ function advanced_statistics_get_groups_data($chart_id){
 			$year_query_base = $base_query . " AND r.posted >= " . $year;
 			$query = $year_query_base . " AND eg.guid NOT IN (" . $sixmonth_query_base . ")";
 			
-			if($query_result = get_data($query)){
+			if ($query_result = get_data($query)) {
 				$total = count($query_result);
 				$data[] = array(elgg_echo("advanced_statistics:groups:dead_vs_alive:year", array($total)), $total);
 			}
@@ -489,7 +492,7 @@ function advanced_statistics_get_groups_data($chart_id){
 			$query = $base_query . " AND r.posted < " . $year;
 			$query .= " AND eg.guid NOT IN (" . $year_query_base . ")";
 			
-			if($query_result = get_data($query)){
+			if ($query_result = get_data($query)) {
 				$total = count($query_result);
 				$data[] = array(elgg_echo("advanced_statistics:groups:dead_vs_alive:more_year", array($total)), $total);
 			}
@@ -513,17 +516,17 @@ function advanced_statistics_get_groups_data($chart_id){
 /**
  * Returns data for a given chart id
  *
- * @param string $chart_id
+ * @param string $chart_id chart id
  *
  * @return string
  */
-function advanced_statistics_get_activity_data($chart_id){
+function advanced_statistics_get_activity_data($chart_id) {
 	$result = array("data" => array(), "options" => array());
 
 	$dbprefix = elgg_get_config("dbprefix");
 	$current_site_guid = elgg_get_site_entity()->getGUID();
 
-	switch($chart_id){
+	switch ($chart_id) {
 		case "day":
 			$data = array();
 		
@@ -533,8 +536,8 @@ function advanced_statistics_get_activity_data($chart_id){
 			$query .= " WHERE e.site_guid = " . $current_site_guid;
 			$query .= " GROUP BY DAYOFWEEK(FROM_UNIXTIME(posted))";
 		
-			if($query_result = get_data($query)){
-				foreach($query_result as $row){
+			if ($query_result = get_data($query)) {
+				foreach ($query_result as $row) {
 					$dotw = $row->day_of_the_week;
 					$dotw = elgg_echo("advanced_statistics:activity:day:" . $dotw);
 					
@@ -556,12 +559,12 @@ function advanced_statistics_get_activity_data($chart_id){
 			$query .= " WHERE e.site_guid = " . $current_site_guid;
 			$query .= " GROUP BY FROM_UNIXTIME(r.posted, '%k')";
 		
-			for($i = 0; $i < 24; $i++){
+			for ($i = 0; $i < 24; $i++) {
 				$data[$i] = array("$i", 0);
 			}
 			
-			if($query_result = get_data($query)){
-				foreach($query_result as $row){
+			if ($query_result = get_data($query)) {
+				foreach ($query_result as $row) {
 					$hotd = $row->hour_of_the_day;
 					
 					$total = (int) $row->total;
@@ -582,8 +585,8 @@ function advanced_statistics_get_activity_data($chart_id){
 			$query .= " WHERE e.site_guid = " . $current_site_guid;
 			$query .= " GROUP BY FROM_UNIXTIME(r.posted, '%Y-%m-%d')";
 						
-			if($query_result = get_data($query)){
-				foreach($query_result as $row){
+			if ($query_result = get_data($query)) {
+				foreach ($query_result as $row) {
 					$date_created = $row->date_created;
 					
 					$total = (int) $row->total;
@@ -613,17 +616,17 @@ function advanced_statistics_get_activity_data($chart_id){
 /**
  * Returns data for a given chart id
  *
- * @param string $chart_id
+ * @param string $chart_id chart id
  *
  * @return string
  */
-function advanced_statistics_get_widgets_data($chart_id){
+function advanced_statistics_get_widgets_data($chart_id) {
 	$result = array("data" => array(), "options" => array());
 
 	$dbprefix = elgg_get_config("dbprefix");
 	$current_site_guid = elgg_get_site_entity()->getGUID();
 
-	switch($chart_id){
+	switch ($chart_id) {
 		case "handlers":
 			$data = array();
 
@@ -638,8 +641,8 @@ function advanced_statistics_get_widgets_data($chart_id){
 			$query .= " GROUP BY ps.value";
 			$query .= " ORDER BY total DESC";
 				
-			if($query_result = get_data($query)){
-				foreach($query_result as $row){
+			if ($query_result = get_data($query)) {
+				foreach ($query_result as $row) {
 					$handler = $row->handler;
 		
 					$total = (int) $row->total;
@@ -669,10 +672,10 @@ function advanced_statistics_get_widgets_data($chart_id){
 			$query .= " GROUP BY ps.value";
 			$query .= " ORDER BY total DESC";
 				
-			if($query_result = get_data($query)){
-				foreach($query_result as $row){
+			if ($query_result = get_data($query)) {
+				foreach ($query_result as $row) {
 					$context = $row->context;
-					if(!$context){
+					if (!$context) {
 						$context = elgg_echo("unknown");
 					} else {
 						$context = elgg_echo($context);
@@ -703,25 +706,25 @@ function advanced_statistics_get_widgets_data($chart_id){
 /**
  * Returns data for a given chart id
  *
- * @param string $chart_id
+ * @param string $chart_id chart id
  *
  * @return string
  */
-function advanced_statistics_get_content_data($chart_id){
+function advanced_statistics_get_content_data($chart_id) {
 	$result = array("data" => array(), "options" => array());
 
 	$dbprefix = elgg_get_config("dbprefix");
 	$current_site_guid = elgg_get_site_entity()->getGUID();
 
-	switch($chart_id){
+	switch ($chart_id) {
 		case "totals":
 			$data = array();
 		
 			$subtype_ids = array();
 			$subtypes = get_registered_entity_types("object");
 			
-			foreach($subtypes as $subtype){
-				if($subtype_id = get_subtype_id("object", $subtype)){
+			foreach ($subtypes as $subtype) {
+				if ($subtype_id = get_subtype_id("object", $subtype)) {
 					$subtype_ids[] = $subtype_id;
 				}
 			}
@@ -733,8 +736,8 @@ function advanced_statistics_get_content_data($chart_id){
 			$query .= " GROUP BY e.subtype";
 			$query .= " ORDER BY total DESC";
 				
-			if($query_result = get_data($query)){
-				foreach($query_result as $row){
+			if ($query_result = get_data($query)) {
+				foreach ($query_result as $row) {
 					$subtype = get_subtype_from_id($row->subtype);
 					$subtype = elgg_echo("item:object:" . $subtype);
 					
@@ -762,8 +765,8 @@ function advanced_statistics_get_content_data($chart_id){
 			$subtype_ids = array();
 			$subtypes = get_registered_entity_types("object");
 			
-			foreach($subtypes as $subtype){
-				if($subtype_id = get_subtype_id("object", $subtype)){
+			foreach ($subtypes as $subtype) {
+				if ($subtype_id = get_subtype_id("object", $subtype)) {
 					$subtype_ids[] = $subtype_id;
 				}
 			}
@@ -776,8 +779,8 @@ function advanced_statistics_get_content_data($chart_id){
 			$query .= " GROUP BY e2.type";
 			$query .= " ORDER BY total DESC";
 				
-			if($query_result = get_data($query)){
-				foreach($query_result as $row){
+			if ($query_result = get_data($query)) {
+				foreach ($query_result as $row) {
 					$total = (int) $row->total;
 					$data[] = array($row->type, $total);
 				}
@@ -803,29 +806,29 @@ function advanced_statistics_get_content_data($chart_id){
 /**
  * Returns data for a given chart id
  *
- * @param string $chart_id
+ * @param string $chart_id chart id
  *
  * @return string
  */
-function advanced_statistics_get_system_data($chart_id){
+function advanced_statistics_get_system_data($chart_id) {
 	$result = array("data" => array(), "options" => array());
 
 	$dbprefix = elgg_get_config("dbprefix");
 	$current_site_guid = elgg_get_site_entity()->getGUID();
 
-	switch($chart_id){
+	switch ($chart_id) {
 		case "files-users":
 			$data = array();
 		
 			$subtype_ids = array();
-			if($subtype_id = get_subtype_id("object", "file")){
+			if ($subtype_id = get_subtype_id("object", "file")) {
 				$subtype_ids[] = $subtype_id;
 			}
-			if($subtype_id = get_subtype_id("object", "images")){
+			if ($subtype_id = get_subtype_id("object", "images")) {
 				$subtype_ids[] = $subtype_id;
 			}
 		
-			if(!empty($subtype_ids)){
+			if (!empty($subtype_ids)) {
 			
 				$query = "SELECT ue.name as user, count(*) as total";
 				$query .= " FROM " . $dbprefix . "entities e";
@@ -836,8 +839,8 @@ function advanced_statistics_get_system_data($chart_id){
 				$query .= " ORDER BY total DESC";
 				$query .= " LIMIT 0, 25";
 					
-				if($query_result = get_data($query)){
-					foreach($query_result as $row){
+				if ($query_result = get_data($query)) {
+					foreach ($query_result as $row) {
 						$user = $row->user;
 							
 						$total = (int) $row->total;
@@ -856,14 +859,14 @@ function advanced_statistics_get_system_data($chart_id){
 			$data = array();
 		
 			$subtype_ids = array();
-			if($subtype_id = get_subtype_id("object", "file")){
+			if ($subtype_id = get_subtype_id("object", "file")) {
 				$subtype_ids[] = $subtype_id;
 			}
-			if($subtype_id = get_subtype_id("object", "images")){
+			if ($subtype_id = get_subtype_id("object", "images")) {
 				$subtype_ids[] = $subtype_id;
 			}
 		
-			if(!empty($subtype_ids)){
+			if (!empty($subtype_ids)) {
 			
 				$query = "SELECT ge.name as user, count(*) as total";
 				$query .= " FROM " . $dbprefix . "entities e";
@@ -874,8 +877,8 @@ function advanced_statistics_get_system_data($chart_id){
 				$query .= " ORDER BY total DESC";
 				$query .= " LIMIT 0, 25";
 					
-				if($query_result = get_data($query)){
-					foreach($query_result as $row){
+				if ($query_result = get_data($query)) {
+					foreach ($query_result as $row) {
 						$user = $row->user;
 							
 						$total = (int) $row->total;
@@ -906,11 +909,11 @@ function advanced_statistics_get_system_data($chart_id){
 /**
  * Returns the default chart options for a give chart type
  * 
- * @param string $type
+ * @param string $type chart type
  * 
  * @return array
  */
-function advanced_statistics_get_default_chart_options($type){
+function advanced_statistics_get_default_chart_options($type) {
 	$defaults = array(
 			"pie" => array(
 					"seriesDefaults" => array (
