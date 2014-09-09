@@ -1,6 +1,16 @@
 <?php
+/**
+ * Page handlers for Advanced Statistics
+ */
 
-function advanced_statistics_page_handler($page){
+/**
+ * Handles the advanced statistics pages
+ *
+ * @param array $page requested page
+ *
+ * @return boolean
+ */
+function advanced_statistics_page_handler($page) {
 	admin_gatekeeper();
 	
 	switch($page[0]){
@@ -24,7 +34,6 @@ function advanced_statistics_page_handler($page){
 			break;
 		default:
 			return false;
-			break;
 	}
 	
 	return true;

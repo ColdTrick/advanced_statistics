@@ -1,4 +1,7 @@
 <?php
+/**
+ * Advanced Statistics
+ */
 
 require_once(dirname(__FILE__) . "/lib/functions.php");
 require_once(dirname(__FILE__) . "/lib/page_handlers.php");
@@ -6,7 +9,12 @@ require_once(dirname(__FILE__) . "/lib/page_handlers.php");
 // register default Elgg event
 elgg_register_event_handler("init", "system", "advanced_statistics_init");
 
-function advanced_statistics_init(){
+/**
+ * initialization of plugin
+ *
+ * @return void
+ */
+function advanced_statistics_init() {
 	// register page handler for nice URLs
 	elgg_register_page_handler("advanced_statistics", "advanced_statistics_page_handler");
 

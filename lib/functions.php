@@ -1,5 +1,15 @@
 <?php
+/**
+ * Functions for Advanced Statistics
+ */
 
+/**
+ * Returns data for a given chart id
+ * 
+ * @param string $chart_id
+ * 
+ * @return string
+ */
 function advanced_statistics_get_users_data($chart_id){
 	$result = array("data" => array(), "options" => array());
 	
@@ -274,6 +284,13 @@ function advanced_statistics_get_users_data($chart_id){
 	return json_encode($result);
 }
 
+/**
+ * Returns data for a given chart id
+ *
+ * @param string $chart_id
+ *
+ * @return string
+ */
 function advanced_statistics_get_groups_data($chart_id){
 	$result = array("data" => array(), "options" => array());
 
@@ -493,6 +510,13 @@ function advanced_statistics_get_groups_data($chart_id){
 	return json_encode($result);
 }
 
+/**
+ * Returns data for a given chart id
+ *
+ * @param string $chart_id
+ *
+ * @return string
+ */
 function advanced_statistics_get_activity_data($chart_id){
 	$result = array("data" => array(), "options" => array());
 
@@ -586,6 +610,13 @@ function advanced_statistics_get_activity_data($chart_id){
 	return json_encode($result);
 }
 
+/**
+ * Returns data for a given chart id
+ *
+ * @param string $chart_id
+ *
+ * @return string
+ */
 function advanced_statistics_get_widgets_data($chart_id){
 	$result = array("data" => array(), "options" => array());
 
@@ -669,6 +700,13 @@ function advanced_statistics_get_widgets_data($chart_id){
 	return json_encode($result);
 }
 
+/**
+ * Returns data for a given chart id
+ *
+ * @param string $chart_id
+ *
+ * @return string
+ */
 function advanced_statistics_get_content_data($chart_id){
 	$result = array("data" => array(), "options" => array());
 
@@ -762,6 +800,13 @@ function advanced_statistics_get_content_data($chart_id){
 	return json_encode($result);
 }
 
+/**
+ * Returns data for a given chart id
+ *
+ * @param string $chart_id
+ *
+ * @return string
+ */
 function advanced_statistics_get_system_data($chart_id){
 	$result = array("data" => array(), "options" => array());
 
@@ -858,6 +903,13 @@ function advanced_statistics_get_system_data($chart_id){
 	return json_encode($result);
 }
 
+/**
+ * Returns the default chart options for a give chart type
+ * 
+ * @param string $type
+ * 
+ * @return array
+ */
 function advanced_statistics_get_default_chart_options($type){
 	$defaults = array(
 			"pie" => array(
@@ -911,12 +963,16 @@ function advanced_statistics_get_default_chart_options($type){
 						"sizeAdjust" => 7.5
 					)
 				),
-		
 		);
 	
 	return $defaults[$type];
 }
 
+/**
+ * Loads the external jquery libraries
+ * 
+ * @return void
+ */
 function advanced_statistics_load_externals() {
 	
 	elgg_load_js("jquery.jqplot");
