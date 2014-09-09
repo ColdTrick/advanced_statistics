@@ -6,8 +6,6 @@ elgg.provide("elgg.advanced_statistics");
 
 elgg.advanced_statistics.init = function(){
 
-	
-	
 	// initialize the plots
 	$(".advanced-statistics-plot-container").each(function(){
 
@@ -48,7 +46,8 @@ elgg.advanced_statistics.init = function(){
 				if(options["axesDefaults"]){
 					options["axesDefaults"]["tickRenderer"] = eval(options["axesDefaults"]["tickRenderer"]);
 				}
-				if(result.data.length){
+				
+				if(result.data[0].length){
 					$.jqplot(target, result.data, options);
 				} else {
 					$("#"+ target).html(elgg.echo("notfound"));
