@@ -47,6 +47,6 @@ function advanced_statistics_init() {
 		elgg_register_css("jquery.jqplot", elgg_get_simplecache_url("css", "advanced_statistics/jqplot"));
 
 		// register admin widget
-		elgg_register_widget_type("advanced_statistics", elgg_echo("advanced_statistics:widgets:advanced_statistics:title"), elgg_echo("advanced_statistics:widgets:advanced_statistics:description"), "admin", true);
+		elgg_register_widget_type("advanced_statistics", elgg_echo("advanced_statistics:widgets:advanced_statistics:title"), elgg_echo("advanced_statistics:widgets:advanced_statistics:description"), array("admin"), true);
 	}
 }
