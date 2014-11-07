@@ -1,15 +1,9 @@
-Advanced Statistics
-===========
+# Advanced Statistics
+
 Show more statistics about you Elgg installation
 
-Contents
------------
+## Features
 
-1. Features
-2. ToDo
-
-1. Features
------------
 Shows the following statistics
 
 - Users
@@ -19,7 +13,4 @@ Shows the following statistics
 - Widgets
 - System
 
-2. ToDo
------------
-
-- More statistics!!!
+You can also add individual statistics to your admin dashboard

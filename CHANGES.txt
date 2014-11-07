@@ -1,5 +1,11 @@
 = Version history =
 
+1.0 (2014-11-07):
+
+- added: widget to add individual stats to your admin dashboard
+- changed: updated for Elgg 1.9
+- fixed: correctly check for empty data to prevent endless loader icon
+
 0.1 (2012-12-19):
 
 - initial release
