@@ -46,7 +46,11 @@ function advanced_statistics_init() {
 		elgg_register_simplecache_view("css/advanced_statistics/jqplot");
 		elgg_register_css("jquery.jqplot", elgg_get_simplecache_url("css", "advanced_statistics/jqplot"));
 
-		// register admin widget
+		// register admin widgets
 		elgg_register_widget_type("advanced_statistics", elgg_echo("advanced_statistics:widgets:advanced_statistics:title"), elgg_echo("advanced_statistics:widgets:advanced_statistics:description"), array("admin"), true);
+
+		elgg_register_widget_type("online_user_count", elgg_echo("advanced_statistics:widgets:online_user_count:title"), elgg_echo("advanced_statistics:widgets:online_user_count:description"), array("admin"));
+		
+		elgg_register_ajax_view("widgets/online_user_count/content");
 	}
 }

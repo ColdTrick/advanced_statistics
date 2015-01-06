@@ -61,6 +61,9 @@
 		'advanced_statistics:widgets:advanced_statistics:description' => "Show some advanced statistics",
 		'advanced_statistics:widgets:advanced_statistics:content:no_chart' => "Edit the widget to select a chart.",
 		'advanced_statistics:widgets:advanced_statistics:content:no_jqplot' => "Please refresh the page to make this widget work.",
+		
+		'advanced_statistics:widgets:online_user_count:title' => "Online Users Counter",
+		'advanced_statistics:widgets:online_user_count:description' => "Show the amount of online users and will automatically refresh",
 			
 	);
 
