@@ -134,8 +134,8 @@ function advanced_statistics_get_users_data($chart_id) {
 			
 			// unvalidated
 			
-			$validated_id = add_metastring('validated');
-			$one_id = add_metastring('1');
+			$validated_id = elgg_get_metastring_id('validated');
+			$one_id = elgg_get_metastring_id('1');
 			$unvalidated = 0;
 			$disabled = 0;
 			$banned = 0;
@@ -195,7 +195,7 @@ function advanced_statistics_get_users_data($chart_id) {
 			
 			if ($profile_fields = elgg_get_config("profile_fields")) {
 				$total_users_count = 0;
-				$empty_id = add_metastring("");
+				$empty_id = elgg_get_metastring_id("");
 				
 				// total for this field
 				$query = "SELECT count(*) AS total";
@@ -209,7 +209,7 @@ function advanced_statistics_get_users_data($chart_id) {
 				}
 				
 				foreach ($profile_fields as $field_name => $type) {
-					$name_id = add_metastring($field_name);
+					$name_id = elgg_get_metastring_id($field_name);
 					
 					// total for this field
 					$query = "SELECT count(distinct e.guid) AS total";
@@ -337,13 +337,13 @@ function advanced_statistics_get_groups_data($chart_id) {
 		case "popular-tools":
 			
 			if ($group_tools = elgg_get_config("group_tool_options")) {
-				$yes_id = add_metastring("yes");
+				$yes_id = elgg_get_metastring_id("yes");
 				
 				$data = array();
 				$order = array();
 				
 				foreach ($group_tools as $key => $tool) {
-					$tool_id = add_metastring($tool->name . "_enable");
+					$tool_id = elgg_get_metastring_id($tool->name . "_enable");
 					
 					$query = "SELECT md.name_id, count(*) AS total";
 					$query .= " FROM " . $dbprefix . "metadata md";
