@@ -1,5 +1,10 @@
 = Version history =
 
+1.1 (2015-07-08):
+
+- added: online users count admin widget
+- fixed: replaced deprecated function usage add_metastring_id
+
 1.0 (2014-11-07):
 
 - added: widget to add individual stats to your admin dashboard
