@@ -1,0 +1,17 @@
+{
+	"name": "coldtrick/advanced_statistics",
+	"description": "Show more statistics about you Elgg installation",
+	"type": "elgg-plugin",
+	"keywords": ["elgg", "plugin", "stats", "statistics"],
+	"license": "GPL-2.0",
+	"support": {
+		"source": "https://github.com/ColdTrick/advanced_statistics",
+		"issues": "https://github.com/ColdTrick/advanced_statistics/issues"
+	},
+	"require": {
+		"composer/installers": "^1.0.8"
+	},
+	"require-dev": {
+		"coldtrick/sniffs": "dev-master"
+	}
+}
