@@ -55,13 +55,15 @@ return array(
 	'advanced_statistics:groups:dead_vs_alive:6_months' => "< 6 mois [%d]",
 	'advanced_statistics:groups:dead_vs_alive:year' => "< 1 an [%d]",
 	'advanced_statistics:groups:dead_vs_alive:more_year' => "> 1 an [%d]",
+	
+	// widgets
+	'advanced_statistics:widgets:advanced_statistics:title' => "Statistiques avancées",
+	'advanced_statistics:widgets:advanced_statistics:description' => "Afficher quelques statistiques avancées",
+	'advanced_statistics:widgets:advanced_statistics:content:no_chart' => "Configurer le widget pour sélectionner un graphique.",
+	'advanced_statistics:widgets:advanced_statistics:content:no_jqplot' => "Veuillez rafraîchir la page pour afficher le contenu de ce widget.",
+	
+	'advanced_statistics:widgets:online_user_count:title' => "Compteur de membres connectés",
+	'advanced_statistics:widgets:online_user_count:description' => "Affiche le nombre de membres connectés et se rafraîchit automatiquement",
 );
 
-		// widgets
-		'advanced_statistics:widgets:advanced_statistics:title' => "Statistiques avancées",
-		'advanced_statistics:widgets:advanced_statistics:description' => "Afficher quelques statistiques avancées",
-		'advanced_statistics:widgets:advanced_statistics:content:no_chart' => "Configurer le widget pour sélectionner un graphique.",
-		'advanced_statistics:widgets:advanced_statistics:content:no_jqplot' => "Veuillez rafraîchir la page pour afficher le contenu de ce widget.",
-		
-		'advanced_statistics:widgets:online_user_count:title' => "Compteur de membres connectés",
-		'advanced_statistics:widgets:online_user_count:description' => "Affiche le nombre de membres connectés et se rafraîchit automatiquement",
+
