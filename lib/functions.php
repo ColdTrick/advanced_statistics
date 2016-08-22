@@ -5,9 +5,9 @@
 
 /**
  * Returns data for a given chart id
- * 
+ *
  * @param string $chart_id chart id
- * 
+ *
  * @return string
  */
 function advanced_statistics_get_users_data($chart_id) {
@@ -905,9 +905,9 @@ function advanced_statistics_get_system_data($chart_id) {
 
 /**
  * Returns the default chart options for a give chart type
- * 
+ *
  * @param string $type chart type
- * 
+ *
  * @return array
  */
 function advanced_statistics_get_default_chart_options($type) {
@@ -970,21 +970,11 @@ function advanced_statistics_get_default_chart_options($type) {
 
 /**
  * Loads the external jquery libraries
- * 
+ *
  * @return void
  */
 function advanced_statistics_load_externals() {
 	
-	elgg_load_js("jquery.jqplot");
+	elgg_require_js('advanced_statistics/charts');
 	elgg_load_css("jquery.jqplot");
-	
-	// extra jqplot plugins
-	elgg_load_js("jquery.jqplot.pieRenderer");
-	elgg_load_js("jquery.jqplot.barRenderer");
-	elgg_load_js("jquery.jqplot.categoryAxisRenderer");
-	elgg_load_js("jquery.jqplot.canvasAxisTickRenderer");
-	elgg_load_js("jquery.jqplot.canvasTextRenderer");
-	elgg_load_js("jquery.jqplot.dateAxisRenderer");
-	elgg_load_js("jquery.jqplot.pointLabels");
-	elgg_load_js("jquery.jqplot.highlighter");
 }
