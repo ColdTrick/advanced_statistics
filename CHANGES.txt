@@ -1,4 +1,15 @@
-= Version history =
+Version history
+===============
+
+2.0 (2016-08-26):
+
+- added: composer support
+- added: dutch translation added
+- added: French translation
+- changed: js libraries are now AMD loaded
+- changed: updated to jqplot 1.0.9
+- changed: upped Elgg requirement to v2.0
+- fixed: updated widget for new AMD modules
 
 1.1 (2015-07-08):
 
