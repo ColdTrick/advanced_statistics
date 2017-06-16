@@ -14,22 +14,14 @@ define(['jquery', 'elgg', 'jqplot/jquery.jqplot'], function($, elgg) {
 			$('.advanced-statistics-plot-container').each(function(){
 		
 				var target = $(this).attr('id');
-				var parts = target.split('-');
-				var chart_id = new Array();
-		
+				
 				if (!$.jqplot) {
-					$('#'+ target).html(elgg.echo('advanced_statistics:widgets:advanced_statistics:content:no_jqplot'));
-					$('#'+ target).next().hide();
+					$(this).html(elgg.echo('advanced_statistics:widgets:advanced_statistics:content:no_jqplot'));
+					$(this).next().hide();
 					return;
 				}
 				
-				for(var i = 3; i < parts.length; i++){
-					chart_id.push(parts[i]);
-				}
-		
-				chart_id = chart_id.join('-');
-				
-				elgg.getJSON('advanced_statistics/' + parts[2] + '/' + chart_id, {
+				elgg.getJSON($(this).data().chartHref, {
 					success: function(result){
 						var options = result.options;
 						if(options['seriesDefaults']){

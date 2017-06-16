@@ -16,6 +16,8 @@ function advanced_statistics_get_users_data($chart_id) {
 	$dbprefix = elgg_get_config("dbprefix");
 	$current_site_guid = elgg_get_site_entity()->getGUID();
 	
+	$ts_limit = advanced_statistics_get_timestamp_query_part('e.time_created');
+	
 	switch($chart_id){
 		case "language-distribution":
 			$data = array();
@@ -51,6 +53,9 @@ function advanced_statistics_get_users_data($chart_id) {
 			$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
 			$query .= " AND e.type = 'user'";
 			$query .= " AND r.time_created > 0";
+			if ($ts_limit) {
+				$query .= " AND {$ts_limit}";
+			}
 			$query .= " GROUP BY FROM_UNIXTIME(r.time_created, '%Y-%m-%d')";
 			
 			if ($query_result = get_data($query)) {
@@ -102,6 +107,9 @@ function advanced_statistics_get_users_data($chart_id) {
 			$query .= " JOIN " . $dbprefix . "entity_relationships r ON r.guid_one = e.guid";
 			$query .= " WHERE r.guid_two = " . $current_site_guid . " AND r.relationship = 'member_of_site'";
 			$query .= " AND e.type = 'user' AND e.last_action > 0";
+			if ($ts_limit) {
+				$query .= " AND {$ts_limit}";
+			}
 			$query .= " GROUP BY FROM_UNIXTIME(e.last_action, '%Y-%m')";
 			
 			if ($query_result = get_data($query)) {
@@ -523,6 +531,8 @@ function advanced_statistics_get_activity_data($chart_id) {
 	$dbprefix = elgg_get_config("dbprefix");
 	$current_site_guid = elgg_get_site_entity()->getGUID();
 
+	$ts_limit = advanced_statistics_get_timestamp_query_part('r.posted');
+
 	switch ($chart_id) {
 		case "day":
 			$data = array();
@@ -531,6 +541,9 @@ function advanced_statistics_get_activity_data($chart_id) {
 			$query .= " FROM " . $dbprefix . "entities e";
 			$query .= " JOIN " . $dbprefix . "river r ON e.guid = r.object_guid";
 			$query .= " WHERE e.site_guid = " . $current_site_guid;
+			if ($ts_limit) {
+				$query .= " AND {$ts_limit}";
+			}
 			$query .= " GROUP BY DAYOFWEEK(FROM_UNIXTIME(posted))";
 		
 			if ($query_result = get_data($query)) {
@@ -554,6 +567,9 @@ function advanced_statistics_get_activity_data($chart_id) {
 			$query .= " FROM " . $dbprefix . "entities e";
 			$query .= " JOIN " . $dbprefix . "river r ON e.guid = r.object_guid";
 			$query .= " WHERE e.site_guid = " . $current_site_guid;
+			if ($ts_limit) {
+				$query .= " AND {$ts_limit}";
+			}
 			$query .= " GROUP BY FROM_UNIXTIME(r.posted, '%k')";
 		
 			for ($i = 0; $i < 24; $i++) {
@@ -580,6 +596,9 @@ function advanced_statistics_get_activity_data($chart_id) {
 			$query .= " FROM " . $dbprefix . "entities e";
 			$query .= " JOIN " . $dbprefix . "river r ON e.guid = r.object_guid";
 			$query .= " WHERE e.site_guid = " . $current_site_guid;
+			if ($ts_limit) {
+				$query .= " AND {$ts_limit}";
+			}
 			$query .= " GROUP BY FROM_UNIXTIME(r.posted, '%Y-%m-%d')";
 						
 			if ($query_result = get_data($query)) {
@@ -606,7 +625,7 @@ function advanced_statistics_get_activity_data($chart_id) {
 			$result = elgg_trigger_plugin_hook("activity", "advanced_statistics", $params, $result);
 			break;
 	}
-
+	
 	return json_encode($result);
 }
 
@@ -713,6 +732,8 @@ function advanced_statistics_get_content_data($chart_id) {
 	$dbprefix = elgg_get_config("dbprefix");
 	$current_site_guid = elgg_get_site_entity()->getGUID();
 
+	$ts_limit = advanced_statistics_get_timestamp_query_part('e.time_created');
+	
 	switch ($chart_id) {
 		case "totals":
 			$data = array();
@@ -730,6 +751,9 @@ function advanced_statistics_get_content_data($chart_id) {
 			$query .= " WHERE e.type = 'object'";
 			$query .= " AND e.subtype IN (" . implode(",", $subtype_ids) . ")";
 			$query .= " AND e.site_guid = " . $current_site_guid;
+			if ($ts_limit) {
+				$query .= " AND {$ts_limit}";
+			}
 			$query .= " GROUP BY e.subtype";
 			$query .= " ORDER BY total DESC";
 				
@@ -773,6 +797,9 @@ function advanced_statistics_get_content_data($chart_id) {
 			$query .= " WHERE e.type = 'object'";
 			$query .= " AND e.subtype IN (" . implode(",", $subtype_ids) . ")";
 			$query .= " AND e.site_guid = " . $current_site_guid;
+			if ($ts_limit) {
+				$query .= " AND {$ts_limit}";
+			}
 			$query .= " GROUP BY e2.type";
 			$query .= " ORDER BY total DESC";
 				
@@ -901,6 +928,39 @@ function advanced_statistics_get_system_data($chart_id) {
 	}
 
 	return json_encode($result);
+}
+
+/**
+ * Returns the query part to limit data based on date selection input
+ *
+ * @param $field_name string Name of the column name to limit
+ *
+ * @return string
+ */
+function advanced_statistics_get_timestamp_query_part($field_name) {
+	if (empty($field_name)) {
+		return '';
+	}
+	
+	$ts_lower = get_input('ts_lower');
+	$ts_upper = get_input('ts_upper');
+	
+	if (empty($ts_lower) && empty($ts_upper)) {
+		return '';
+	}
+	
+	$ts_lower = strtotime($ts_lower);
+	$ts_upper = strtotime($ts_upper);
+	
+	$ts_limits = [];
+	if (!empty($ts_lower)) {
+		$ts_limits[] = $field_name . ' > ' . $ts_lower;
+	}
+	if (!empty($ts_upper)) {
+		$ts_limits[] = $field_name . ' < ' . $ts_upper;
+	}
+	
+	return implode(' AND ', $ts_limits);
 }
 
 /**

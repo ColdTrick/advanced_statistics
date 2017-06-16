@@ -12,10 +12,20 @@
     Profile Completeness (with PM plugin)
  */
 
-echo elgg_view("advanced_statistics/elements/chart", array("title" => elgg_echo('advanced_statistics:users:popular'), "id" => "advanced-statistics-users-popular"));
-echo elgg_view("advanced_statistics/elements/chart", array("title" => elgg_echo('advanced_statistics:users:most_used_domains'), "id" => "advanced-statistics-users-most-used-domains"));
-echo elgg_view("advanced_statistics/elements/chart", array("title" => elgg_echo('advanced_statistics:users:account_creation'), "id" => "advanced-statistics-users-account-creation"));
-echo elgg_view("advanced_statistics/elements/chart", array("title" => elgg_echo('advanced_statistics:users:account_status'), "id" => "advanced-statistics-users-account-status"));
-echo elgg_view("advanced_statistics/elements/chart", array("title" => elgg_echo('advanced_statistics:users:account_activity'), "id" => "advanced-statistics-users-account-activity"));
-echo elgg_view("advanced_statistics/elements/chart", array("title" => elgg_echo('advanced_statistics:users:language_distribution'), "id" => "advanced-statistics-users-language-distribution"));
-echo elgg_view("advanced_statistics/elements/chart", array("title" => elgg_echo('advanced_statistics:users:profile_field_usage'), "id" => "advanced-statistics-users-profile-field-usage"));
+echo elgg_view('advanced_statistics/date_selector');
+
+echo elgg_view('advanced_statistics/elements/chart', ['title' => elgg_echo('advanced_statistics:users:popular'), 'id' => 'advanced-statistics-users-popular']);
+echo elgg_view('advanced_statistics/elements/chart', ['title' => elgg_echo('advanced_statistics:users:most_used_domains'), 'id' => 'advanced-statistics-users-most-used-domains']);
+echo elgg_view('advanced_statistics/elements/chart', [
+	'title' => elgg_echo('advanced_statistics:users:account_creation'),
+	'id' => 'advanced-statistics-users-account-creation',
+	'date_limited' => true,
+]);
+echo elgg_view('advanced_statistics/elements/chart', ['title' => elgg_echo('advanced_statistics:users:account_status'), 'id' => 'advanced-statistics-users-account-status']);
+echo elgg_view('advanced_statistics/elements/chart', [
+	'title' => elgg_echo('advanced_statistics:users:account_activity'),
+	'id' => 'advanced-statistics-users-account-activity',
+	'date_limited' => true,
+]);
+echo elgg_view('advanced_statistics/elements/chart', ['title' => elgg_echo('advanced_statistics:users:language_distribution'), 'id' => 'advanced-statistics-users-language-distribution']);
+echo elgg_view('advanced_statistics/elements/chart', ['title' => elgg_echo('advanced_statistics:users:profile_field_usage'), 'id' => 'advanced-statistics-users-profile-field-usage']);

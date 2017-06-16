@@ -10,6 +10,11 @@
 		'admin:advanced_statistics:activity' => 'Activity',
 		'admin:advanced_statistics:widgets' => 'Widgets',
 		'admin:advanced_statistics:system' => 'System',
+		
+		// date selection
+		'advanced_statistics:date_selection:title_button' => 'Show date selection',
+		'advanced_statistics:date_selection:start' => 'Start',
+		'advanced_statistics:date_selection:end' => 'End',
 
 		// users
 		'advanced_statistics:users:popular' => 'Popular Users',
