@@ -1,7 +1,18 @@
 <?php
 
 return [
-
+	
+	// settings
+	'advanced_statistics:settings:enable_group_stats' => "Enable statistics for group admins",
+	
+	// group statistics
+	'advanced_statistics:group:title' => "Group statistics",
+	
+	'advanced_statistics:group:members' => "Members",
+	'advanced_statistics:group:contenttype' => "Content types",
+	'advanced_statistics:group:content_creation' => "Content creation",
+	'advanced_statistics:group:activity' => "Activity",
+	
 	// admin menu items
 	'admin:advanced_statistics' => 'Advanced Statistics',
 	'admin:advanced_statistics:users' => 'Users',

@@ -931,6 +931,160 @@ function advanced_statistics_get_system_data($chart_id) {
 }
 
 /**
+ * Returns data for a given chart id
+ *
+ * @param string $chart_id   chart id
+ * @param int    $group_guid group to get data for
+ *
+ * @return string
+ */
+function advanced_statistics_get_group_data($chart_id) {
+	$result = array("data" => array(), "options" => array());
+	
+	$dbprefix = elgg_get_config("dbprefix");
+	$current_site_guid = elgg_get_site_entity()->getGUID();
+	$container_guid = get_input('container_guid');
+	
+	switch ($chart_id) {
+		case "members":
+			$data = array();
+			$data2 = array();
+			
+			$query = "SELECT FROM_UNIXTIME(r.time_created, '%Y-%m-%d') AS date_created, count(*) AS total";
+			$query .= " FROM " . $dbprefix . "entities e";
+			$query .= " JOIN " . $dbprefix . "entity_relationships r ON r.guid_one = e.guid";
+			$query .= " WHERE r.guid_two = " . $container_guid . " AND r.relationship = 'member'";
+			$query .= " AND e.type = 'user'";
+			$query .= " AND r.time_created > 0";
+			$query .= " GROUP BY FROM_UNIXTIME(r.time_created, '%Y-%m-%d')";
+			
+			if ($query_result = get_data($query)) {
+				$total = 0;
+				
+				foreach ($query_result as $row) {
+					$date_total = (int) $row->total;
+					$total += $date_total;
+					
+					$data[] = array($row->date_created , $date_total);
+					$data2[] = array($row->date_created , $total);
+				}
+			}
+			
+			$result["data"] = array($data, $data2);
+			$result["options"] = advanced_statistics_get_default_chart_options("date");
+			$result["options"]["series"] = array(
+				array("showMarker" => false, "label" => elgg_echo("admin:widget:new_users")),
+				array("showMarker" => false, "label" => elgg_echo("total") . " " . strtolower(elgg_echo("item:user")), "yaxis" => "y2axis")
+			);
+			$result["options"]["legend"] = array("show" => true, "position" => "e");
+			
+			break;
+		case "contenttype":
+			$data = array();
+			
+			$subtype_ids = array();
+			$subtypes = get_registered_entity_types("object");
+			
+			foreach ($subtypes as $subtype) {
+				if ($subtype_id = get_subtype_id("object", $subtype)) {
+					$subtype_ids[] = $subtype_id;
+				}
+			}
+			$query = "SELECT e.subtype as subtype, count(*) as total";
+			$query .= " FROM " . $dbprefix . "entities e";
+			$query .= " WHERE e.type = 'object'";
+			$query .= " AND e.subtype IN (" . implode(",", $subtype_ids) . ")";
+			$query .= " AND e.container_guid = " . $container_guid;
+			if ($ts_limit) {
+				$query .= " AND {$ts_limit}";
+			}
+			$query .= " GROUP BY e.subtype";
+			$query .= " ORDER BY total DESC";
+			
+			if ($query_result = get_data($query)) {
+				foreach ($query_result as $row) {
+					$subtype = get_subtype_from_id($row->subtype);
+					$subtype = elgg_echo("item:object:" . $subtype);
+					
+					$total = (int) $row->total;
+					$data[] = array($subtype, $total);
+				}
+			}
+			
+			$result["data"] = array($data);
+			$result["options"] = advanced_statistics_get_default_chart_options("bar");
+			$result["options"]["seriesDefaults"]["rendererOptions"] = array("varyBarColor" => true);
+			
+			$result["options"]["highlighter"] = array (
+				"show" => true,
+				"sizeAdjust" => 7.5,
+				"tooltipAxes" => "y"
+			);
+			$result["options"]["axes"]["xaxis"]["tickRenderer"] = "$.jqplot.CanvasAxisTickRenderer";
+			$result["options"]["axes"]["xaxis"]["tickOptions"] = array("angle" => "-30", "fontSize" => "8pt");
+			
+			break;
+		case "content-creation":
+			$data = array();
+			
+			$query = "SELECT FROM_UNIXTIME(e.time_created, '%Y-%m-%d') AS date_created, count(*) as total";
+			$query .= " FROM " . $dbprefix . "entities e";
+			$query .= " WHERE e.container_guid = " . $container_guid;
+			$query .= " GROUP BY FROM_UNIXTIME(e.time_created, '%Y-%m-%d')";
+			
+			if ($query_result = get_data($query)) {
+				foreach ($query_result as $row) {
+					$date_created = $row->date_created;
+					
+					$total = (int) $row->total;
+					$data[] = array($date_created, $total);
+				}
+			}
+			
+			$result["data"] = array($data);
+			
+			$result["options"] = advanced_statistics_get_default_chart_options("date");
+			$result["options"]["series"] = array(array("showMarker" => false));
+			
+			break;
+		case "activity":
+			$data = array();
+			
+			$query = "SELECT FROM_UNIXTIME(r.posted, '%Y-%m-%d') AS date_created, count(*) as total";
+			$query .= " FROM " . $dbprefix . "entities e";
+			$query .= " JOIN " . $dbprefix . "river r ON e.guid = r.object_guid";
+			$query .= " WHERE e.container_guid = " . $container_guid;
+			$query .= " GROUP BY FROM_UNIXTIME(r.posted, '%Y-%m-%d')";
+			
+			if ($query_result = get_data($query)) {
+				foreach ($query_result as $row) {
+					$date_created = $row->date_created;
+					
+					$total = (int) $row->total;
+					$data[] = array($date_created, $total);
+				}
+			}
+			
+			$result["data"] = array($data);
+			
+			$result["options"] = advanced_statistics_get_default_chart_options("date");
+			$result["options"]["series"] = array(array("showMarker" => false));
+			
+			break;
+		default:
+			$params = array(
+				"chart_id" => $chart_id,
+				"default_result" => $result
+			);
+			
+			$result = elgg_trigger_plugin_hook("group", "advanced_statistics", $params, $result);
+			break;
+	}
+	
+	return json_encode($result);
+}
+
+/**
  * Returns the query part to limit data based on date selection input
  *
  * @param $field_name string Name of the column name to limit

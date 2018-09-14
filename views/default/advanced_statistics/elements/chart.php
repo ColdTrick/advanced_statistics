@@ -11,6 +11,7 @@ $id_parts = explode('-', $href_id);
 
 $chart_href = 'advanced_statistics/' . $id_parts[0] . '/' . substr($href_id, strlen($id_parts[0]) + 1);
 
+$url_elements = [];
 if (elgg_extract('date_limited', $vars)) {
 	$date_part = '';
 	$ts_lower = get_input('ts_lower');
@@ -26,8 +27,16 @@ if (elgg_extract('date_limited', $vars)) {
 		$title .= ' -' . $date_part;
 	}
 	
-	$chart_href .= "?ts_lower={$ts_lower}&ts_upper={$ts_upper}";
+	$url_elements['ts_lower'] = $ts_lower;
+	$url_elements['ts_upper'] = $ts_upper;
 }
+
+$container_guid = elgg_extract('container_guid', $vars);
+if ($container_guid) {
+	$url_elements['container_guid'] = $container_guid;
+}
+
+$chart_href = elgg_http_add_url_query_elements($chart_href, $url_elements);
 
 $body = elgg_format_element('div', [
 	'id' => $id,

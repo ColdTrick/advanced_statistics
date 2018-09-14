@@ -35,6 +35,8 @@ function advanced_statistics_init() {
 		
 		elgg_register_ajax_view('widgets/online_user_count/content');
 	}
+	
+	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'advanced_statistics_owner_block_menu');
 }
 
 
@@ -46,6 +48,20 @@ function advanced_statistics_init() {
  * @return boolean
  */
 function advanced_statistics_page_handler($page) {
+	
+	if ($page[0] === 'group') {
+		if (elgg_get_plugin_setting('enable_group_stats', 'advanced_statistics') !== 'yes') {
+			return false;
+		}
+		
+		if (is_numeric($page[1])) {
+			echo elgg_view_resource('advanced_statistics/group');
+		} else {
+			echo advanced_statistics_get_group_data($page[1]);
+		}
+		return true;
+	}
+	
 	admin_gatekeeper();
 	
 	switch($page[0]){
@@ -72,4 +88,31 @@ function advanced_statistics_page_handler($page) {
 	}
 	
 	return true;
+}
+
+/**
+ * Registers menu item to owner block of groups
+ *
+ * @param string $hook
+ * @param string $type
+ * @param array  $return
+ * @param array  $params
+ */
+function advanced_statistics_owner_block_menu($hook, $type, $return, $params) {
+	$entity = elgg_extract('entity', $params);
+	
+	if (elgg_get_plugin_setting('enable_group_stats', 'advanced_statistics') !== 'yes') {
+		return;
+	}
+	
+	if (!$entity instanceof \ElggGroup || !$entity->canEdit()) {
+		return;
+	}
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'advanced_statistics',
+		'href' => "advanced_statistics/group/{$entity->guid}",
+		'text' => elgg_echo('advanced_statistics:group:title'),
+	]);
+	return $return;
 }
