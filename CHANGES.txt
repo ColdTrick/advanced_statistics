@@ -1,6 +1,10 @@
 Version history
 ===============
 
+2.2 (2018-09-20):
+
+- added: statistics for group admins
+
 2.1 (2018-01-25):
 
 - added: date selection for various charts
