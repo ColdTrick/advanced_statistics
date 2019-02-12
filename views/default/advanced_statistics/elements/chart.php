@@ -1,17 +1,18 @@
 <?php
 
-advanced_statistics_load_externals();
+elgg_require_js('advanced_statistics/charts');
+elgg_load_css('jquery.jqplot');
 
 $id = elgg_extract('id', $vars);
 $title = elgg_extract('title', $vars);
 
-$href_id = substr($id, 20);
+$page = elgg_extract('page', $vars);
 
-$id_parts = explode('-', $href_id);
+$url_elements = [
+	'section' => elgg_extract('section', $vars),
+	'chart' => elgg_extract('chart', $vars),
+];
 
-$chart_href = 'advanced_statistics/' . $id_parts[0] . '/' . substr($href_id, strlen($id_parts[0]) + 1);
-
-$url_elements = [];
 if (elgg_extract('date_limited', $vars)) {
 	$date_part = '';
 	$ts_lower = get_input('ts_lower');
@@ -36,15 +37,10 @@ if ($container_guid) {
 	$url_elements['container_guid'] = $container_guid;
 }
 
-$chart_href = elgg_http_add_url_query_elements($chart_href, $url_elements);
-
 $body = elgg_format_element('div', [
 	'id' => $id,
 	'class' => 'advanced-statistics-plot-container',
-	'data-chart-href' => $chart_href,
-]);
-$body .= elgg_format_element('div', [
-	'class' => 'elgg-ajax-loader',
+	'data-chart-href' => elgg_http_add_url_query_elements("advanced_statistics/{$page}", $url_elements),
 ]);
 
-echo elgg_view_module('inline', $title, $body);
+echo elgg_view_module('info', $title, $body);

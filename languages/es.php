@@ -57,13 +57,13 @@ $es = array(
   'advanced_statistics:groups:dead_vs_alive:more_year' => "> 1 año [%d]",
 
   // widgets
-  'advanced_statistics:widgets:advanced_statistics:title' => "Estadísticas avanzadas",
-  'advanced_statistics:widgets:advanced_statistics:description' => "Mostrar algunas estadísticas avanzadas",
+  'widgets:advanced_statistics:name' => "Estadísticas avanzadas",
+  'widgets:advanced_statistics:description' => "Mostrar algunas estadísticas avanzadas",
   'advanced_statistics:widgets:advanced_statistics:content:no_chart' => "Editar el widget para elegir un gráfico.",
   'advanced_statistics:widgets:advanced_statistics:content:no_jqplot' => "Por favor actualiza la página para que este widget funcione.",
 
-  'advanced_statistics:widgets:online_user_count:title' => "Contador de usuarios en linea",
-  'advanced_statistics:widgets:online_user_count:description' => "Mostrar la cantidad de usuario en linea y actualizar automáticamente",
+  'widgets:online_user_count:name' => "Contador de usuarios en linea",
+  'widgets:online_user_count:description' => "Mostrar la cantidad de usuario en linea y actualizar automáticamente",
 
 );
 

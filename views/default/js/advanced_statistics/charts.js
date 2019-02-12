@@ -1,4 +1,9 @@
-define(['jquery', 'elgg', 'jqplot/jquery.jqplot'], function($, elgg) {
+define(function(require) {
+	
+	var $ = require('jquery');
+	var elgg = require('elgg');
+	var Ajax = require('elgg/Ajax');
+	require('jqplot/jquery.jqplot');
 	
 	var init = function () {
 		require(['jqplot/plugins/jqplot.pieRenderer', 
@@ -13,20 +18,22 @@ define(['jquery', 'elgg', 'jqplot/jquery.jqplot'], function($, elgg) {
 			// initialize the plots
 			$('.advanced-statistics-plot-container').each(function(){
 		
-				var target = $(this).attr('id');
+				var $target = $(this);
 				
 				if (!$.jqplot) {
-					$(this).html(elgg.echo('advanced_statistics:widgets:advanced_statistics:content:no_jqplot'));
-					$(this).next().hide();
+					$target.html(elgg.echo('advanced_statistics:widgets:advanced_statistics:content:no_jqplot'));
 					return;
 				}
 				
-				elgg.getJSON($(this).data().chartHref, {
+				var ajax = new Ajax();
+				ajax.view($(this).data().chartHref, {
 					success: function(result){
 						var options = result.options;
+						
 						if(options['seriesDefaults']){
 							options['seriesDefaults']['renderer'] = eval(options['seriesDefaults']['renderer']);
 						}
+						
 						if(options['axes']){
 							if(options['axes']['xaxis']){
 								options['axes']['xaxis']['renderer'] = eval(options['axes']['xaxis']['renderer']);
@@ -39,17 +46,19 @@ define(['jquery', 'elgg', 'jqplot/jquery.jqplot'], function($, elgg) {
 								options['axes']['y2axis']['renderer'] = eval(options['axes']['y2axis']['renderer']);
 							}
 						}
+						
 						if(options['axesDefaults']){
 							options['axesDefaults']['tickRenderer'] = eval(options['axesDefaults']['tickRenderer']);
 						}
 						
 						if(result.data[0].length){
-							$.jqplot(target, result.data, options);
+							$.jqplot($target.attr('id'), result.data, options);
 						} else {
-							$('#'+ target).html(elgg.echo('notfound'));
+							$target.html(elgg.echo('notfound'));
 						}
-						// hide loader
-						$('#'+ target).next().hide();
+					},
+					data: {
+						view: 'json'
 					}
 				});
 			});
@@ -57,8 +66,4 @@ define(['jquery', 'elgg', 'jqplot/jquery.jqplot'], function($, elgg) {
 	};
 
 	init();
-
-	return {
-		init: init
-	};
 });

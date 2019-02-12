@@ -2,6 +2,7 @@
 
 elgg_register_menu_item('title', [
 	'name' => 'date_selector',
+	'icon' => 'filter',
 	'text' => elgg_echo('advanced_statistics:date_selection:title_button'),
 	'href' => '#advanced-statistics-date-selection',
 	'rel' => 'toggle',
@@ -12,7 +13,7 @@ elgg_register_menu_item('title', [
 ]);
 
 $form = elgg_view_form('advanced_statistics/date_selector', [
-	'class' => 'float-alt',
+	'class' => 'mbm',
 	'action' => current_page_url(),
 	'disable_security' => true,
 ]);
