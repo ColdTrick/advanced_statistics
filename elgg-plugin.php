@@ -14,6 +14,12 @@ return [
 			'js/jqplot/' => __DIR__ . '/vendors/jqplot',
 		],
 	],
+	'routes' => [
+		'collection:advanced_statistics:group' => [
+			'path' => '/advanced_statistics/group/{guid}',
+			'resource' => 'advanced_statistics/group',
+		],
+	],
 	'widgets' => [
 		'advanced_statistics' => [
 			'context' => ['admin'],

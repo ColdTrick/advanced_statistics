@@ -12,7 +12,7 @@ if (elgg_get_plugin_setting('enable_group_stats', 'advanced_statistics') === 'no
 	throw new EntityPermissionsException();
 }
 
-//echo advanced_statistics_get_group_data($page[1]);
+elgg_push_entity_breadcrumbs($group);
 
 $title = elgg_echo('advanced_statistics:group:title');
 $content = '';
@@ -22,6 +22,9 @@ $content .= elgg_view('advanced_statistics/elements/chart', [
 	'title' => elgg_echo('advanced_statistics:group:members'),
 	'id' => 'advanced-statistics-group-members',
 	'container_guid' => $group->guid,
+	'page' => 'group_data',
+	'section' => 'group',
+	'chart' => 'members',
 ]);
 
 // group content pie
@@ -29,6 +32,9 @@ $content .= elgg_view('advanced_statistics/elements/chart', [
 	'title' => elgg_echo('advanced_statistics:group:contenttype'),
 	'id' => 'advanced-statistics-group-contenttype',
 	'container_guid' => $group->guid,
+	'page' => 'group_data',
+	'section' => 'group',
+	'chart' => 'contenttype',
 ]);
 
 // content creation history
@@ -36,6 +42,9 @@ $content .= elgg_view('advanced_statistics/elements/chart', [
 	'title' => elgg_echo('advanced_statistics:group:content_creation'),
 	'id' => 'advanced-statistics-group-content-creation',
 	'container_guid' => $group->guid,
+	'page' => 'group_data',
+	'section' => 'group',
+	'chart' => 'content_creation',
 ]);
 
 // activity history
@@ -43,6 +52,9 @@ $content .= elgg_view('advanced_statistics/elements/chart', [
 	'title' => elgg_echo('advanced_statistics:group:activity'),
 	'id' => 'advanced-statistics-group-activity',
 	'container_guid' => $group->guid,
+	'page' => 'group_data',
+	'section' => 'group',
+	'chart' => 'activity',
 ]);
 
 $body = elgg_view_layout('default', [

@@ -34,7 +34,7 @@ return array (
   'advanced_statistics:content:totals' => 'Content totalen',
   'advanced_statistics:content:distribution' => 'Content container distributie',
   'advanced_statistics:system:files:users' => 'Gebruikers met de meeste bestanden en foto\'s',
-  'advanced_statistics:system:files:groups' => 'Groupen met de meeste bestanden en foto\'s',
+  'advanced_statistics:system:files:groups' => 'Groepen met de meeste bestanden en foto\'s',
   'advanced_statistics:groups:popular' => 'Populaire groepen',
   'advanced_statistics:groups:popular_tools' => 'Populaire group tools',
   'advanced_statistics:groups:most_active' => 'Meest actieve groepen (laatste week)',

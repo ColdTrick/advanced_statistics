@@ -5,27 +5,26 @@ $result = [
 ];
 
 $entities = elgg_get_entities_from_relationship_count([
-	'type' => 'group',
-	'relationship' => 'member',
+	'type' => 'user',
+	'relationship' => 'friend',
 	'inverse_relationship' => false,
 	'limit' => 10,
 ]);
 
 $data = [];
 if ($entities) {
-	foreach ($entities as $group) {
-		$data[] = [
-			$group->getDisplayName(),
-			$group->getMembers(['count' => true]),
-		];
+	foreach ($entities as $user) {
+		$data[] = (int) $user->countEntitiesFromRelationship('friend', true);
+		$ticks[] = elgg_get_excerpt($user->getDisplayName(), 25);
 	}
 }
 
 $result['data'] = [$data];
 
+$result['options']['axes']['xaxis']['ticks'] = $ticks;
 $result['options']['axes']['xaxis']['tickRenderer'] = '$.jqplot.CanvasAxisTickRenderer';
 $result['options']['axes']['xaxis']['tickOptions'] = [
-	'angle' => '-30',
+	'angle' => '-70',
 	'fontSize' => '8pt',
 ];
 
