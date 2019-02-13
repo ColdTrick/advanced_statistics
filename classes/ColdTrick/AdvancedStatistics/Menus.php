@@ -13,7 +13,7 @@ class Menus {
 	 */
 	public static function registerAdminItems(\Elgg\Hook $hook) {
 		
-		if (!elgg_is_admin_logged_in()) {
+		if (!elgg_is_admin_logged_in() || !elgg_in_context('admin')) {
 			return;
 		}
 		
