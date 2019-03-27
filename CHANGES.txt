@@ -1,6 +1,10 @@
 Version history
 ===============
 
+3.0 (2019-03-27):
+
+- changed: minimal requirements set to Elgg 3
+
 2.2 (2018-09-20):
 
 - added: statistics for group admins
