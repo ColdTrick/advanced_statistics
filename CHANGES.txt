@@ -1,6 +1,10 @@
 Version history
 ===============
 
+3.0.1 (2019-05-29):
+
+- fixed: online user widget now correctly refreshes
+
 3.0 (2019-03-27):
 
 - changed: minimal requirements set to Elgg 3
