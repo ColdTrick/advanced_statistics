@@ -1,7 +1,7 @@
 <?php
 
 elgg_require_js('advanced_statistics/charts');
-elgg_load_css('jquery.jqplot');
+elgg_require_css('advanced_statistics/jqplot');
 
 $id = elgg_extract('id', $vars);
 $title = elgg_extract('title', $vars);

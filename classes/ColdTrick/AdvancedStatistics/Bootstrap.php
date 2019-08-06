@@ -10,9 +10,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 	 * {@inheritDoc}
 	 */
 	public function init() {
-		elgg_register_simplecache_view('css/advanced_statistics/jqplot');
-		elgg_register_css('jquery.jqplot', elgg_get_simplecache_url('css', 'advanced_statistics/jqplot'));
-
 		elgg_register_ajax_view('widgets/online_user_count/content');
 		elgg_register_ajax_view('advanced_statistics/admin_data');
 		elgg_register_ajax_view('advanced_statistics/group_data');

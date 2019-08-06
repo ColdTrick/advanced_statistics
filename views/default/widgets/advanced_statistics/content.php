@@ -10,7 +10,7 @@ if (empty($chart)) {
 }
 
 elgg_require_js('advanced_statistics/charts');
-elgg_load_css('jquery.jqplot');
+elgg_require_css('advanced_statistics/jqplot');
 
 list($id, $text) = explode('|', $chart);
 
