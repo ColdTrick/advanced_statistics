@@ -1,6 +1,11 @@
 Version history
 ===============
 
+4.0 (2019-08-22):
+
+- changed: increased minimal Elgg requirement to 3.1
+- changed: replaced deprecated css loading with elgg_require_css
+
 3.0.1 (2019-05-29):
 
 - fixed: online user widget now correctly refreshes
