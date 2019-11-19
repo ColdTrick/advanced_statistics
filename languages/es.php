@@ -1,6 +1,6 @@
 <?php
 
-$es = array(
+return array(
 
   // admin menu items
   'admin:advanced_statistics' => 'Estadísticas Avanzadas',
@@ -66,5 +66,3 @@ $es = array(
   'widgets:online_user_count:description' => "Mostrar la cantidad de usuario en linea y actualizar automáticamente",
 
 );
-
-add_translation('es', $es);
