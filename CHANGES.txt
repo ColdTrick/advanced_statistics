@@ -1,6 +1,10 @@
 Version history
 ===============
 
+4.0.1 (2019-11-26):
+
+- fixed: return array for es language file
+
 4.0 (2019-08-22):
 
 - changed: increased minimal Elgg requirement to 3.1
