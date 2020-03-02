@@ -15,7 +15,7 @@ $qb->groupBy("FROM_UNIXTIME(e.last_action, '%Y-%m')");
 
 $ts_limit = advanced_statistics_get_timestamp_query_part('e.time_created');
 if ($ts_limit) {
-	$qb->where($ts_limit);
+	$qb->andWhere($ts_limit);
 }
 
 $query_result = $qb->execute()->fetchAll();
