@@ -1,6 +1,11 @@
 Version history
 ===============
 
+4.0.2 (2020-03-03):
+
+- fixed: make sure css can be loaded
+- fixed: use correct andwhere construction for conditional ts limit
+
 4.0.1 (2019-11-26):
 
 - fixed: return array for es language file
