@@ -25,7 +25,7 @@ define(function(require) {
 					return;
 				}
 				
-				var ajax = new Ajax();
+				var ajax = new Ajax(false);
 				ajax.view($(this).data().chartHref, {
 					success: function(result){
 						var options = result.options;
@@ -52,6 +52,7 @@ define(function(require) {
 						}
 						
 						if(result.data[0].length){
+							$target.html(''); // remove loader
 							$.jqplot($target.attr('id'), result.data, options);
 						} else {
 							$target.html(elgg.echo('notfound'));

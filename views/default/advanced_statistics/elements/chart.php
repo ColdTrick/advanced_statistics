@@ -41,6 +41,6 @@ $body = elgg_format_element('div', [
 	'id' => $id,
 	'class' => 'advanced-statistics-plot-container',
 	'data-chart-href' => elgg_http_add_url_query_elements("advanced_statistics/{$page}", $url_elements),
-]);
+], elgg_view('graphics/ajax_loader', ['hidden' => false]));
 
 echo elgg_view_module('info', $title, $body);
