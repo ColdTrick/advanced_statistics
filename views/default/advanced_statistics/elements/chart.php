@@ -8,10 +8,10 @@ $title = elgg_extract('title', $vars);
 
 $page = elgg_extract('page', $vars);
 
-$url_elements = [
-	'section' => elgg_extract('section', $vars),
-	'chart' => elgg_extract('chart', $vars),
-];
+$url_elements = (array) elgg_extract('url_elements', $vars, []);
+
+$url_elements['section'] = elgg_extract('section', $vars);
+$url_elements['chart'] = elgg_extract('chart', $vars);
 
 if (elgg_extract('date_limited', $vars)) {
 	$date_part = '';
