@@ -44,3 +44,9 @@ $body = elgg_format_element('div', [
 ], elgg_view('graphics/ajax_loader', ['hidden' => false]));
 
 echo elgg_view_module('info', $title, $body);
+?>
+<script>
+	require(['advanced_statistics/charts'], function (advancedStatistics) {
+		advancedStatistics.init('#<?php echo $id; ?>');
+	});
+</script>
