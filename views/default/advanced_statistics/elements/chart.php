@@ -47,6 +47,8 @@ echo elgg_view_module('info', $title, $body);
 ?>
 <script>
 	require(['advanced_statistics/charts'], function (advancedStatistics) {
-		advancedStatistics.init('#<?php echo $id; ?>');
+		setTimeout(function() {
+			advancedStatistics.init('#<?php echo $id; ?>');
+		}, 500);
 	});
 </script>
