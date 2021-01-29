@@ -90,6 +90,8 @@ return [
 	'advanced_statistics:account:statistics:details:this_year' => "This year",
 	'advanced_statistics:account:statistics:details:last_year' => "Last year",
 	'advanced_statistics:account:statistics:details:chart:years' => "Year totals",
-	'' => "",
-	'' => "",
+	
+	'advanced_statistics:account:likes:top:title' => "Top 5 most liked content",
+	'advanced_statistics:account:likes:top:description' => "Below is a list of content you wrote which others have liked in the past %d days ordered by the most liked content first.",
+	'advanced_statistics:account:likes:chart' => "Likes over time",
 ];
