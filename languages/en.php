@@ -80,5 +80,16 @@ return [
 	
 	'widgets:online_user_count:name' => "Online Users Counter",
 	'widgets:online_user_count:description' => "Show the amount of online users and will automatically refresh",
-		
+	
+	// user statistics
+	'advanced_statistics:numentities:admin_help' => "* non searchable entities, only shown to site administrators",
+	
+	'advanced_statistics:account:statistics:details:title' => "Detailed content statistics for %s",
+	'advanced_statistics:account:statistics:details:week' => "Last 7 days",
+	'advanced_statistics:account:statistics:details:month' => "Last 30 days",
+	'advanced_statistics:account:statistics:details:this_year' => "This year",
+	'advanced_statistics:account:statistics:details:last_year' => "Last year",
+	'advanced_statistics:account:statistics:details:chart:years' => "Year totals",
+	'' => "",
+	'' => "",
 ];
