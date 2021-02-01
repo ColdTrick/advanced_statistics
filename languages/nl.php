@@ -1,10 +1,29 @@
 <?php
 /**
- * This file was created by Translation Editor v5.1
- * On 2016-08-23 10:19
+ * This file was created by Translation Editor v8.0
+ * On 2021-02-01 13:15
  */
 
 return array (
+  'advanced_statistics:settings:enable_group_stats' => 'Schakel statistieken voor groepsbeheerders in',
+  'advanced_statistics:group:title' => 'Groep statistieken',
+  'advanced_statistics:group:members' => 'Leden',
+  'advanced_statistics:group:contenttype' => 'Content types',
+  'advanced_statistics:group:content_creation' => 'Content bijdrages',
+  'advanced_statistics:group:activity' => 'Activiteit',
+  'advanced_statistics:date_selection:title_button' => 'Toon datum selectie',
+  'advanced_statistics:date_selection:start' => 'Start',
+  'advanced_statistics:date_selection:end' => 'Einde',
+  'advanced_statistics:numentities:admin_help' => '* niet doorzoekbare content, wordt alleen getoond aan site beheerders',
+  'advanced_statistics:account:statistics:details:title' => 'Gedetailleerde content statistieken voor %s',
+  'advanced_statistics:account:statistics:details:week' => 'Laatste 7 dagen',
+  'advanced_statistics:account:statistics:details:month' => 'Laatste 30 dagen',
+  'advanced_statistics:account:statistics:details:this_year' => 'Dit jaar',
+  'advanced_statistics:account:statistics:details:last_year' => 'Vorig jaar',
+  'advanced_statistics:account:statistics:details:chart:years' => 'Jaar totalen',
+  'advanced_statistics:account:likes:top:title' => 'Top 5 meest gelikede content',
+  'advanced_statistics:account:likes:top:description' => 'Hieronder staat een lijst van content welke jij hebt geschreven en anderen hebben geliked in de laatste %d dagen, gesorteerd op de meest gelikede content eerst.',
+  'advanced_statistics:account:likes:chart' => 'Likes over tijd',
   'admin:advanced_statistics' => 'Geavanceerde Statistieken',
   'admin:advanced_statistics:users' => 'Gebruikers',
   'admin:advanced_statistics:groups' => 'Groepen',
