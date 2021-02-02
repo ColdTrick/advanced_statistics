@@ -21,6 +21,9 @@ return [
 		],
 	],
 	'view_extensions' => [
+		'advanced_statistics/account/statistics/likes' => [
+			'advanced_statistics/account/statistics/likes_graph' => [],
+		],
 		'core/settings/statistics' => [
 			'advanced_statistics/account/statistics/likes' => [],
 		],

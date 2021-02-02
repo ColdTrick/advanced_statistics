@@ -1,6 +1,6 @@
 <?php
 /**
- * Show your most liked content and total likes over time
+ * Show your most liked content
  */
 
 if (!elgg_is_active_plugin('likes')) {
@@ -24,43 +24,33 @@ $entities = elgg_get_entities([
 	'full_view' => false,
 ]);
 
-if (!empty($entities)) {
-	$body = elgg_view('output/longtext', [
-		'value' => elgg_echo('advanced_statistics:account:likes:top:description', [$num_days]),
+$likes_count = function(\ElggEntity $entity) use ($num_days) {
+	return elgg_get_annotations([
+		'guid' => $entity->guid,
+		'count' => true,
+		'annotation_created_after' => "today - {$num_days} days",
+		'annotation_name' => 'likes',
 	]);
-	
-	$lis = [];
-	foreach ($entities as $entity) {
-		$lis[] = elgg_format_element('li', ['class' => 'elgg-item'], elgg_view('output/url', [
-			'text' => $entity->getDisplayName(),
-			'href' => $entity->getURL(),
-			'is_trusted' => true,
-			'badge' => elgg_echo('likes:userslikedthis', [likes_count($entity)]),
-		]));
-	}
-	
-	$body .= elgg_format_element('ul', ['class' => 'elgg-list'], implode(PHP_EOL, $lis));
-	
-	echo elgg_view_module('info', elgg_echo('advanced_statistics:account:likes:top:title'), $body);
+};
+
+if (empty($entities)) {
+	return;
 }
 
-// likes graph
-$count = elgg_get_annotations([
-	'owner_guid' => $user->guid,
-	'count' => true,
-	'annotation_name' => 'likes',
+$body = elgg_view('output/longtext', [
+	'value' => elgg_echo('advanced_statistics:account:likes:top:description', [$num_days]),
 ]);
 
-if ($count > 10) {
-	echo elgg_view('advanced_statistics/elements/chart', [
-		'title' => elgg_echo('advanced_statistics:account:likes:chart'),
-		'id' => 'advanced-statistics-account-likes-chart',
-		'date_limited' => false,
-		'page' => 'account',
-		'section' => 'likes',
-		'chart' => 'count',
-		'url_elements' => [
-			'user_guid' => $user->guid,
-		],
-	]);
+$lis = [];
+foreach ($entities as $entity) {
+	$lis[] = elgg_format_element('li', ['class' => 'elgg-item'], elgg_view('output/url', [
+		'text' => $entity->getDisplayName(),
+		'href' => $entity->getURL(),
+		'is_trusted' => true,
+		'badge' => elgg_echo('likes:userslikedthis', [$likes_count($entity)]),
+	]));
 }
+
+$body .= elgg_format_element('ul', ['class' => 'elgg-list'], implode(PHP_EOL, $lis));
+
+echo elgg_view_module('info', elgg_echo('advanced_statistics:account:likes:top:title'), $body);
