@@ -1,6 +1,11 @@
 Version history
 ===============
 
+4.2 (2021-02-03):
+
+- added: improved account statistics
+- added: likes statistics
+
 4.1 (2021-01-19):
 
 - added: non searchable content totals graph
