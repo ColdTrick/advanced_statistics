@@ -61,8 +61,10 @@ class Menus {
 		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'advanced_statistics',
-			'href' => "advanced_statistics/group/{$entity->guid}",
 			'text' => elgg_echo('advanced_statistics:group:title'),
+			'href' => elgg_generate_url('collection:advanced_statistics:group', [
+				'guid' => $entity->guid,
+			]),
 		]);
 		
 		return $return_value;

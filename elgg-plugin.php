@@ -3,6 +3,7 @@
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
 use ColdTrick\AdvancedStatistics\Bootstrap;
+use Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper;
 
 return [
 	'bootstrap' => Bootstrap::class,
@@ -18,6 +19,9 @@ return [
 		'collection:advanced_statistics:group' => [
 			'path' => '/advanced_statistics/group/{guid}',
 			'resource' => 'advanced_statistics/group',
+			'middleware' => [
+				GroupPageOwnerCanEditGatekeeper::class,
+			],
 		],
 	],
 	'view_extensions' => [
