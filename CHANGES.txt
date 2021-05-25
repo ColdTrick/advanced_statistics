@@ -1,6 +1,10 @@
 Version history
 ===============
 
+4.2.1 (2021-05-25):
+
+- several small chores/fixes
+
 4.2 (2021-02-03):
 
 - added: improved account statistics
