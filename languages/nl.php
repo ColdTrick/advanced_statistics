@@ -6,7 +6,7 @@
 
 return array (
   'advanced_statistics:settings:enable_group_stats' => 'Schakel statistieken voor groepsbeheerders in',
-  'advanced_statistics:group:title' => 'Groep statistieken',
+  'advanced_statistics:group:title' => 'Groepsstatistieken',
   'advanced_statistics:group:members' => 'Leden',
   'advanced_statistics:group:contenttype' => 'Content types',
   'advanced_statistics:group:content_creation' => 'Content bijdrages',

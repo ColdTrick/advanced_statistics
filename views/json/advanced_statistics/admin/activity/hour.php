@@ -18,7 +18,7 @@ if ($ts_limit) {
 	$qb->where($ts_limit);
 }
 
-$query_result = $qb->execute()->fetchAll();
+$query_result = $qb->execute()->fetchAllAssociative();
 
 // make sure every hour is present
 $data = [];
@@ -28,8 +28,8 @@ for ($i = 0; $i < 24; $i++) {
 
 if ($query_result) {
 	foreach ($query_result as $row) {
-		$hotd = $row->hour_of_the_day;
-		$total = (int) $row->total;
+		$hotd = $row['hour_of_the_day'];
+		$total = (int) $row['total'];
 		
 		$data[(int)$hotd] = [$hotd, $total];
 	}

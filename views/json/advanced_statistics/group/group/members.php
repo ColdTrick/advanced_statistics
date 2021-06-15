@@ -18,7 +18,7 @@ $qb->andWhere("e.type = 'user'");
 $qb->andWhere("r.time_created > 0");
 $qb->groupBy("FROM_UNIXTIME(r.time_created, '%Y-%m-%d')");
 
-$query_result = $qb->execute()->fetchAll();
+$query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
 $data2 = [];
@@ -26,15 +26,15 @@ if ($query_result) {
 	$total = 0;
 	
 	foreach ($query_result as $row) {
-		$date_total = (int) $row->total;
+		$date_total = (int) $row['total'];
 		$total += $date_total;
 		
 		$data[] = [
-			$row->date_created,
+			$row['date_created'],
 			$date_total,
 		];
 		$data2[] = [
-			$row->date_created,
+			$row['date_created'],
 			$total,
 		];
 	}

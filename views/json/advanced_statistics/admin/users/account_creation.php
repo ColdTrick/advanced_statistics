@@ -18,7 +18,7 @@ if ($ts_limit) {
 	$qb->andWhere($ts_limit);
 }
 
-$query_result = $qb->execute()->fetchAll();
+$query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
 $data2 = [];
@@ -26,11 +26,11 @@ if ($query_result) {
 	$total = 0;
 	
 	foreach ($query_result as $row) {
-		$date_total = (int) $row->total;
+		$date_total = (int) $row['total'];
 		$total += $date_total;
 		
-		$data[] = array($row->date_created , $date_total);
-		$data2[] = array($row->date_created , $total);
+		$data[] = array($row['date_created'], $date_total);
+		$data2[] = array($row['date_created'], $total);
 	}
 }
 

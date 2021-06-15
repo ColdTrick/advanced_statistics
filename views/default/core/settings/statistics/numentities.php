@@ -28,14 +28,14 @@ foreach ($entity_stats as $type => $entry) {
 		
 		$registered_subtypes = get_registered_entity_types($type);
 		if (in_array($subtype, $registered_subtypes)) {
-			// is searcheable, so show to user
+			// is searchable, so show to user
 			$cells[] = elgg_format_element('td', ['class' => 'column-one'], $content_type);
 			$cells[] = elgg_format_element('td', ['class' => 'center'], $count);
 		} elseif (elgg_is_admin_logged_in()) {
 				$show_admin_help = true;
 				// not searchable, only admins get to see this
-				$cells[] = elgg_format_element('td', ['class' => ['column-one', 'elgg-subtext']], "{$content_type} *");
-				$cells[] = elgg_format_element('td', ['class' => ['center', 'elgg-subtext']], $count);
+				$cells[] = elgg_format_element('td', ['class' => 'column-one'], elgg_format_element('span', ['class' => 'elgg-quiet'], "{$content_type} *"));
+				$cells[] = elgg_format_element('td', ['class' => 'center'], elgg_format_element('span', ['class' => 'elgg-quiet'], $count));
 		}
 		
 		if (empty($cells)) {

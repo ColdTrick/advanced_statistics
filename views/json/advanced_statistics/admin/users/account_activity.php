@@ -18,14 +18,14 @@ if ($ts_limit) {
 	$qb->andWhere($ts_limit);
 }
 
-$query_result = $qb->execute()->fetchAll();
+$query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
 if ($query_result) {
 	foreach ($query_result as $row) {
 		$data[] = [
-			$row->month,
-			(int) $row->total,
+			$row['month'],
+			(int) $row['total'],
 		];
 	}
 }

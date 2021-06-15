@@ -1,5 +1,4 @@
 <?php
-
 /**
 *   Which days most activity?
 *   Which hours most activity?
@@ -16,6 +15,7 @@ echo elgg_view('advanced_statistics/elements/chart', [
 	'section' => 'activity',
 	'chart' => 'day',
 ]);
+
 echo elgg_view('advanced_statistics/elements/chart', [
 	'title' => elgg_echo('advanced_statistics:activity:hour'),
 	'id' => 'advanced-statistics-activity-hour',
@@ -24,6 +24,7 @@ echo elgg_view('advanced_statistics/elements/chart', [
 	'section' => 'activity',
 	'chart' => 'hour',
 ]);
+
 echo elgg_view('advanced_statistics/elements/chart', [
 	'title' => elgg_echo('advanced_statistics:activity:timeline'),
 	'id' => 'advanced-statistics-activity-timeline',

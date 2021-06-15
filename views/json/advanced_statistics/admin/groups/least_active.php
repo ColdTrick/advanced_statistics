@@ -19,14 +19,14 @@ $qb->groupBy('md.value');
 $qb->orderBy('total', 'asc');
 $qb->setMaxResults(10);
 
-$query_result = $qb->execute()->fetchAll();
+$query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
 if ($query_result) {
 	foreach ($query_result as $row) {
 		$data[] = [
-			elgg_get_excerpt($row->name, 25),
-			(int) $row->total,
+			elgg_get_excerpt($row['name'], 25),
+			(int) $row['total'],
 		];
 	}
 }

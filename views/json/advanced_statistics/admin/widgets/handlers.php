@@ -16,14 +16,14 @@ $qb->andWhere("e.subtype = 'widget'");
 $qb->groupBy('ps.value');
 $qb->orderBy('total', 'desc');
 
-$query_result = $qb->execute()->fetchAll();
+$query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
 if ($query_result) {
 	foreach ($query_result as $row) {
 		$data[] = [
-			$row->handler,
-			(int) $row->total,
+			$row['handler'],
+			(int) $row['total'],
 		];
 	}
 }

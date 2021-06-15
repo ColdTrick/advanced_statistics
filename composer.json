@@ -1,6 +1,7 @@
 {
 	"name": "coldtrick/advanced_statistics",
 	"description": "Show more statistics about you Elgg installation",
+	"homepage": "https://www.coldtrick.com",
 	"type": "elgg-plugin",
 	"keywords": ["elgg", "plugin", "stats", "statistics"],
 	"license": "GPL-2.0-only",
@@ -16,6 +17,6 @@
 		"coldtrick/releases": "dev-master"
 	},
 	"conflict": {
-		"elgg/elgg": "<3.1"
+		"elgg/elgg": "<4.0"
 	}
 }

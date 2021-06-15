@@ -1,5 +1,4 @@
 <?php
-
 /**
 *   count created content (pie)
 *   distribution (groups vs personal)

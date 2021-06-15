@@ -1,5 +1,4 @@
 <?php
-
 /**
  *     25 users with most friends (bars)
     25 most friended users (most followers)

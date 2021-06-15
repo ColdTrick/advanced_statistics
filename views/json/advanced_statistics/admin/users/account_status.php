@@ -18,7 +18,7 @@ $qb->andWhere("e.enabled = 'yes'");
 $qb->andWhere("md.name = 'banned'");
 $qb->andWhere("md.value = 'yes'");
 
-$banned = (int) $qb->execute()->fetchColumn(0);
+$banned = (int) $qb->execute()->fetchFirstColumn();
 
 $data[] = [
 	"banned [{$banned}]",
@@ -38,7 +38,7 @@ $qb->where("e.type = 'user'");
 $qb->andWhere("e.enabled = 'no'");
 $qb->andWhere($qb->compare('e.guid', 'NOT IN', $subquery->getSQL()));
 
-$unvalidated = (int) $qb->execute()->fetchColumn(0);
+$unvalidated = (int) $qb->execute()->fetchFirstColumn();
 
 $data[] = [
 	"unvalidated [{$unvalidated}]",
@@ -51,7 +51,7 @@ $qb->select('count(*) AS total');
 $qb->where("e.type = 'user'");
 $qb->andWhere("e.enabled = 'no'");
 
-$disabled = (int) $qb->execute()->fetchColumn(0);
+$disabled = (int) $qb->execute()->fetchFirstColumn();
 
 $disabled = $disabled - $unvalidated;
 
@@ -65,7 +65,7 @@ $qb = Select::fromTable('entities', 'e');
 $qb->select('count(*) AS total');
 $qb->where("e.type = 'user'");
 
-$active = (int) $qb->execute()->fetchColumn(0);
+$active = (int) $qb->execute()->fetchFirstColumn();
 $active = $active - $disabled - $unvalidated - $banned;
 
 $data[] = [

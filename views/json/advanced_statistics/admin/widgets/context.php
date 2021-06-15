@@ -16,16 +16,16 @@ $qb->andWhere("e.subtype = 'widget'");
 $qb->groupBy('ps.value');
 $qb->orderBy('total', 'desc');
 
-$query_result = $qb->execute()->fetchAll();
+$query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
 if ($query_result) {
 	foreach ($query_result as $row) {
-		$context = $row->context ?: 'unknown';
+		$context = $row['context'] ?: 'unknown';
 
 		$data[] = [
 			elgg_echo($context),
-			(int) $row->total,
+			(int) $row['total'],
 		];
 	}
 }

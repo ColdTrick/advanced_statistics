@@ -3,8 +3,8 @@
  * Ajax view to show more details about content statistics of a user
  */
 
-use Elgg\BadRequestException;
-use Elgg\EntityPermissionsException;
+use Elgg\Exceptions\Http\BadRequestException;
+use Elgg\Exceptions\Http\EntityPermissionsException;
 
 $user_guid = (int) elgg_extract('user_guid', $vars);
 $type = elgg_extract('type', $vars);

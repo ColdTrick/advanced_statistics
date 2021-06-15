@@ -2,17 +2,28 @@
 
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
-use ColdTrick\AdvancedStatistics\Bootstrap;
 use Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper;
 
 return [
-	'bootstrap' => Bootstrap::class,
+	'plugin' => [
+		'version' => '4.2.1',
+	],
 	'settings' => [
 		'enable_group_stats' => 'no',
 	],
 	'views' => [
 		'default' => [
 			'js/jqplot/' => __DIR__ . '/vendors/jqplot',
+		],
+	],
+	'hooks' => [
+		'register' => [
+			'menu:owner_block' => [
+				'\ColdTrick\AdvancedStatistics\Menus::registerGroupItems' => [],
+			],
+			'menu:page' => [
+				'\ColdTrick\AdvancedStatistics\Menus::registerAdminItems' => [],
+			],
 		],
 	],
 	'routes' => [
@@ -32,6 +43,14 @@ return [
 			'advanced_statistics/account/statistics/likes' => [],
 		],
 	],
+	'view_options' => [
+		'widgets/online_user_count/content' => ['ajax' => true],
+		'advanced_statistics/account/statistics/details' => ['ajax' => true],
+		'advanced_statistics/account' => ['ajax' => true],
+		'advanced_statistics/admin_data' => ['ajax' => true],
+		'advanced_statistics/group_data' => ['ajax' => true],
+		'css/advanced_statistics/jqplot' => ['simplecache' => true],
+	],
 	'widgets' => [
 		'advanced_statistics' => [
 			'context' => ['admin'],
@@ -42,3 +61,4 @@ return [
 		],
 	],
 ];
+	

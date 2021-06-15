@@ -1,5 +1,4 @@
 <?php
-
 /**
 	10 most popular groups (bar)
     enabled tools for group (pie)
@@ -15,6 +14,7 @@ echo elgg_view('advanced_statistics/elements/chart', [
 	'section' => 'groups',
 	'chart' => 'popular',
 ]);
+
 echo elgg_view('advanced_statistics/elements/chart', [
 	'title' => elgg_echo('advanced_statistics:groups:popular_tools'),
 	'id' => 'advanced-statistics-groups-popular-tools',
@@ -22,6 +22,7 @@ echo elgg_view('advanced_statistics/elements/chart', [
 	'section' => 'groups',
 	'chart' => 'popular_tools',
 ]);
+
 echo elgg_view('advanced_statistics/elements/chart', [
 	'title' => elgg_echo('advanced_statistics:groups:most_active'),
 	'id' => 'advanced-statistics-groups-most-active',
@@ -29,6 +30,7 @@ echo elgg_view('advanced_statistics/elements/chart', [
 	'section' => 'groups',
 	'chart' => 'most_active',
 ]);
+
 echo elgg_view('advanced_statistics/elements/chart', [
 	'title' => elgg_echo('advanced_statistics:groups:least_active'),
 	'id' => 'advanced-statistics-groups-least-active',
@@ -36,6 +38,7 @@ echo elgg_view('advanced_statistics/elements/chart', [
 	'section' => 'groups',
 	'chart' => 'least_active',
 ]);
+
 echo elgg_view('advanced_statistics/elements/chart', [
 	'title' => elgg_echo('advanced_statistics:groups:dead_vs_alive'),
 	'id' => 'advanced-statistics-groups-dead-vs-alive',

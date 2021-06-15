@@ -12,6 +12,7 @@ $entities = elgg_get_entities_from_relationship_count([
 ]);
 
 $data = [];
+$ticks = [];
 if ($entities) {
 	foreach ($entities as $user) {
 		$data[] = (int) $user->countEntitiesFromRelationship('friend', true);

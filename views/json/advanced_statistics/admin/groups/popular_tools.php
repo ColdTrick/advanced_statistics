@@ -20,11 +20,11 @@ foreach ($group_tools as $key => $tool) {
 	$qb->andWhere("e.enabled = 'yes'");
 	$qb->andWhere("md.value = 'yes'");
 	
-	$query_result = $qb->execute()->fetchAll();
+	$query_result = $qb->execute()->fetchAllAssociative();
 
 	if ($query_result) {
 		foreach ($query_result as $row) {
-			$total = (int) $row->total;
+			$total = (int) $row['total'];
 			$order[$key] = $total;
 			$data[$key] = [
 				$tool->name . " [" . $total . "]",

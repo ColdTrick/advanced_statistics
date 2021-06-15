@@ -17,16 +17,16 @@ $qb->andWhere($qb->compare("a.name", '=', 'likes', ELGG_VALUE_STRING));
 $qb->groupBy("FROM_UNIXTIME(a.time_created, '%x-%v')");
 $qb->orderBy('yearweek', 'ASC');
 
-$query_result = $qb->execute()->fetchAll();
+$query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
 if ($query_result) {
 	foreach ($query_result as $row) {
-		list ($year, $week) = explode('-', $row->yearweek);
+		list ($year, $week) = explode('-', $row['yearweek']);
 
 		$data[] = [
 			date('Y-m-d', strtotime("first monday of january {$year} + {$week} weeks")),
-			(int) $row->total,
+			(int) $row['total'],
 		];
 	}
 }

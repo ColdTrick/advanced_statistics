@@ -1,6 +1,6 @@
 <?php
 
-use Elgg\EntityPermissionsException;
+use Elgg\Exceptions\Http\EntityPermissionsException;
 
 if (elgg_get_plugin_setting('enable_group_stats', 'advanced_statistics') === 'no') {
 	throw new EntityPermissionsException();

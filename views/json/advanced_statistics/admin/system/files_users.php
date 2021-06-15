@@ -17,19 +17,19 @@ $qb->groupBy('e.owner_guid');
 $qb->orderBy('total', 'desc');
 $qb->setMaxResults(25);
 
-$query_result = $qb->execute()->fetchAll();
+$query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
 if ($query_result) {
 	foreach ($query_result as $row) {
-		$user = get_user($row->user);
+		$user = get_user($row['user']);
 		if (!$user) {
 			continue;
 		}
 		
 		$data[] = [
 			elgg_get_excerpt($user->getDisplayName(), 25),
-			(int) $row->total,
+			(int) $row['total'],
 		];
 	}
 }

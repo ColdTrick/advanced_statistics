@@ -16,14 +16,14 @@ $qb->groupBy("SUBSTRING_INDEX(md.value, '@', -1)");
 $qb->orderBy('total', 'desc');
 $qb->setMaxResults(10);
 
-$query_result = $qb->execute()->fetchAll();
+$query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
 if ($query_result) {
 	foreach ($query_result as $row) {
-		$total = (int) $row->total;
+		$total = (int) $row['total'];
 		$data[] = [
-			$row->domain . " [" . $total . "]",
+			$row['domain'] . " [" . $total . "]",
 			$total,
 		];
 	}

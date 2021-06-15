@@ -17,15 +17,15 @@ if ($ts_limit) {
 	$qb->where($ts_limit);
 }
 
-$query_result = $qb->execute()->fetchAll();
+$query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
 if ($query_result) {
 	foreach ($query_result as $row) {
-		$dotw = $row->day_of_the_week;
+		$dotw = $row['day_of_the_week'];
 		$dotw = elgg_echo("advanced_statistics:activity:day:{$dotw}");
 		
-		$total = (int) $row->total;
+		$total = (int) $row['total'];
 		$data[] = [
 			$dotw . " [" . $total . "]",
 			$total,

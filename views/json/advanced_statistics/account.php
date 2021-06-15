@@ -2,8 +2,8 @@
 /**
  * Fetch graph data for account statistics
  */
-use Elgg\BadRequestException;
-use Elgg\EntityPermissionsException;
+use Elgg\Exceptions\Http\BadRequestException;
+use Elgg\Exceptions\Http\EntityPermissionsException;
 
 $user_guid = (int) elgg_extract('user_guid', $vars);
 

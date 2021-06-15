@@ -1,6 +1,6 @@
 <?php
 
-use Elgg\BadRequestException;
+use Elgg\Exceptions\Http\BadRequestException;
 
 elgg_admin_gatekeeper();
 

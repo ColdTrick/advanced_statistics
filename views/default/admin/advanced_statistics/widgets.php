@@ -1,5 +1,4 @@
 <?php
-
 /**
 *   Widget handler counts (pie)
 *   Widget context

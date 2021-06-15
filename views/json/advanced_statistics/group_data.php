@@ -1,6 +1,6 @@
 <?php
 
-use Elgg\BadRequestException;
+use Elgg\Exceptions\Http\BadRequestException;
 
 $section = elgg_extract('section', $vars);
 $chart = elgg_extract('chart', $vars);

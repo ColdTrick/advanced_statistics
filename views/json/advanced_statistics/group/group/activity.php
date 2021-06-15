@@ -15,14 +15,14 @@ $qb->join('e', 'river', 'r', 'e.guid = r.object_guid');
 $qb->where("e.container_guid = {$container_guid}");
 $qb->groupBy("FROM_UNIXTIME(r.posted, '%Y-%m-%d')");
 
-$query_result = $qb->execute()->fetchAll();
+$query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
 if ($query_result) {
 	foreach ($query_result as $row) {
 		$data[] = [
-			$row->date_created,
-			(int) $row->total,
+			$row['date_created'],
+			(int) $row['total'],
 		];
 	}
 }

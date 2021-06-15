@@ -19,14 +19,14 @@ if ($ts_limit) {
 	$qb->andWhere($ts_limit);
 }
 
-$query_result = $qb->execute()->fetchAll();
+$query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
 if ($query_result) {
 	foreach ($query_result as $row) {
 		$data[] = [
-			elgg_echo("item:object:{$row->subtype}"),
-			(int) $row->total,
+			elgg_echo("item:object:{$row['subtype']}"),
+			(int) $row['total'],
 		];
 	}
 }

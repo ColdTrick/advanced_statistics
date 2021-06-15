@@ -17,19 +17,19 @@ $qb->groupBy('e.container_guid');
 $qb->orderBy('total', 'desc');
 $qb->setMaxResults(25);
 
-$query_result = $qb->execute()->fetchAll();
+$query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
 if ($query_result) {
 	foreach ($query_result as $row) {
-		$group = get_entity($row->group_guid);
+		$group = get_entity($row['group_guid']);
 		if (!$group instanceof \ElggGroup) {
 			continue;
 		}
 		
 		$data[] = [
 			elgg_get_excerpt($group->getDisplayName(), 25),
-			(int) $row->total,
+			(int) $row['total'],
 		];
 	}
 }

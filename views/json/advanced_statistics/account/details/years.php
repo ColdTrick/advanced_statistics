@@ -1,7 +1,7 @@
 <?php
 
 use Elgg\Database\Select;
-use Elgg\BadRequestException;
+use Elgg\Exceptions\Http\BadRequestException;
 
 $user = elgg_extract('user', $vars);
 $type = elgg_extract('type', $vars);
@@ -24,14 +24,14 @@ $qb->andWhere($qb->compare('e.subtype', '=', $subtype, ELGG_VALUE_STRING));
 $qb->groupBy("FROM_UNIXTIME(e.time_created, '%Y')");
 $qb->orderBy('year', 'ASC');
 
-$query_result = $qb->execute()->fetchAll();
+$query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
 if ($query_result) {
 	foreach ($query_result as $row) {
 		$data[] = [
-			$row->year,
-			(int) $row->total,
+			$row['year'],
+			(int) $row['total'],
 		];
 	}
 }
