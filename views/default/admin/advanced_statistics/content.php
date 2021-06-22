@@ -34,3 +34,22 @@ echo elgg_view('advanced_statistics/elements/chart', [
 	'section' => 'content',
 	'chart' => 'distribution',
 ]);
+
+echo elgg_view('advanced_statistics/elements/chart', [
+	'title' => elgg_echo('advanced_statistics:content:subscriptions'),
+	'help' => elgg_echo('advanced_statistics:content:subscriptions:help'),
+	'id' => 'advanced-statistics-content-subscriptions',
+	'date_limited' => true,
+	'page' => 'admin_data',
+	'section' => 'content',
+	'chart' => 'subscriptions',
+]);
+
+echo elgg_view('advanced_statistics/elements/chart', [
+	'title' => elgg_echo('advanced_statistics:content:block_subscriptions'),
+	'id' => 'advanced-statistics-content-block-subscriptions',
+	'date_limited' => true,
+	'page' => 'admin_data',
+	'section' => 'content',
+	'chart' => 'block_subscriptions',
+]);

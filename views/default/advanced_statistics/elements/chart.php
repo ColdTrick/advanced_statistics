@@ -1,4 +1,17 @@
 <?php
+/**
+ * Generate a chart info module
+ *
+ * @uses $vars['id']             Unique ID for the chart
+ * @uses $vars['title']          Title of the chart
+ * @uses $vars['help']           Help text below the chart
+ * @uses $vars['page']           Main page which will handle the chart data (@see views/json/advanced_statistics)
+ * @uses $vars['section']        Section in the page
+ * @uses $vars['chart']          Name of the chart
+ * @uses $vars['url_elements']   Additional URL elements
+ * @uses $vars['date_limited']   Is a date range selection supported (default: false)
+ * @uses $vars['container_guid'] Container GUID to limit data to (for groups)
+ */
 
 elgg_require_js('advanced_statistics/charts');
 elgg_require_css('advanced_statistics/jqplot');
@@ -13,7 +26,7 @@ $url_elements = (array) elgg_extract('url_elements', $vars, []);
 $url_elements['section'] = elgg_extract('section', $vars);
 $url_elements['chart'] = elgg_extract('chart', $vars);
 
-if (elgg_extract('date_limited', $vars)) {
+if ((bool) elgg_extract('date_limited', $vars, false)) {
 	$date_part = '';
 	$ts_lower = get_input('ts_lower');
 	$ts_upper = get_input('ts_upper');
@@ -42,6 +55,12 @@ $body = elgg_format_element('div', [
 	'class' => 'advanced-statistics-plot-container',
 	'data-chart-href' => elgg_http_add_url_query_elements("advanced_statistics/{$page}", $url_elements),
 ], elgg_view('graphics/ajax_loader', ['hidden' => false]));
+
+
+$help = elgg_extract('help', $vars);
+if (!elgg_is_empty($help)) {
+	$body .= elgg_format_element('div', ['class' => ['elgg-field-help', 'elgg-text-help']], $help);
+}
 
 echo elgg_view_module('info', $title, $body);
 ?>

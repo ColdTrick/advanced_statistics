@@ -1,10 +1,13 @@
 <?php
 /**
  * This file was created by Translation Editor v8.0
- * On 2021-02-01 13:15
+ * On 2021-06-22 17:21
  */
 
 return array (
+  'advanced_statistics:content:subscriptions' => 'Content abonnementen',
+  'advanced_statistics:content:subscriptions:help' => 'Toont het aantal abonnees op content over tijd, exclusief de eigenaren abonnementen',
+  'advanced_statistics:content:block_subscriptions' => 'Geblokkeerde content abonnementen',
   'advanced_statistics:settings:enable_group_stats' => 'Schakel statistieken voor groepsbeheerders in',
   'advanced_statistics:group:title' => 'Groepsstatistieken',
   'advanced_statistics:group:members' => 'Leden',

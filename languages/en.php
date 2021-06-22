@@ -55,6 +55,9 @@ return [
 	// content
 	'advanced_statistics:content:totals' => 'Content totals',
 	'advanced_statistics:content:distribution' => 'Content container distribution',
+	'advanced_statistics:content:subscriptions' => 'Content subscriptions',
+	'advanced_statistics:content:subscriptions:help' => 'Shows the number of subscribers on content over time, excluding the owner subscriptions.',
+	'advanced_statistics:content:block_subscriptions' => 'Content block subscriptions',
 
 	// system
 	'advanced_statistics:system:files:users' => 'Users with the most files and photos',
