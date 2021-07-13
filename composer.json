@@ -3,7 +3,7 @@
 	"description": "Show more statistics about you Elgg installation",
 	"homepage": "https://www.coldtrick.com",
 	"type": "elgg-plugin",
-	"keywords": ["elgg", "plugin", "stats", "statistics"],
+	"keywords": ["elgg", "plugin", "statistics"],
 	"license": "GPL-2.0-only",
 	"support": {
 		"source": "https://github.com/ColdTrick/advanced_statistics",
