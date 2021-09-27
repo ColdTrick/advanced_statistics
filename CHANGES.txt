@@ -1,6 +1,11 @@
 Version history
 ===============
 
+5.0 (2021-09-27):
+
+- added: content subscription stats
+- changed: updated for Elgg 4
+
 4.2.1 (2021-05-25):
 
 - several small chores/fixes
