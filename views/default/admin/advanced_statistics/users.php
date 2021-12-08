@@ -70,3 +70,23 @@ echo elgg_view('advanced_statistics/elements/chart', [
 	'section' => 'users',
 	'chart' => 'profile_field_usage',
 ]);
+
+if (elgg_is_active_plugin('friends')) {
+	echo elgg_view('advanced_statistics/elements/chart', [
+		'title' => elgg_echo('advanced_statistics:users:friend_bundled'),
+		'id' => 'advanced-statistics-users-friends-bundled',
+		'page' => 'admin_data',
+		'section' => 'users',
+		'chart' => 'friends_bundled',
+	]);
+}
+
+if (elgg_is_active_plugin('groups')) {
+	echo elgg_view('advanced_statistics/elements/chart', [
+		'title' => elgg_echo('advanced_statistics:users:groups_bundled'),
+		'id' => 'advanced-statistics-users-groups-bundled',
+		'page' => 'admin_data',
+		'section' => 'users',
+		'chart' => 'groups_bundled',
+	]);
+}

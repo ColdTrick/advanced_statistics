@@ -97,4 +97,7 @@ return [
 	'advanced_statistics:account:likes:top:title' => "Top 5 most liked content",
 	'advanced_statistics:account:likes:top:description' => "Below is a list of content you wrote which others have liked in the past %d days ordered by the most liked content first.",
 	'advanced_statistics:account:likes:chart' => "Likes over time",
+	
+	'advanced_statistics:users:friend_bundled' => "Aggregated number of friends",
+	'advanced_statistics:users:groups_bundled' => "Aggregated group memberships",
 ];

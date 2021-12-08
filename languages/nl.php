@@ -73,4 +73,6 @@ return array (
   'advanced_statistics:widgets:advanced_statistics:content:no_jqplot' => 'Ververs de pagina om deze widget te laten werken',
   'widgets:online_user_count:name' => 'Online gebruikers teller',
   'widgets:online_user_count:description' => 'Toont het aantal online gebruikers en zal dit automatisch verversen',
+  'advanced_statistics:users:friend_bundled' => "Gegroepeerde aantallen vrienden",
+  'advanced_statistics:users:groups_bundled' => "Gegroepeerde groepslidmaatschappen",
 );
