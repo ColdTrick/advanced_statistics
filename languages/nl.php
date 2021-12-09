@@ -1,10 +1,23 @@
 <?php
 /**
- * This file was created by Translation Editor v8.0
- * On 2021-06-22 17:21
+ * This file was created by Translation Editor v9.0
+ * On 2021-12-09 11:00
  */
 
 return array (
+  'admin:advanced_statistics:notifications' => 'Notificaties',
+  'advanced_statistics:notifications:not_configured' => 'Niet geconfigureerd',
+  'advanced_statistics:notifications:generic_count' => 'Generiek',
+  'advanced_statistics:notifications:specific_count' => 'Specifiek',
+  'advanced_statistics:notifications:generic_vs_specific:help' => 'De manier waarop gebruiker de notificatie voorkeuren hebben ingesteld. Generiek betekend alle notificaties, specifiek betekend alleen bepaalde notificaties (bijv. blog creatie).',
+  'advanced_statistics:notifications:delayed_interval' => 'Geconfigureerde uitgestelde aflever interval',
+  'advanced_statistics:notifications:timed_muting' => 'Tijdelijk uitgeschakelde notificaties gebruik',
+  'advanced_statistics:notifications:timed_muting:previous' => 'Geconfigureerd in het verleden',
+  'advanced_statistics:notifications:timed_muting:active' => 'Nu actief',
+  'advanced_statistics:notifications:timed_muting:scheduled' => 'Ingepland voor gebruik',
+  'advanced_statistics:notifications:user_configured_methods' => 'Geconfigureerde aflever methodes',
+  'advanced_statistics:notifications:users_generic_vs_specific' => 'Notificatie voorkeuren voor vrienden',
+  'advanced_statistics:notifications:groups_generic_vs_specific' => 'Notificatie voorkeuren voor groepen',
   'advanced_statistics:content:subscriptions' => 'Content abonnementen',
   'advanced_statistics:content:subscriptions:help' => 'Toont het aantal abonnees op content over tijd, exclusief de eigenaren abonnementen',
   'advanced_statistics:content:block_subscriptions' => 'Geblokkeerde content abonnementen',
@@ -73,6 +86,6 @@ return array (
   'advanced_statistics:widgets:advanced_statistics:content:no_jqplot' => 'Ververs de pagina om deze widget te laten werken',
   'widgets:online_user_count:name' => 'Online gebruikers teller',
   'widgets:online_user_count:description' => 'Toont het aantal online gebruikers en zal dit automatisch verversen',
-  'advanced_statistics:users:friend_bundled' => "Gegroepeerde aantallen vrienden",
-  'advanced_statistics:users:groups_bundled' => "Gegroepeerde groepslidmaatschappen",
+  'advanced_statistics:users:friend_bundled' => 'Gegroepeerde aantallen vrienden',
+  'advanced_statistics:users:groups_bundled' => 'Gegroepeerde groepslidmaatschappen',
 );

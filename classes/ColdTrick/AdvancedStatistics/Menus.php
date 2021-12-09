@@ -25,7 +25,7 @@ class Menus {
 			'section' => 'information',
 		]);
 		
-		$sections = ['users', 'groups', 'content', 'activity', 'widgets', 'system'];
+		$sections = ['users', 'groups', 'content', 'activity', 'widgets', 'notifications', 'system'];
 		foreach ($sections as $section) {
 			$return_value[] = \ElggMenuItem::factory([
 				'name' => "information:advanced_statistics:{$section}",

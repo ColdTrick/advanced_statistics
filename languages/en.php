@@ -21,6 +21,7 @@ return [
 	'admin:advanced_statistics:activity' => 'Activity',
 	'admin:advanced_statistics:widgets' => 'Widgets',
 	'admin:advanced_statistics:system' => 'System',
+	'admin:advanced_statistics:notifications' => 'Notifications',
 	
 	// date selection
 	'advanced_statistics:date_selection:title_button' => 'Show date selection',
@@ -100,4 +101,21 @@ return [
 	
 	'advanced_statistics:users:friend_bundled' => "Aggregated number of friends",
 	'advanced_statistics:users:groups_bundled' => "Aggregated group memberships",
+	
+	// notifications
+	'advanced_statistics:notifications:not_configured' => "Not configured",
+	'advanced_statistics:notifications:generic_count' => "Generic",
+	'advanced_statistics:notifications:specific_count' => "Specific",
+	'advanced_statistics:notifications:generic_vs_specific:help' => "The way users configured notification preferences. Generic means all notifications, specific means only certain notifications (eg. blog creation).",
+	
+	'advanced_statistics:notifications:delayed_interval' => "Configured delayed delivery interval",
+	
+	'advanced_statistics:notifications:timed_muting' => "Temporarily disabled notification usage",
+	'advanced_statistics:notifications:timed_muting:previous' => "Configured in the past",
+	'advanced_statistics:notifications:timed_muting:active' => "Currently active",
+	'advanced_statistics:notifications:timed_muting:scheduled' => "Scheduled for use",
+	
+	'advanced_statistics:notifications:user_configured_methods' => "Configured delivery methods",
+	'advanced_statistics:notifications:users_generic_vs_specific' => "Friends notification preferences",
+	'advanced_statistics:notifications:groups_generic_vs_specific' => "Groups notification preferences",
 ];
