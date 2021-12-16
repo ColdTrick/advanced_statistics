@@ -1,6 +1,11 @@
 Version history
 ===============
 
+5.1 (2021-12-16):
+
+- added: aggragated user stats
+- added: notification statistics
+
 5.0 (2021-09-27):
 
 - added: content subscription stats
