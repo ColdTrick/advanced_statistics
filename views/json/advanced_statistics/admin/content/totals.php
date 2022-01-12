@@ -6,11 +6,13 @@ $result = [
 	'options' => advanced_statistics_get_default_chart_options('bar'),
 ];
 
+$searchable_subtypes = elgg_extract('object', elgg_entity_types_with_capability('searchable'), []);
+
 $qb = Select::fromTable('entities', 'e');
 $qb->select('e.subtype as subtype');
 $qb->addSelect('count(*) AS total');
 $qb->where("e.type = 'object'");
-$qb->andWhere($qb->compare('e.subtype', '=', get_registered_entity_types('object'), ELGG_VALUE_STRING));
+$qb->andWhere($qb->compare('e.subtype', '=', $searchable_subtypes, ELGG_VALUE_STRING));
 $qb->groupBy('e.subtype');
 $qb->orderBy('total', 'desc');
 

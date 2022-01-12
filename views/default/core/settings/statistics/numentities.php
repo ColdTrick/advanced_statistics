@@ -26,7 +26,7 @@ foreach ($entity_stats as $type => $entry) {
 		
 		$cells = [];
 		
-		$registered_subtypes = get_registered_entity_types($type);
+		$registered_subtypes = elgg_extract($type, elgg_entity_types_with_capability('searchable'), []);
 		if (in_array($subtype, $registered_subtypes)) {
 			// is searchable, so show to user
 			$cells[] = elgg_format_element('td', ['class' => 'column-one'], $content_type);
