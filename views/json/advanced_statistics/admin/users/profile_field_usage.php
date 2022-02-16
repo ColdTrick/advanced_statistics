@@ -4,19 +4,15 @@ $result = [
 	'options' => advanced_statistics_get_default_chart_options('bar'),
 ];
 
-$total_users_count = elgg_get_entities([
-	'type' => 'user',
-	'count' => true,
-]);
+$total_users_count = elgg_count_entities(['type' => 'user']);
 
 $data = [];
 $ticks = [];
 
 $profile_fields = elgg()->fields->get('user', 'user');
 foreach ($profile_fields as $field) {
-	$field_total = elgg_get_entities([
+	$field_total = elgg_count_entities([
 		'type' => 'user',
-		'count' => true,
 		'metadata_name' => $field['name'],
 	]);
 		
