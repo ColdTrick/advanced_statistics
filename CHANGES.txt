@@ -1,6 +1,12 @@
 Version history
 ===============
 
+6.0 (2022-02-16):
+
+- changed: use new Elgg 4.1 field layout options
+- fixed: fallback to name if label missing for profile field usage
+- fixed: user status shows correct data
+
 5.1 (2021-12-16):
 
 - added: aggragated user stats
