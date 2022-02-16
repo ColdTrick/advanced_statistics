@@ -14,14 +14,13 @@ $ticks = [];
 
 $profile_fields = elgg()->fields->get('user', 'user');
 foreach ($profile_fields as $field) {
-	
 	$field_total = elgg_get_entities([
 		'type' => 'user',
 		'count' => true,
 		'metadata_name' => $field['name'],
 	]);
 		
-	$ticks[] = elgg_get_excerpt($field['#label'], 25);
+	$ticks[] = elgg_get_excerpt(elgg_extract('#label', $field, $field['name']), 25);
 	$data[] = round(($field_total * 100) / $total_users_count);
 }
 
