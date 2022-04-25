@@ -8,71 +8,62 @@ $result = [
 
 $qb = Select::fromTable('river', 'r');
 $qb->select('DISTINCT ge.guid');
-$qb->join('r', 'entities', 'e' , 'r.object_guid = e.guid');
-$qb->join('e', 'entities', 'ge' , 'e.container_guid = ge.guid');
-$qb->where("ge.type = 'group'");
-$qb->andWhere("ge.enabled = 'yes'");
+$qb->joinEntitiesTable('r', 'object_guid', 'inner', 'e');
+$qb->joinEntitiesTable('e', 'container_guid', 'inner', 'ge');
+$qb->where($qb->compare('ge.type', '=', 'group', ELGG_VALUE_STRING));
+$qb->andWhere($qb->compare('ge.enabled', '=', 'yes', ELGG_VALUE_STRING));
 
 // activity in last month
-$month = time() - (30 * 24 * 60 * 60);
-
-$month_qb = $qb;
-$month_qb->andWhere("r.posted >= {$month}");
+$month_qb = clone $qb;
+$month_qb->andWhere($month_qb->compare('r.posted', '>=', \Elgg\Values::normalizeTimestamp('-30 days'), ELGG_VALUE_TIMESTAMP));
 
 $total = $month_qb->execute()->rowCount();
 $data[] = [
-	elgg_echo("advanced_statistics:groups:dead_vs_alive:last_month", [$total]),
+	elgg_echo('advanced_statistics:groups:dead_vs_alive:last_month', [$total]),
 	$total,
 ];
+$previous_total = $total;
 
 // activity in last 3 months
-$threemonth = time() - (90 * 24 * 60 * 60);
-
-$three_month_qb = $qb;
-$three_month_qb->andWhere("r.posted >= {$threemonth}");
-$three_month_qb->andWhere($three_month_qb->compare('ge.guid', 'NOT IN', $month_qb->getSQL()));
+$three_month_qb = clone $qb;
+$three_month_qb->andWhere($three_month_qb->compare('r.posted', '>=', \Elgg\Values::normalizeTimestamp('-90 days'), ELGG_VALUE_TIMESTAMP));
 
 $total = $three_month_qb->execute()->rowCount();
 $data[] = [
-	elgg_echo("advanced_statistics:groups:dead_vs_alive:3_months", [$total]),
-	$total,
+	elgg_echo('advanced_statistics:groups:dead_vs_alive:3_months', [$total - $previous_total]),
+	$total - $previous_total,
 ];
+$previous_total = $total;
 
 // activity in last 6 months
-$sixmonth = time() - (180 * 24 * 60 * 60);
-
-$six_month_qb = $qb;
-$six_month_qb->andWhere("r.posted >= {$sixmonth}");
-$six_month_qb->andWhere($six_month_qb->compare('ge.guid', 'NOT IN', $three_month_qb->getSQL()));
+$six_month_qb = clone $qb;
+$six_month_qb->andWhere($six_month_qb->compare('r.posted', '>=', \Elgg\Values::normalizeTimestamp('-180 days'), ELGG_VALUE_TIMESTAMP));
 
 $total = $six_month_qb->execute()->rowCount();
 $data[] = [
-	elgg_echo("advanced_statistics:groups:dead_vs_alive:6_months", [$total]),
-	$total,
+	elgg_echo('advanced_statistics:groups:dead_vs_alive:6_months', [$total - $previous_total]),
+	$total - $previous_total,
 ];
+$previous_total = $total;
 
 // activity in last year
-$year = time() - (365 * 24 * 60 * 60);
-
-$year_qb = $qb;
-$year_qb->andWhere("r.posted >= {$year}");
-$year_qb->andWhere($year_qb->compare('ge.guid', 'NOT IN', $six_month_qb->getSQL()));
+$year_qb = clone $qb;
+$year_qb->andWhere($year_qb->compare('r.posted', '>=', \Elgg\Values::normalizeTimestamp('-365 days'), ELGG_VALUE_TIMESTAMP));
 
 $total = $year_qb->execute()->rowCount();
 $data[] = [
-	elgg_echo("advanced_statistics:groups:dead_vs_alive:year", [$total]),
-	$total,
+	elgg_echo('advanced_statistics:groups:dead_vs_alive:year', [$total - $previous_total]),
+	$total - $previous_total,
 ];
+$previous_total = $total;
 
 // activity < last year
-$dead_qb = $qb;
-$dead_qb->andWhere("r.posted < {$year}");
-$dead_qb->andWhere($dead_qb->compare('ge.guid', 'NOT IN', $year_qb->getSQL()));
+$dead_qb = clone $qb;
 
 $total = $dead_qb->execute()->rowCount();
 $data[] = [
-	elgg_echo("advanced_statistics:groups:dead_vs_alive:more_year", [$total]),
-	$total,
+	elgg_echo('advanced_statistics:groups:dead_vs_alive:more_year', [$total - $previous_total]),
+	$total - $previous_total,
 ];
 
 $result['data'] = [$data];

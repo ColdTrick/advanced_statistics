@@ -32,9 +32,6 @@ foreach ($methods as $method) {
 	];
 	$temp_qb->andWhere($temp_qb->merge($ors, 'OR'));
 	
-	error_log($temp_qb->getSQL());
-	error_log(var_export($temp_qb->getParameters(), true));
-	
 	$db_result = $temp_qb->executeQuery();
 	
 	$data[] = $db_result->rowCount();

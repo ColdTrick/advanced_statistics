@@ -27,7 +27,7 @@ $data = [];
 if ($query_result) {
 	foreach ($query_result as $row) {
 		$data[] = [
-			elgg_language_key_exists("item:object:{$row['subtype']}") ? elgg_echo("item:object:{$row['subtype']}") : ucfirst($row->subtype),
+			elgg_language_key_exists("item:object:{$row['subtype']}") ? elgg_echo("item:object:{$row['subtype']}") : ucfirst($row['subtype']),
 			(int) $row['total'],
 		];
 	}

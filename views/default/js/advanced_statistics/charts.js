@@ -1,20 +1,19 @@
-define(function(require) {
-	
-	var $ = require('jquery');
-	var elgg = require('elgg');
-	var Ajax = require('elgg/Ajax');
-	require('jqplot/jquery.jqplot');
+define(['jquery', 'jqplot/jquery.jqplot'], function($) {
 	
 	var advancedStatistics = {
 		init: function (selector) {
-			require(['jqplot/plugins/jqplot.pieRenderer', 
+			require([
+					'elgg/i18n',
+					'elgg/Ajax',
+					'jqplot/plugins/jqplot.pieRenderer', 
 			 		'jqplot/plugins/jqplot.barRenderer', 
 			 		'jqplot/plugins/jqplot.categoryAxisRenderer', 
 			 		'jqplot/plugins/jqplot.canvasAxisTickRenderer', 
 			 		'jqplot/plugins/jqplot.canvasTextRenderer', 
 			 		'jqplot/plugins/jqplot.dateAxisRenderer', 
 			 		'jqplot/plugins/jqplot.pointLabels', 
-			 		'jqplot/plugins/jqplot.highlighter' ], function() {
+			 		'jqplot/plugins/jqplot.highlighter'
+				], function(i18n, Ajax) {
 			 			
 				// initialize the plots
 				$(selector).each(function(){
@@ -22,7 +21,7 @@ define(function(require) {
 					var $target = $(this);
 					
 					if (!$.jqplot) {
-						$target.html(elgg.echo('advanced_statistics:widgets:advanced_statistics:content:no_jqplot'));
+						$target.html(i18n.echo('advanced_statistics:widgets:advanced_statistics:content:no_jqplot'));
 						return;
 					}
 					
@@ -56,7 +55,7 @@ define(function(require) {
 								$target.html(''); // remove loader
 								$.jqplot($target.attr('id'), result.data, options);
 							} else {
-								$target.html(elgg.echo('notfound'));
+								$target.html(i18n.echo('notfound'));
 							}
 						},
 						data: {
