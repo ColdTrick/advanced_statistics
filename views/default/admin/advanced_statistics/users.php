@@ -1,15 +1,17 @@
 <?php
 /**
- *     25 users with most friends (bars)
-    25 most friended users (most followers)
-    25 most used emaildomains (bar)
-    Language distribution (pie)
-    Account creation over time (line)
-    Active vs Unvalidated vs Banned (pie)
-    Last login < 1 month < 3 months < 6 months < 1 year (pie)
-    Profile fields usage (pie)
-    Profile Completeness (with PM plugin)
+ * 25 users with most friends (bars)
+ * 25 most friended users (most followers)
+ * 25 most used emaildomains (bar)
+ * Language distribution (pie)
+ * Account creation over time (line)
+ * Active vs Unvalidated vs Banned (pie)
+ * Last login < 1 month < 3 months < 6 months < 1 year (pie)
+ * Profile fields usage (pie)
+ * Profile Completeness (with PM plugin)
  */
+
+$include_banned_users = (bool) elgg_get_plugin_setting('include_banned_users', 'advanced_statistics');
 
 echo elgg_view('advanced_statistics/date_selector');
 
@@ -27,6 +29,7 @@ echo elgg_view('advanced_statistics/elements/chart', [
 	'page' => 'admin_data',
 	'section' => 'users',
 	'chart' => 'most_used_domains',
+	'include_banned_users' => $include_banned_users,
 ]);
 
 echo elgg_view('advanced_statistics/elements/chart', [
@@ -61,6 +64,7 @@ echo elgg_view('advanced_statistics/elements/chart', [
 	'page' => 'admin_data',
 	'section' => 'users',
 	'chart' => 'language_distribution',
+	'include_banned_users' => $include_banned_users,
 ]);
 
 echo elgg_view('advanced_statistics/elements/chart', [
@@ -69,6 +73,7 @@ echo elgg_view('advanced_statistics/elements/chart', [
 	'page' => 'admin_data',
 	'section' => 'users',
 	'chart' => 'profile_field_usage',
+	'include_banned_users' => $include_banned_users,
 ]);
 
 if (elgg_is_active_plugin('friends')) {
@@ -78,6 +83,7 @@ if (elgg_is_active_plugin('friends')) {
 		'page' => 'admin_data',
 		'section' => 'users',
 		'chart' => 'friends_bundled',
+		'include_banned_users' => $include_banned_users,
 	]);
 }
 
@@ -88,5 +94,6 @@ if (elgg_is_active_plugin('groups')) {
 		'page' => 'admin_data',
 		'section' => 'users',
 		'chart' => 'groups_bundled',
+		'include_banned_users' => $include_banned_users,
 	]);
 }

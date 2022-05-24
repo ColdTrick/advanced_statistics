@@ -9,19 +9,30 @@ $result = [
 $qb = Select::fromTable('private_settings', 'ps');
 $qb->select('ps.value');
 $qb->addSelect('count(*) AS total');
-$qb->join('ps', 'entities', 'e', 'ps.entity_guid = e.guid');
-$qb->where("e.type = 'user'");
-$qb->andWhere("ps.name = 'delayed_email_interval'");
+$e = $qb->joinEntitiesTable('ps', 'entity_guid');
+$md2 = $qb->joinMetadataTable('ps', 'entity_guid', 'banned');
+$qb->where($qb->compare("{$e}.type", '=', 'user', ELGG_VALUE_STRING));
+$qb->andWhere($qb->compare("{$e}.enabled", '=', 'yes', ELGG_VALUE_STRING));
+$qb->andWhere($qb->compare('ps.name', '=', 'delayed_email_interval', ELGG_VALUE_STRING));
+$qb->andWhere($qb->compare("{$md2}.value", '=', 'no', ELGG_VALUE_STRING));
 $qb->groupBy('ps.value');
+$qb->orderBy('total', 'desc');
 
 $data = [];
 $intervals = [];
 
-$total_user_count = elgg_count_entities(['type' => 'user']);
+$total_user_count = elgg_count_entities([
+	'type' => 'user',
+	'metadata_name_value_pairs' => [
+		'name' => 'banned',
+		'value' => 'no',
+		'case_sensitive' => false,
+	],
+]);
 
 $db_result = elgg()->db->getData($qb);
 foreach ($db_result as $row) {
-	$interval_count = (int) $row->total;;
+	$interval_count = (int) $row->total;
 	$intervals[$row->value] = $interval_count;
 	
 	$total_user_count -= $interval_count;

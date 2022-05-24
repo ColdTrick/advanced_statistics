@@ -10,6 +10,7 @@ return [
 	],
 	'settings' => [
 		'enable_group_stats' => 'no',
+		'include_banned_users' => 1,
 	],
 	'views' => [
 		'default' => [

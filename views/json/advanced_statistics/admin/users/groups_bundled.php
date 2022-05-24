@@ -9,12 +9,18 @@ $result = [
 $qb = Select::fromTable('entity_relationships', 'r');
 $qb->select('r.guid_one');
 $qb->addSelect('count(*) AS total');
-$qb->join('r', 'entities', 'e', 'r.guid_one = e.guid');
-$qb->join('r', 'entities', 'e2', 'r.guid_two = e2.guid');
-$qb->where("e.type = 'user'");
-$qb->where("e2.type = 'group'");
-$qb->andWhere("r.relationship = 'member'");
+$ue = $qb->joinEntitiesTable('r', 'guid_one');
+$ge = $qb->joinEntitiesTable('r', 'guid_two');
+$qb->where($qb->compare("{$ue}.type", '=', 'user', ELGG_VALUE_STRING));
+$qb->andWhere($qb->compare("{$ue}.enabled", '=', 'yes', ELGG_VALUE_STRING));
+$qb->andWhere($qb->compare("{$ge}.type", '=', 'group', ELGG_VALUE_STRING));
+$qb->andWhere($qb->compare('r.relationship', '=', 'member', ELGG_VALUE_STRING));
 $qb->groupBy('r.guid_one');
+
+if (!(bool) elgg_extract('include_banned_users', $vars, true)) {
+	$md2 = $qb->joinMetadataTable('r', 'guid_one', 'banned');
+	$qb->andWhere($qb->compare("{$md2}.value", '=', 'no', ELGG_VALUE_STRING));
+}
 
 $data = [];
 

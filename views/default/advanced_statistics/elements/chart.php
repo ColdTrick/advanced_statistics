@@ -2,15 +2,16 @@
 /**
  * Generate a chart info module
  *
- * @uses $vars['id']             Unique ID for the chart
- * @uses $vars['title']          Title of the chart
- * @uses $vars['help']           Help text below the chart
- * @uses $vars['page']           Main page which will handle the chart data (@see views/json/advanced_statistics)
- * @uses $vars['section']        Section in the page
- * @uses $vars['chart']          Name of the chart
- * @uses $vars['url_elements']   Additional URL elements
- * @uses $vars['date_limited']   Is a date range selection supported (default: false)
- * @uses $vars['container_guid'] Container GUID to limit data to (for groups)
+ * @uses $vars['id']                   Unique ID for the chart
+ * @uses $vars['title']                Title of the chart
+ * @uses $vars['help']                 Help text below the chart
+ * @uses $vars['page']                 Main page which will handle the chart data (@see views/json/advanced_statistics)
+ * @uses $vars['section']              Section in the page
+ * @uses $vars['chart']                Name of the chart
+ * @uses $vars['url_elements']         Additional URL elements
+ * @uses $vars['date_limited']         Is a date range selection supported (default: false)
+ * @uses $vars['container_guid']       Container GUID to limit data to (for groups)
+ * @uses $vars['include_banned_users'] Will banned users be included in this chart (default: true)
  */
 
 elgg_require_js('advanced_statistics/charts');
@@ -48,6 +49,11 @@ if ((bool) elgg_extract('date_limited', $vars, false)) {
 $container_guid = elgg_extract('container_guid', $vars);
 if ($container_guid) {
 	$url_elements['container_guid'] = $container_guid;
+}
+
+$url_elements['include_banned_users'] = (int) elgg_extract('include_banned_users', $vars, true);
+if (!(bool) elgg_extract('include_banned_users', $vars, true)) {
+	$title .= ' - ' . elgg_echo('advanced_statistics:chart:exclude_banned_users');
 }
 
 $body = elgg_format_element('div', [

@@ -9,10 +9,16 @@ $result = [
 $qb = Select::fromTable('entity_relationships', 'r');
 $qb->select('r.guid_one');
 $qb->addSelect('count(*) AS total');
-$qb->join('r', 'entities', 'e', 'r.guid_one = e.guid');
-$qb->where("e.type = 'user'");
-$qb->andWhere("r.relationship = 'friend'");
+$e = $qb->joinEntitiesTable('r', 'guid_one');
+$qb->where($qb->compare("{$e}.type", '=', 'user', ELGG_VALUE_STRING));
+$qb->andWhere($qb->compare("{$e}.enabled", '=', 'yes', ELGG_VALUE_STRING));
+$qb->andWhere($qb->compare('r.relationship', '=', 'friend', ELGG_VALUE_STRING));
 $qb->groupBy('r.guid_one');
+
+if (!(bool) elgg_extract('include_banned_users', $vars, true)) {
+	$md2 = $qb->joinMetadataTable('r', 'guid_one', 'banned');
+	$qb->andWhere($qb->compare("{$md2}.value", '=', 'no', ELGG_VALUE_STRING));
+}
 
 $data = [];
 

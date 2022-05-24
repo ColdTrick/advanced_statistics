@@ -7,12 +7,18 @@ $result = [
 ];
 
 $qb = Select::fromTable('entities', 'e');
-$qb->select('md.value as language');
+$md1 = $qb->joinMetadataTable('e', 'guid', 'language');
+
+$qb->select("{$md1}.value as language");
 $qb->addSelect('count(*) AS total');
-$qb->join('e', 'metadata', 'md', 'md.entity_guid = e.guid');
-$qb->where("e.type = 'user'");
-$qb->andWhere("md.name = 'language'");
-$qb->groupBy('md.value');
+$qb->where($qb->compare('e.type', '=', 'user', ELGG_VALUE_STRING));
+$qb->groupBy("{$md1}.value");
+$qb->orderBy('total', 'desc');
+
+if (!(bool) elgg_extract('include_banned_users', $vars, true)) {
+	$md2 = $qb->joinMetadataTable('e', 'guid', 'banned');
+	$qb->andWhere($qb->compare("{$md2}.value", '=', 'no', ELGG_VALUE_STRING));
+}
 
 $query_result = $qb->execute()->fetchAllAssociative();
 

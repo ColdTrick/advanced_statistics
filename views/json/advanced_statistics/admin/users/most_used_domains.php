@@ -7,14 +7,19 @@ $result = [
 ];
 
 $qb = Select::fromTable('entities', 'e');
-$qb->select("SUBSTRING_INDEX(md.value, '@', -1) AS domain");
+$md1 = $qb->joinMetadataTable('e', 'guid', 'email');
+
+$qb->select("SUBSTRING_INDEX({$md1}.value, '@', -1) AS domain");
 $qb->addSelect('count(*) AS total');
-$qb->join('e', 'metadata', 'md', 'md.entity_guid = e.guid');
-$qb->where("e.type = 'user'");
-$qb->andWhere("md.name = 'email'");
-$qb->groupBy("SUBSTRING_INDEX(md.value, '@', -1)");
+$qb->where($qb->compare('e.type', '=', 'user', ELGG_VALUE_STRING));
+$qb->groupBy("SUBSTRING_INDEX({$md1}.value, '@', -1)");
 $qb->orderBy('total', 'desc');
 $qb->setMaxResults(10);
+
+if (!(bool) elgg_extract('include_banned_users', $vars, true)) {
+	$md2 = $qb->joinMetadataTable('e', 'guid', 'banned');
+	$qb->andWhere($qb->compare("{$md2}.value", '=', 'no', ELGG_VALUE_STRING));
+}
 
 $query_result = $qb->execute()->fetchAllAssociative();
 

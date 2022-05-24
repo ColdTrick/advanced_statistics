@@ -4,10 +4,22 @@ $result = [
 	'options' => advanced_statistics_get_default_chart_options('pie'),
 ];
 
-$total_user_count = elgg_count_entities(['type' => 'user']);
+$total_user_count = elgg_count_entities([
+	'type' => 'user',
+	'metadata_name_value_pairs' => [
+		'name' => 'banned',
+		'value' => 'no',
+		'case_sensitive' => false,
+	],
+]);
 
 $previously_used = elgg_count_entities([
 	'type' => 'user',
+	'metadata_name_value_pairs' => [
+		'name' => 'banned',
+		'value' => 'no',
+		'case_sensitive' => false,
+	],
 	'private_setting_name_value_pairs' => [
 		[
 			'name' => 'timed_muting_end',
@@ -18,6 +30,11 @@ $previously_used = elgg_count_entities([
 ]);
 $active = elgg_count_entities([
 	'type' => 'user',
+	'metadata_name_value_pairs' => [
+		'name' => 'banned',
+		'value' => 'no',
+		'case_sensitive' => false,
+	],
 	'private_setting_name_value_pairs' => [
 		[
 			'name' => 'timed_muting_start',
@@ -34,6 +51,11 @@ $active = elgg_count_entities([
 
 $scheduled = elgg_count_entities([
 	'type' => 'user',
+	'metadata_name_value_pairs' => [
+		'name' => 'banned',
+		'value' => 'no',
+		'case_sensitive' => false,
+	],
 	'private_setting_name_value_pairs' => [
 		[
 			'name' => 'timed_muting_start',

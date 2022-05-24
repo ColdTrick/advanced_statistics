@@ -10,16 +10,29 @@ $result = [
 $qb = Select::fromTable('entity_relationships', 'r');
 $qb->select('r.guid_one');
 $qb->addSelect('count(*) AS total');
-$qb->join('r', 'entities', 'e', 'r.guid_one = e.guid');
-$qb->join('r', 'entities', 'e2', 'r.guid_two = e2.guid');
-$qb->where("e.type = 'user'");
-$qb->andWhere("e2.type = 'user' OR e2.type = 'group'");
+$ue = $qb->joinEntitiesTable('r', 'guid_one');
+$oe = $qb->joinEntitiesTable('r', 'guid_two');
+$md2 = $qb->joinMetadataTable('r', 'guid_one', 'banned');
+$qb->where($qb->compare("{$ue}.type", '=', 'user', ELGG_VALUE_STRING));
+$qb->andWhere($qb->compare("{$ue}.enabled", '=', 'yes', ELGG_VALUE_STRING));
+$qb->andWhere($qb->compare("{$md2}.value", '=', 'no', ELGG_VALUE_STRING));
+$qb->andWhere($qb->merge([
+	$qb->compare("{$oe}.type", '=', 'user', ELGG_VALUE_STRING),
+	$qb->compare("{$oe}.type", '=', 'group', ELGG_VALUE_STRING),
+], 'OR'));
 $qb->groupBy('r.guid_one');
 
 $data = [];
 $ticks = [];
 
-$data[] = elgg_count_entities(['type' => 'user']);
+$data[] = elgg_count_entities([
+	'type' => 'user',
+	'metadata_name_value_pairs' => [
+		'name' => 'banned',
+		'value' => 'no',
+		'case_sensitive' => false,
+	],
+]);
 $ticks[] = elgg_echo('admin:statistics:label:numusers');
 
 $methods = elgg_get_notification_methods();

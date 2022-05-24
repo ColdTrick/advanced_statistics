@@ -10,10 +10,13 @@ $result = [
 $qb = Select::fromTable('entity_relationships', 'r');
 $qb->select('r.guid_one');
 $qb->addSelect('count(*) AS total');
-$qb->join('r', 'entities', 'e', 'r.guid_one = e.guid');
-$qb->join('r', 'entities', 'e2', 'r.guid_two = e2.guid');
-$qb->where($qb->compare('e.type', '=', 'user', ELGG_VALUE_STRING));
-$qb->andWhere($qb->compare('e2.type', '=', 'group', ELGG_VALUE_STRING));
+$ue = $qb->joinEntitiesTable('r', 'guid_one');
+$ge = $qb->joinEntitiesTable('r', 'guid_two');
+$md2 = $qb->joinMetadataTable('r', 'guid_one', 'banned');
+$qb->where($qb->compare("{$ue}.type", '=', 'user', ELGG_VALUE_STRING));
+$qb->andWhere($qb->compare("{$ue}.enabled", '=', 'yes', ELGG_VALUE_STRING));
+$qb->andWhere($qb->compare("{$ge}.type", '=', 'group', ELGG_VALUE_STRING));
+$qb->andWhere($qb->compare("{$md2}.value", '=', 'no', ELGG_VALUE_STRING));
 $qb->groupBy('r.guid_one');
 
 $specific = clone $qb;
@@ -37,7 +40,14 @@ $specific_result = $specific->executeQuery();
 $data = [];
 $ticks = [];
 
-$data[] = elgg_count_entities(['type' => 'user']);
+$data[] = elgg_count_entities([
+	'type' => 'user',
+	'metadata_name_value_pairs' => [
+		'name' => 'banned',
+		'value' => 'no',
+		'case_sensitive' => false,
+	],
+]);
 $ticks[] = elgg_echo('admin:statistics:label:numusers');
 
 $data[] = $generic_result->rowCount();

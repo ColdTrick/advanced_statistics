@@ -4,6 +4,11 @@ return [
 	
 	// settings
 	'advanced_statistics:settings:enable_group_stats' => "Enable statistics for group admins",
+	'advanced_statistics:settings:include_banned_users' => "Include banned users in statistics",
+	'advanced_statistics:settings:include_banned_users:help' => "Include banned users in certain user related statistics (eg. profile field usage).",
+	
+	// generic
+	'advanced_statistics:chart:exclude_banned_users' => "banned users are excluded from this chart",
 	
 	// group statistics
 	'advanced_statistics:group:title' => "Group statistics",
