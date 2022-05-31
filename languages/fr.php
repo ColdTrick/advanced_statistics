@@ -24,13 +24,6 @@ return array(
 	'advanced_statistics:activity:day' => 'Activité quotidienne',
 	'advanced_statistics:activity:hour' => 'Activité horaire',
 	'advanced_statistics:activity:timeline' => 'Activité globale',
-	'advanced_statistics:activity:day:1' => 'Dimanche',
-	'advanced_statistics:activity:day:2' => 'Lundi',
-	'advanced_statistics:activity:day:3' => 'Mardi',
-	'advanced_statistics:activity:day:4' => 'Mercredi',
-	'advanced_statistics:activity:day:5' => 'Jeudi',
-	'advanced_statistics:activity:day:6' => 'Vendredi',
-	'advanced_statistics:activity:day:7' => 'Samedi',
 	
 	// widgets
 	'advanced_statistics:widgets:handlers' => 'Gestionnaires des widgets',

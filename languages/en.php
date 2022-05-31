@@ -46,14 +46,7 @@ return [
 	'advanced_statistics:activity:day' => 'Activity per day',
 	'advanced_statistics:activity:hour' => 'Activity per hour',
 	'advanced_statistics:activity:timeline' => 'Activity over time',
-	'advanced_statistics:activity:day:1' => 'Sunday',
-	'advanced_statistics:activity:day:2' => 'Monday',
-	'advanced_statistics:activity:day:3' => 'Tuesday',
-	'advanced_statistics:activity:day:4' => 'Wednesday',
-	'advanced_statistics:activity:day:5' => 'Thursday',
-	'advanced_statistics:activity:day:6' => 'Friday',
-	'advanced_statistics:activity:day:7' => 'Saturday',
-
+	
 	// widgets
 	'advanced_statistics:widgets:handlers' => 'Widget handlers',
 	'advanced_statistics:widgets:context' => 'Widget context',
