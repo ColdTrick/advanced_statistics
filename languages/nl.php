@@ -1,10 +1,13 @@
 <?php
 /**
- * This file was created by Translation Editor v9.0
- * On 2021-12-09 11:00
+ * This file was created by Translation Editor v9.0.2
+ * On 2022-05-31 11:42
  */
 
 return array (
+  'advanced_statistics:settings:include_banned_users' => 'Geblokkeerde gebruikers meenemen in de statistieken',
+  'advanced_statistics:settings:include_banned_users:help' => 'Neem de geblokkeerde gebruikers mee in sommige statistieken (bijv. profielvel gebruik).',
+  'advanced_statistics:chart:exclude_banned_users' => 'geblokkeerde gebruikers zijn uitgesloten in deze grafiek',
   'admin:advanced_statistics:notifications' => 'Notificaties',
   'advanced_statistics:notifications:not_configured' => 'Niet geconfigureerd',
   'advanced_statistics:notifications:generic_count' => 'Generiek',
