@@ -12,6 +12,7 @@ $md1 = $qb->joinMetadataTable('e', 'guid', 'language');
 $qb->select("{$md1}.value as language");
 $qb->addSelect('count(*) AS total');
 $qb->where($qb->compare('e.type', '=', 'user', ELGG_VALUE_STRING));
+$qb->where($qb->compare('e.enabled', '=', 'yes', ELGG_VALUE_STRING));
 $qb->groupBy("{$md1}.value");
 $qb->orderBy('total', 'desc');
 
