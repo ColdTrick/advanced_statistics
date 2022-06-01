@@ -1,6 +1,13 @@
 Version history
 ===============
 
+7.0 (2022-06-01):
+
+- added: plugin setting to exclude banned users from some charts
+- changed: updated for Elgg 4.2
+- fixed: no longer count disabled users in graph
+- fixed: show user content statistics
+
 6.0 (2022-02-16):
 
 - changed: use new Elgg 4.1 field layout options
