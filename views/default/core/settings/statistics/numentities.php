@@ -3,13 +3,12 @@
  * Elgg statistics screen
  */
 
-$user = elgg_get_page_owner_entity();
+$user = elgg_extract('entity', $vars, elgg_get_page_owner_entity()); // page owner for BC reasons
 if (!$user instanceof ElggUser) {
 	return;
 }
 
 $entity_stats = get_entity_statistics($user->guid);
-
 if (empty($entity_stats)) {
 	return;
 }
