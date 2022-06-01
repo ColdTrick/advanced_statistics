@@ -17,9 +17,20 @@ $qb->andWhere($qb->compare("{$ge}.type", '=', 'group', ELGG_VALUE_STRING));
 $qb->andWhere($qb->compare('r.relationship', '=', 'member', ELGG_VALUE_STRING));
 $qb->groupBy('r.guid_one');
 
+$base_options = [
+	'type' => 'user',
+	'metadata_name_value_pairs' => [],
+];
+
 if (!(bool) elgg_extract('include_banned_users', $vars, true)) {
 	$md2 = $qb->joinMetadataTable('r', 'guid_one', 'banned');
 	$qb->andWhere($qb->compare("{$md2}.value", '=', 'no', ELGG_VALUE_STRING));
+	
+	$base_options['metadata_name_value_pairs'][] = [
+		'name' => 'banned',
+		'value' => 'no',
+		'case_sensitive' => false,
+	];
 }
 
 $data = [];
@@ -31,7 +42,7 @@ $havings = [
 	'> 20' => 'total > 20',
 ];
 
-$total_user_count = elgg_count_entities(['type' => 'user']);
+$total_user_count = elgg_count_entities($base_options);
 
 foreach ($havings as $key => $having) {
 	$temp_qb = $qb;
