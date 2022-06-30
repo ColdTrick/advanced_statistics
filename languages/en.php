@@ -64,6 +64,8 @@ return [
 
 	// groups
 	'advanced_statistics:groups:popular' => "Popular groups",
+	'advanced_statistics:groups:created' => "New groups per week",
+	'advanced_statistics:groups:created:new' => "New groups",
 	'advanced_statistics:groups:popular_tools' => "Popular group tools",
 	'advanced_statistics:groups:most_active' => "Most active groups (last week)",
 	'advanced_statistics:groups:least_active' => "Least active groups",

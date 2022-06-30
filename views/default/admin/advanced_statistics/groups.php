@@ -1,6 +1,7 @@
 <?php
 /**
 	10 most popular groups (bar)
+	new groups / total per week
     enabled tools for group (pie)
     10 most active groups (most activity in last week) (bar)
     10 least active groups (least activity in last week)
@@ -13,6 +14,14 @@ echo elgg_view('advanced_statistics/elements/chart', [
 	'page' => 'admin_data',
 	'section' => 'groups',
 	'chart' => 'popular',
+]);
+
+echo elgg_view('advanced_statistics/elements/chart', [
+	'title' => elgg_echo('advanced_statistics:groups:created'),
+	'id' => 'advanced-statistics-groups-created',
+	'page' => 'admin_data',
+	'section' => 'groups',
+	'chart' => 'created',
 ]);
 
 echo elgg_view('advanced_statistics/elements/chart', [
