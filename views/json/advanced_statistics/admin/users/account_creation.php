@@ -45,7 +45,7 @@ $result['options']['series'] = [
 	],
 	[
 		'showMarker' => false,
-		'label' => elgg_echo('total') . ' ' . strtolower(elgg_echo('item:user:user')),
+		'label' => elgg_echo('total') . ' ' . strtolower(elgg_echo('collection:user:user')),
 		'yaxis' => 'y2axis',
 	],
 ];
