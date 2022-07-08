@@ -6,13 +6,14 @@ use Elgg\Values;
 $result = [
 	'options' => advanced_statistics_get_default_chart_options('date'),
 ];
+$result['options']['axes']['xaxis']['tickOptions']['formatString'] = '%Y-%m';
 
 $qb = Select::fromTable('entities', 'e');
-$qb->select("FROM_UNIXTIME(e.time_created, '%Y-%v') AS date_created");
+$qb->select("FROM_UNIXTIME(e.time_created, '%Y-%m') AS date_created");
 $qb->addSelect('count(*) AS total');
 $qb->where($qb->compare('e.type', '=', 'group', ELGG_VALUE_STRING));
 $qb->andWhere($qb->compare('e.time_created', '>', 0, ELGG_VALUE_INTEGER));
-$qb->groupBy("FROM_UNIXTIME(e.time_created, '%Y-%v')");
+$qb->groupBy("FROM_UNIXTIME(e.time_created, '%Y-%m')");
 $qb->orderBy('date_created', 'ASC');
 
 $query_result = elgg()->db->getData($qb);
@@ -26,11 +27,8 @@ if ($query_result) {
 		$date_total = (int) $row->total;
 		$total += $date_total;
 		
-		list($year, $week) = explode('-', $row->date_created);
-		$dt = Values::normalizeTime(strtotime("{$year}W{$week}1"));
-		
-		$data[] = array($dt->format('Y-m-d'), $date_total);
-		$data2[] = array($dt->format('Y-m-d'), $total);
+		$data[] = array($row->date_created, $date_total);
+		$data2[] = array($row->date_created, $total);
 	}
 }
 

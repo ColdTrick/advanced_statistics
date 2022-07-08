@@ -5,7 +5,7 @@
  */
 
 return array (
-  'advanced_statistics:groups:created' => 'Nieuwe groepen per week',
+  'advanced_statistics:groups:created' => 'Nieuwe groepen per maand',
   'advanced_statistics:groups:created:new' => 'Nieuwe groepen',
   'advanced_statistics:settings:include_banned_users' => 'Geblokkeerde gebruikers meenemen in de statistieken',
   'advanced_statistics:settings:include_banned_users:help' => 'Neem de geblokkeerde gebruikers mee in sommige statistieken (bijv. profielvel gebruik).',
