@@ -1,6 +1,16 @@
 <?php
 
-$count = find_active_users(['count' => true]);
+use Elgg\Database\QueryBuilder;
+use Elgg\Values;
+
+$count = elgg_count_entities([
+	'type' => 'user',
+	'wheres' => [
+		function(QueryBuilder $qb, $main_alias) {
+			return $qb->compare("{$main_alias}.last_action", '>=', Values::normalizeTimestamp('-10 minutes'), ELGG_VALUE_TIMESTAMP);
+		}
+	],
+]);
 
 echo elgg_echo('admin:statistics:label:onlineusers') . ": <strong>{$count}</strong>";
 

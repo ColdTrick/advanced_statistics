@@ -5,16 +5,16 @@ elgg_register_menu_item('title', [
 	'icon' => 'filter',
 	'text' => elgg_echo('advanced_statistics:date_selection:title_button'),
 	'href' => '#advanced-statistics-date-selection',
-	'rel' => 'toggle',
 	'link_class' => [
 		'elgg-button',
 		'elgg-button-action',
+		'elgg-toggle',
 	],
 ]);
 
 $form = elgg_view_form('advanced_statistics/date_selector', [
 	'class' => 'mbm',
-	'action' => current_page_url(),
+	'action' => elgg_get_current_url(),
 	'disable_security' => true,
 ]);
 
