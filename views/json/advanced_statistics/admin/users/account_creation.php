@@ -12,6 +12,7 @@ $qb->addSelect('count(*) AS total');
 $qb->where("e.type = 'user'");
 $qb->andWhere('e.time_created > 0');
 $qb->groupBy("FROM_UNIXTIME(e.time_created, '%Y-%m-%d')");
+$qb->orderBy('date_created', 'ASC');
 
 $ts_limit = advanced_statistics_get_timestamp_query_part('e.time_created');
 if ($ts_limit) {
@@ -44,7 +45,7 @@ $result['options']['series'] = [
 	],
 	[
 		'showMarker' => false,
-		'label' => elgg_echo('total') . ' ' . strtolower(elgg_echo('item:user:user')),
+		'label' => elgg_echo('total') . ' ' . strtolower(elgg_echo('collection:user:user')),
 		'yaxis' => 'y2axis',
 	],
 ];

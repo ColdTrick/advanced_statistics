@@ -1,6 +1,11 @@
 Version history
 ===============
 
+7.1 (2022-07-12):
+
+- added: new groups per month graph
+- fixed: use correct sorting
+
 7.0 (2022-06-01):
 
 - added: plugin setting to exclude banned users from some charts

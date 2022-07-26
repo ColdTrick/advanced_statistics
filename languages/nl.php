@@ -1,10 +1,12 @@
 <?php
 /**
- * This file was created by Translation Editor v9.0.2
- * On 2022-05-31 11:42
+ * This file was created by Translation Editor v10.1
+ * On 2022-06-30 10:55
  */
 
 return array (
+  'advanced_statistics:groups:created' => 'Nieuwe groepen per maand',
+  'advanced_statistics:groups:created:new' => 'Nieuwe groepen',
   'advanced_statistics:settings:include_banned_users' => 'Geblokkeerde gebruikers meenemen in de statistieken',
   'advanced_statistics:settings:include_banned_users:help' => 'Neem de geblokkeerde gebruikers mee in sommige statistieken (bijv. profielvel gebruik).',
   'advanced_statistics:chart:exclude_banned_users' => 'geblokkeerde gebruikers zijn uitgesloten in deze grafiek',
