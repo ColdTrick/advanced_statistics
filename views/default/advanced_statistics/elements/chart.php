@@ -12,6 +12,7 @@
  * @uses $vars['date_limited']         Is a date range selection supported (default: false)
  * @uses $vars['container_guid']       Container GUID to limit data to (for groups)
  * @uses $vars['include_banned_users'] Will banned users be included in this chart (default: true)
+ * @uses $vars['allow_export']         Is it allowed to export the graph data as an CSV-file (default: true)
  */
 
 elgg_require_js('advanced_statistics/charts');
@@ -68,7 +69,22 @@ if (!elgg_is_empty($help)) {
 	$body .= elgg_format_element('div', ['class' => ['elgg-field-help', 'elgg-text-help']], $help);
 }
 
-echo elgg_view_module('info', $title, $body);
+$params = [];
+if ((bool) elgg_extract('allow_export', $vars, true)) {
+	$export_params = $url_elements;
+	$export_params['page'] = $page;
+	$export_params['title'] = elgg_extract('title', $vars); // without postfix (date selection)
+	$export_params['ts_lower'] = get_input('ts_lower');
+	$export_params['ts_upper'] = get_input('ts_upper');
+	
+	$params['menu'] = elgg_view('output/url', [
+		'icon' => 'download',
+		'text' => elgg_echo('export'),
+		'href' => elgg_generate_action_url('advanced_statistics/export', $export_params),
+	]);
+}
+
+echo elgg_view_module('info', $title, $body, $params);
 ?>
 <script>
 	require(['advanced_statistics/charts'], function (advancedStatistics) {
