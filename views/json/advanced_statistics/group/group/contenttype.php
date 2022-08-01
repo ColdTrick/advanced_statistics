@@ -14,19 +14,33 @@ $qb = Select::fromTable('entities', 'e');
 $qb->select('e.subtype as subtype');
 $qb->addSelect('count(*) AS total');
 $qb->join('e', 'river', 'r', 'e.guid = r.object_guid');
-$qb->where("e.type = 'object'");
+$qb->where($qb->compare('e.type', '=', 'object', ELGG_VALUE_STRING));
 $qb->andWhere($qb->compare('e.subtype', '=', $searchable_subtypes, ELGG_VALUE_STRING));
-$qb->andWhere("e.container_guid = {$container_guid}");
+$qb->andWhere($qb->compare('e.container_guid', '=', $container_guid, ELGG_VALUE_GUID));
 $qb->groupBy('e.subtype');
 $qb->orderBy('total', 'desc');
+
+$ts_limit = advanced_statistics_get_timestamp_query_part('e.time_created');
+if (!empty($ts_limit)) {
+	$qb->andWhere($ts_limit);
+}
 
 $query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
 if ($query_result) {
 	foreach ($query_result as $row) {
+		$label = $row['subtype'];
+		$lan_key = "collection:object:{$row['subtype']}";
+		if (!elgg_language_key_exists($lan_key)) {
+			$lan_key = "item:object:{$row['subtype']}";
+		}
+		if (elgg_language_key_exists($lan_key)) {
+			$label = elgg_echo($lan_key);
+		}
+		
 		$data[] = [
-			elgg_echo("item:object:{$row['subtype']}"),
+			$label,
 			(int) $row['total'],
 		];
 	}
