@@ -11,8 +11,13 @@ $result = [
 $qb = Select::fromTable('entities', 'e');
 $qb->select("FROM_UNIXTIME(e.time_created, '%Y-%m-%d') AS date_created");
 $qb->addSelect('count(*) AS total');
-$qb->where("e.container_guid = {$container_guid}");
+$qb->where($qb->compare('e.container_guid', '=', $container_guid, ELGG_VALUE_GUID));
 $qb->groupBy("FROM_UNIXTIME(e.time_created, '%Y-%m-%d')");
+
+$ts_limit = advanced_statistics_get_timestamp_query_part('e.time_created');
+if (!empty($ts_limit)) {
+	$qb->andWhere($ts_limit);
+}
 
 $query_result = $qb->execute()->fetchAllAssociative();
 

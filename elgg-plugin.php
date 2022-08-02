@@ -6,16 +6,14 @@ use Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper;
 
 return [
 	'plugin' => [
-		'version' => '7.1',
+		'version' => '7.2.1',
 	],
 	'settings' => [
 		'enable_group_stats' => 'no',
 		'include_banned_users' => 1,
 	],
-	'views' => [
-		'default' => [
-			'js/jqplot/' => __DIR__ . '/vendors/jqplot',
-		],
+	'actions' => [
+		'advanced_statistics/export' => [],
 	],
 	'hooks' => [
 		'register' => [
@@ -34,6 +32,11 @@ return [
 			'middleware' => [
 				GroupPageOwnerCanEditGatekeeper::class,
 			],
+		],
+	],
+	'views' => [
+		'default' => [
+			'js/jqplot/' => __DIR__ . '/vendors/jqplot',
 		],
 	],
 	'view_extensions' => [

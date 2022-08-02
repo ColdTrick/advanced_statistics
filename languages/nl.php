@@ -1,10 +1,12 @@
 <?php
 /**
- * This file was created by Translation Editor v10.1
- * On 2022-06-30 10:55
+ * This file was created by Translation Editor v10.1.1
+ * On 2022-08-02 10:56
  */
 
 return array (
+  'advanced_statistics:chart:since' => 'vanaf',
+  'advanced_statistics:chart:until' => 'tot',
   'advanced_statistics:groups:created' => 'Nieuwe groepen per maand',
   'advanced_statistics:groups:created:new' => 'Nieuwe groepen',
   'advanced_statistics:settings:include_banned_users' => 'Geblokkeerde gebruikers meenemen in de statistieken',
