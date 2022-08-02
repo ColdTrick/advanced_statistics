@@ -9,6 +9,8 @@ return [
 	
 	// generic
 	'advanced_statistics:chart:exclude_banned_users' => "banned users are excluded from this chart",
+	'advanced_statistics:chart:since' => "since",
+	'advanced_statistics:chart:until' => "until",
 	
 	// group statistics
 	'advanced_statistics:group:title' => "Group statistics",

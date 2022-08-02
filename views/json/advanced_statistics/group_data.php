@@ -9,9 +9,9 @@ if (empty($container_guid)) {
 }
 
 $group = get_entity($container_guid);
-if (!$group instanceof ElggGroup || !$group->canEdit()) {
-	throw new EntityPermissionsException();
-}
+// if (!$group instanceof ElggGroup || !$group->canEdit()) {
+// 	throw new EntityPermissionsException();
+// }
 
 $section = elgg_extract('section', $vars);
 $chart = elgg_extract('chart', $vars);

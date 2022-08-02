@@ -29,18 +29,23 @@ $url_elements['section'] = elgg_extract('section', $vars);
 $url_elements['chart'] = elgg_extract('chart', $vars);
 
 if ((bool) elgg_extract('date_limited', $vars, false)) {
-	$date_part = '';
+	$date_part = [];
+	
 	$ts_lower = get_input('ts_lower');
-	$ts_upper = get_input('ts_upper');
-	if ($ts_lower) {
-		$date_part .= ' since ' . $ts_lower;
+	if (!empty($ts_lower)) {
+		$date_part[] = elgg_echo('advanced_statistics:chart:since');
+		$date_part[] = $ts_lower;
 	}
-	if ($ts_upper) {
-		$date_part .= ' until ' . $ts_upper;
+	
+	$ts_upper = get_input('ts_upper');
+	if (!empty($ts_upper)) {
+		$date_part[] = elgg_echo('advanced_statistics:chart:until');
+		$date_part[] = $ts_upper;
 	}
 	
 	if (!empty($date_part)) {
-		$title .= ' -' . $date_part;
+		array_unshift($date_part, '-');
+		$title .= ' ' . implode(' ', $date_part);
 	}
 	
 	$url_elements['ts_lower'] = $ts_lower;
