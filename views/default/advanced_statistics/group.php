@@ -29,7 +29,7 @@ echo elgg_view('advanced_statistics/elements/chart', [
 	'date_limited' => true,
 ]);
 
-// group content pie
+// group content created bar chart (content must be searchable and have activity)
 echo elgg_view('advanced_statistics/elements/chart', [
 	'title' => elgg_echo('advanced_statistics:group:contenttype'),
 	'id' => 'advanced-statistics-group-contenttype',
