@@ -1,6 +1,11 @@
 Version history
 ===============
 
+8.0 (2022-08-24):
+
+- changed: updated for Elgg 4.3
+- fixed: group content type graph
+
 7.2.1 (2022-08-02):
 
 - several small chores/fixes
