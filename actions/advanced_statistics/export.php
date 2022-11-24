@@ -5,6 +5,11 @@ if (empty($request_data['page']) || empty($request_data['section']) || empty($re
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
+// load entity if a guid is provided, during viewing of the chart this is handled by the Router
+if (!empty($request_data['guid'])) {
+	$request_data['entity'] = get_entity((int) $request_data['guid']);
+}
+
 // get the chart data
 $viewtype = elgg_get_viewtype();
 elgg_set_viewtype('json');
