@@ -1,6 +1,11 @@
 Version history
 ===============
 
+8.0.1 (2022-12-08):
+
+- fixed: admin widget didn't show chart data
+- fixed: unable to export entity specific stats
+
 8.0 (2022-08-24):
 
 - changed: updated for Elgg 4.3
