@@ -4,7 +4,7 @@
  */
 
 $user = elgg_extract('entity', $vars, elgg_get_page_owner_entity()); // page owner for BC reasons
-if (!$user instanceof ElggUser) {
+if (!$user instanceof \ElggUser) {
 	return;
 }
 

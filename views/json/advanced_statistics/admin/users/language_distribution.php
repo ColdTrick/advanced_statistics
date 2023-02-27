@@ -28,7 +28,7 @@ if ($query_result) {
 	foreach ($query_result as $row) {
 		$total = (int) $row['total'];
 		$data[] = [
-			elgg_echo($row['language']) . " [" . $total . "]",
+			elgg_echo($row['language']) . " [{$total}]",
 			$total,
 		];
 	}

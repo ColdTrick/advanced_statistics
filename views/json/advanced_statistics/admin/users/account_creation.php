@@ -30,8 +30,8 @@ if ($query_result) {
 		$date_total = (int) $row['total'];
 		$total += $date_total;
 		
-		$data[] = array($row['date_created'], $date_total);
-		$data2[] = array($row['date_created'], $total);
+		$data[] = [$row['date_created'], $date_total];
+		$data2[] = [$row['date_created'], $total];
 	}
 }
 

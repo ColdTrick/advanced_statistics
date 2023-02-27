@@ -33,6 +33,7 @@ if ($query_result) {
 		];
 	}
 }
+
 $result['data'] = [$data];
 
 echo json_encode($result);

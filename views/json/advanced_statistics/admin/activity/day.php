@@ -28,11 +28,12 @@ if ($query_result) {
 		
 		$total = (int) $row['total'];
 		$data[] = [
-			$dotw . " [" . $total . "]",
+			$dotw . " [{$total}]",
 			$total,
 		];
 	}
 }
+
 $result['data'] = [$data];
 
 echo json_encode($result);

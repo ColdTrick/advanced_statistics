@@ -1,12 +1,12 @@
 <?php
 /**
-	10 most popular groups (bar)
-	new groups / total per week
-    enabled tools for group (pie)
-    10 most active groups (most activity in last week) (bar)
-    10 least active groups (least activity in last week)
-    Dead vs Alive groups (last activity < 1 month <3 <6 <12) (pie)
-*/
+ * 10 most popular groups (bar)
+ * new groups / total per week
+ * enabled tools for group (pie)
+ * 10 most active groups (most activity in last week) (bar)
+ * 10 least active groups (least activity in last week)
+ * Dead vs Alive groups (last activity < 1 month <3 <6 <12) (pie)
+ */
 
 echo elgg_view('advanced_statistics/elements/chart', [
 	'title' => elgg_echo('advanced_statistics:groups:popular'),

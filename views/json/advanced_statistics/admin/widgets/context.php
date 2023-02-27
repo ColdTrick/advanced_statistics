@@ -7,13 +7,13 @@ $result = [
 ];
 
 $qb = Select::fromTable('entities', 'e');
-$qb->select('ps.value as context');
+$qb->select('md.value as context');
 $qb->addSelect('count(*) AS total');
-$qb->join('e', 'private_settings', 'ps', 'e.guid = ps.entity_guid');
-$qb->where("ps.name = 'context'");
+$qb->join('e', 'metadata', 'md', 'e.guid = md.entity_guid');
+$qb->where("md.name = 'context'");
 $qb->andWhere("e.type = 'object'");
 $qb->andWhere("e.subtype = 'widget'");
-$qb->groupBy('ps.value');
+$qb->groupBy('md.value');
 $qb->orderBy('total', 'desc');
 
 $query_result = $qb->execute()->fetchAllAssociative();
@@ -29,6 +29,7 @@ if ($query_result) {
 		];
 	}
 }
+
 $result['data'] = [$data];
 
 echo json_encode($result);

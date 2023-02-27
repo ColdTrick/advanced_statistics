@@ -31,9 +31,10 @@ if ($query_result) {
 		$hotd = $row['hour_of_the_day'];
 		$total = (int) $row['total'];
 		
-		$data[(int)$hotd] = [$hotd, $total];
+		$data[(int) $hotd] = [$hotd, $total];
 	}
 }
+
 $result['data'] = [$data];
 
 echo json_encode($result);

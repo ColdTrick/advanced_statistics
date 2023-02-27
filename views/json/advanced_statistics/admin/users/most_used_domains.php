@@ -28,7 +28,7 @@ if ($query_result) {
 	foreach ($query_result as $row) {
 		$total = (int) $row['total'];
 		$data[] = [
-			$row['domain'] . " [" . $total . "]",
+			$row['domain'] . " [{$total}]",
 			$total,
 		];
 	}

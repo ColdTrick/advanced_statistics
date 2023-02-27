@@ -1,9 +1,9 @@
 <?php
 /**
-*   Which days most activity?
-*   Which hours most activity?
-*   Activity count per day (line)
-*/
+ * Which days most activity?
+ * Which hours most activity?
+ * Activity count per day (line)
+ */
 
 echo elgg_view('advanced_statistics/date_selector');
 

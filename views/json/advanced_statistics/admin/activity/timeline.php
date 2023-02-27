@@ -28,6 +28,7 @@ if ($query_result) {
 		];
 	}
 }
+
 $result['data'] = [$data];
 $result['options']['series'] = [['showMarker' => false]];
 

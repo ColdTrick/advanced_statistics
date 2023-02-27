@@ -2,8 +2,7 @@ Advanced Statistics
 ===================
 
 ![Elgg 4.3](https://img.shields.io/badge/Elgg-4.3-green.svg)
-[![Build Status](https://scrutinizer-ci.com/g/ColdTrick/advanced_statistics/badges/build.png?b=master)](https://scrutinizer-ci.com/g/ColdTrick/advanced_statistics/build-status/master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ColdTrick/advanced_statistics/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ColdTrick/advanced_statistics/?branch=master)
+![Lint Checks](https://github.com/ColdTrick/advanced_statistics/actions/workflows/lint.yml/badge.svg?event=push)
 [![Latest Stable Version](https://poser.pugx.org/coldtrick/advanced_statistics/v/stable.svg)](https://packagist.org/packages/coldtrick/advanced_statistics)
 [![License](https://poser.pugx.org/coldtrick/advanced_statistics/license.svg)](https://packagist.org/packages/coldtrick/advanced_statistics)
 
@@ -21,6 +20,6 @@ Shows the following statistics
 - Widgets
 - System
 
-You can also add individual statistics to your admin dashboard
+You can also add individual statistics to your admin dashboard.
 
 Also provides group related statistics to group administrators.

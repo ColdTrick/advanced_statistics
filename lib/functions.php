@@ -10,7 +10,7 @@
  *
  * @return string
  */
-function advanced_statistics_get_timestamp_query_part($field_name) {
+function advanced_statistics_get_timestamp_query_part(string $field_name): string {
 	if (empty($field_name)) {
 		return '';
 	}
@@ -29,6 +29,7 @@ function advanced_statistics_get_timestamp_query_part($field_name) {
 	if (!empty($ts_lower)) {
 		$ts_limits[] = $field_name . ' > ' . $ts_lower;
 	}
+	
 	if (!empty($ts_upper)) {
 		$ts_limits[] = $field_name . ' < ' . $ts_upper;
 	}
@@ -43,7 +44,7 @@ function advanced_statistics_get_timestamp_query_part($field_name) {
  *
  * @return array
  */
-function advanced_statistics_get_default_chart_options($type) {
+function advanced_statistics_get_default_chart_options(string $type): array {
 	$defaults = [
 		'pie' => [
 			'seriesDefaults' => [

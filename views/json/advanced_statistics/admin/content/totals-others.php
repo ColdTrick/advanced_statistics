@@ -32,6 +32,7 @@ if ($query_result) {
 		];
 	}
 }
+
 $result['data'] = [$data];
 
 $result['options']['seriesDefaults']['rendererOptions'] = ['varyBarColor' => true];
@@ -45,4 +46,3 @@ $result['options']['axes']['xaxis']['tickRenderer'] = '$.jqplot.CanvasAxisTickRe
 $result['options']['axes']['xaxis']['tickOptions'] = ['angle' => '-30', 'fontSize' => '8pt'];
 
 echo json_encode($result);
-		

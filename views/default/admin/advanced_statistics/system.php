@@ -1,14 +1,12 @@
 <?php
 /**
-*
-
-FileStorage
-
-    most consuming owners (bar)
-    most consuming groups (bar)
-    Based on ElggFile and ElggPhoto (tidypics) stacked bar
-
-*/
+ *
+ * FileStorage
+ *
+ * most consuming owners (bar)
+ * most consuming groups (bar)
+ * Based on ElggFile and ElggPhoto (tidypics) stacked bar
+ */
 
 echo elgg_view('advanced_statistics/elements/chart', [
 	'title' => elgg_echo('advanced_statistics:system:files:users'),

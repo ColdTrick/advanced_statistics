@@ -7,13 +7,13 @@ $result = [
 ];
 
 $qb = Select::fromTable('entities', 'e');
-$qb->select('ps.value as handler');
+$qb->select('md.value as handler');
 $qb->addSelect('count(*) AS total');
-$qb->join('e', 'private_settings', 'ps', 'e.guid = ps.entity_guid');
-$qb->where("ps.name = 'handler'");
+$qb->join('e', 'metadata', 'md', 'e.guid = md.entity_guid');
+$qb->where("md.name = 'handler'");
 $qb->andWhere("e.type = 'object'");
 $qb->andWhere("e.subtype = 'widget'");
-$qb->groupBy('ps.value');
+$qb->groupBy('md.value');
 $qb->orderBy('total', 'desc');
 
 $query_result = $qb->execute()->fetchAllAssociative();
@@ -27,6 +27,7 @@ if ($query_result) {
 		];
 	}
 }
+
 $result['data'] = [$data];
 
 $result['options']['seriesDefaults']['rendererOptions'] = [

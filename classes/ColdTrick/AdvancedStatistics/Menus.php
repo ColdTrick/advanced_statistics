@@ -2,27 +2,31 @@
 
 namespace ColdTrick\AdvancedStatistics;
 
+/**
+ * Menu callbacks
+ */
 class Menus {
 	
 	/**
 	 * Add a subscribe/unsubscribe link to the supported entity types
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:page'
+	 * @param \Elgg\Event $event 'register', 'menu:admin_header'
 	 *
 	 * @return void|\ElggMenuItem[]
 	 */
-	public static function registerAdminItems(\Elgg\Hook $hook) {
+	public static function registerAdminItems(\Elgg\Event $event) {
 		
-		if (!elgg_is_admin_logged_in() || !elgg_in_context('admin')) {
+		if (!elgg_is_admin_logged_in()) {
 			return;
 		}
 		
-		$return_value = $hook->getValue();
+		$return_value = $event->getValue();
 		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'information:advanced_statistics',
 			'text' => elgg_echo('admin:advanced_statistics'),
-			'section' => 'information',
+			'href' => false,
+			'parent_name' => 'information',
 		]);
 		
 		$sections = ['users', 'groups', 'content', 'activity', 'widgets', 'notifications', 'system'];
@@ -32,7 +36,6 @@ class Menus {
 				'href' => "admin/advanced_statistics/{$section}",
 				'text' => elgg_echo("admin:advanced_statistics:{$section}"),
 				'parent_name' => 'information:advanced_statistics',
-				'section' => 'information',
 			]);
 		}
 		
@@ -42,22 +45,22 @@ class Menus {
 	/**
 	 * Add a subscribe/unsubscribe link to the supported entity types
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:owner_block'
+	 * @param \Elgg\Event $event 'register', 'menu:owner_block'
 	 *
 	 * @return void|\ElggMenuItem[]
 	 */
-	public static function registerGroupItems(\Elgg\Hook $hook) {
+	public static function registerGroupItems(\Elgg\Event $event) {
 		
 		if (elgg_get_plugin_setting('enable_group_stats', 'advanced_statistics') === 'no') {
 			return;
 		}
 		
-		$entity = $hook->getEntityParam();
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggGroup || !$entity->canEdit()) {
 			return;
 		}
 		
-		$return_value = $hook->getValue();
+		$return_value = $event->getValue();
 		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'advanced_statistics',

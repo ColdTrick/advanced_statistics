@@ -15,13 +15,13 @@ return [
 	'actions' => [
 		'advanced_statistics/export' => [],
 	],
-	'hooks' => [
+	'events' => [
 		'register' => [
+			'menu:admin_header' => [
+				'\ColdTrick\AdvancedStatistics\Menus::registerAdminItems' => [],
+			],
 			'menu:owner_block' => [
 				'\ColdTrick\AdvancedStatistics\Menus::registerGroupItems' => [],
-			],
-			'menu:page' => [
-				'\ColdTrick\AdvancedStatistics\Menus::registerAdminItems' => [],
 			],
 		],
 	],
@@ -65,4 +65,3 @@ return [
 		],
 	],
 ];
-	

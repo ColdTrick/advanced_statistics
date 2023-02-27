@@ -1,10 +1,10 @@
 <?php
 /**
-*   count created content (pie)
-*   distribution (groups vs personal)
-*   content usage in groups (% blog, %file etc)
-*   content usage personal
-*/
+ * count created content (pie)
+ * distribution (groups vs personal)
+ * content usage in groups (% blog, %file etc)
+ * content usage personal
+ */
 
 echo elgg_view('advanced_statistics/date_selector');
 

@@ -18,7 +18,7 @@ $form = elgg_view_form('advanced_statistics/date_selector', [
 	'disable_security' => true,
 ]);
 
-$classes = ['clearfix'];
+$classes = [];
 
 if (empty(get_input('ts_lower')) && empty(get_input('ts_upper'))) {
 	$classes[] = 'hidden';

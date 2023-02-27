@@ -35,6 +35,7 @@ if (isset($graph_data['options']['axes']['xaxis']['ticks'])) {
 	foreach ($ticks as $index => $tick) {
 		$result[$index][] = $tick;
 	}
+	
 	$append = true;
 }
 

@@ -27,7 +27,7 @@ foreach ($group_tools as $key => $tool) {
 			$total = (int) $row['total'];
 			$order[$key] = $total;
 			$data[$key] = [
-				$tool->name . " [" . $total . "]",
+				$tool->name . " [{$total}]",
 				$total,
 			];
 		}
@@ -39,4 +39,3 @@ array_multisort($order, $data);
 $result['data'] = [array_values($data)];
 
 echo json_encode($result);
-	

@@ -57,6 +57,7 @@ if ($query_result) {
 		];
 	}
 }
+
 $result['data'] = [$data, $data2];
 
 $result['options']['series'] = [

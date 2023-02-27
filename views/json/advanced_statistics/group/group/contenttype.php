@@ -45,6 +45,7 @@ if ($query_result) {
 		if (!elgg_language_key_exists($lan_key)) {
 			$lan_key = "item:object:{$row['subtype']}";
 		}
+		
 		if (elgg_language_key_exists($lan_key)) {
 			$label = elgg_echo($lan_key);
 		}
@@ -55,6 +56,7 @@ if ($query_result) {
 		];
 	}
 }
+
 $result['data'] = [$data];
 
 $result['options']['seriesDefaults']['rendererOptions'] = [

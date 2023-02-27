@@ -43,8 +43,24 @@ $body = elgg_view('output/longtext', [
 
 $lis = [];
 foreach ($entities as $entity) {
+	$title = $entity->getDisplayName();
+	if (!$title) {
+		$keys = [
+			"item:{$entity->type}:{$entity->getSubtype()}",
+			"item:{$entity->subtype}",
+			'untitled',
+		];
+		
+		foreach ($keys as $key) {
+			if (elgg_language_key_exists($key)) {
+				$title = elgg_echo($key);
+				break;
+			}
+		}
+	}
+	
 	$lis[] = elgg_format_element('li', ['class' => 'elgg-item'], elgg_view('output/url', [
-		'text' => $entity->getDisplayName(),
+		'text' => $title,
 		'href' => $entity->getURL(),
 		'is_trusted' => true,
 		'badge' => elgg_echo('likes:userslikedthis', [$likes_count($entity)]),

@@ -11,9 +11,9 @@ $week_ago = time() - (7 * 24 * 60 * 60);
 $qb = Select::fromTable('river', 'r');
 $qb->select('md.value as name');
 $qb->addSelect('count(*) AS total');
-$qb->join('r', 'entities', 'e' , 'r.object_guid = e.guid');
-$qb->join('e', 'entities', 'ge' , 'e.container_guid = ge.guid');
-$qb->join('ge', 'metadata', 'md' , 'ge.guid = md.entity_guid');
+$qb->join('r', 'entities', 'e', 'r.object_guid = e.guid');
+$qb->join('e', 'entities', 'ge', 'e.container_guid = ge.guid');
+$qb->join('ge', 'metadata', 'md', 'ge.guid = md.entity_guid');
 $qb->where("e.enabled = 'yes'");
 $qb->andWhere("ge.enabled = 'yes'");
 $qb->andWhere("ge.type = 'group'");
@@ -33,6 +33,7 @@ if ($query_result) {
 		];
 	}
 }
+
 $result['data'] = [$data];
 
 $result['options']['axes']['xaxis']['tickRenderer'] = '$.jqplot.CanvasAxisTickRenderer';

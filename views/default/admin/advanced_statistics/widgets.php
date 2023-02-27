@@ -1,8 +1,8 @@
 <?php
 /**
-*   Widget handler counts (pie)
-*   Widget context
-*/
+ * Widget handler counts (pie)
+ * Widget context
+ */
 
 echo elgg_view('advanced_statistics/elements/chart', [
 	'title' => elgg_echo('advanced_statistics:widgets:handlers'),

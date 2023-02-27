@@ -35,6 +35,7 @@ if ($query_result) {
 		];
 	}
 }
+
 $result['data'] = [$data];
 $result['options']['series'] = [['showMarker' => false]];
 $result['options']['axes']['yaxis']['tickOptions']['show'] = false;
