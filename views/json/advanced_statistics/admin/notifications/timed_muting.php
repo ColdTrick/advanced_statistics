@@ -25,6 +25,7 @@ $previously_used = elgg_count_entities([
 			'name' => 'timed_muting_end',
 			'value' => time(),
 			'operand' => '<',
+			'type' => ELGG_VALUE_INTEGER,
 		],
 	],
 ]);
@@ -41,11 +42,13 @@ $active = elgg_count_entities([
 			'name' => 'timed_muting_start',
 			'value' => time(),
 			'operand' => '<=',
+			'type' => ELGG_VALUE_INTEGER,
 		],
 		[
 			'name' => 'timed_muting_end',
 			'value' => time(),
 			'operand' => '>=',
+			'type' => ELGG_VALUE_INTEGER,
 		],
 	],
 ]);
@@ -62,6 +65,7 @@ $scheduled = elgg_count_entities([
 			'name' => 'timed_muting_start',
 			'value' => time(),
 			'operand' => '>',
+			'type' => ELGG_VALUE_INTEGER,
 		],
 	],
 ]);
