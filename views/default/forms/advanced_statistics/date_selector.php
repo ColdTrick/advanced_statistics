@@ -20,7 +20,7 @@ echo elgg_view_field([
 		],
 		[
 			'#type' => 'submit',
-			'value' => elgg_echo('submit'),
+			'text' => elgg_echo('submit'),
 		],
 	],
 ]);
