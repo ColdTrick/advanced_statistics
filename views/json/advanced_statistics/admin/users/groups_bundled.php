@@ -23,8 +23,12 @@ $base_options = [
 ];
 
 if (!(bool) elgg_extract('include_banned_users', $vars, true)) {
-	$md2 = $qb->joinMetadataTable('r', 'guid_one', 'banned');
-	$qb->andWhere($qb->compare("{$md2}.value", '=', 'no', ELGG_VALUE_STRING));
+	$banned = $qb->subquery('metadata');
+	$banned->select('entity_guid')
+		->where($qb->compare('name', '=', 'banned', ELGG_VALUE_STRING))
+		->andWhere($qb->compare('value', '=', 'yes', ELGG_VALUE_STRING));
+	
+	$qb->andWhere($qb->compare('r.guid_one', 'NOT IN', $banned->getSQL()));
 	
 	$base_options['metadata_name_value_pairs'][] = [
 		'name' => 'banned',
