@@ -4,8 +4,6 @@ $result = [
 	'options' => advanced_statistics_get_default_chart_options('bar'),
 ];
 
-$total_users_count = elgg_count_entities(['type' => 'user']);
-
 $data = [];
 $ticks = [];
 
@@ -21,6 +19,8 @@ if (!(bool) elgg_extract('include_banned_users', $vars, true)) {
 		'case_sensitive' => false,
 	];
 }
+
+$total_users_count = elgg_count_entities($base_options);
 
 $profile_fields = elgg()->fields->get('user', 'user');
 foreach ($profile_fields as $field) {
