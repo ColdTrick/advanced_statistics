@@ -1,6 +1,10 @@
 Version history
 ===============
 
+9.0.4 (2023-11-30):
+
+- several small chores/fixes
+
 9.0.3 (2023-10-18):
 
 - fixed: correctly calculate profile field usage without banned users
