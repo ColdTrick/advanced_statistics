@@ -28,6 +28,8 @@ return array (
   'advanced_statistics:content:subscriptions' => 'Content abonnementen',
   'advanced_statistics:content:subscriptions:help' => 'Toont het aantal abonnees op content over tijd, exclusief de eigenaren abonnementen',
   'advanced_statistics:content:block_subscriptions' => 'Geblokkeerde content abonnementen',
+  'advanced_statistics:content:active_groups' => 'Top 10 groepen met de meeste content',
+  'advanced_statistics:content:commenting_groups' => 'Top 10 groepen met de meeste reacties',
   'advanced_statistics:settings:enable_group_stats' => 'Schakel statistieken voor groepsbeheerders in',
   'advanced_statistics:group:title' => 'Groepsstatistieken',
   'advanced_statistics:group:members' => 'Leden',

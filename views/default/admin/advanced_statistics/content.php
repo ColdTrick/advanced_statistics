@@ -53,3 +53,22 @@ echo elgg_view('advanced_statistics/elements/chart', [
 	'section' => 'content',
 	'chart' => 'block_subscriptions',
 ]);
+
+echo elgg_view('advanced_statistics/elements/chart', [
+	'title' => elgg_echo('advanced_statistics:content:active_groups'),
+	'id' => 'advanced-statistics-content-active-groups',
+	'date_limited' => true,
+	'allow_export' => false,
+	'page' => 'admin_data',
+	'section' => 'content',
+	'chart' => 'active_groups',
+]);
+
+echo elgg_view('advanced_statistics/elements/chart', [
+	'title' => elgg_echo('advanced_statistics:content:commenting_groups'),
+	'id' => 'advanced-statistics-content-commenting-groups',
+	'date_limited' => true,
+	'page' => 'admin_data',
+	'section' => 'content',
+	'chart' => 'commenting_groups',
+]);

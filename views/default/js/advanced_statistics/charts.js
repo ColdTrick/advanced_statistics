@@ -28,7 +28,7 @@ define(['jquery', 'jqplot/jquery.jqplot'], function($) {
 					ajax.view($(this).data().chartHref, {
 						success: function(result){
 							var options = result.options;
-							
+							console.log(result.options);
 							if (options['seriesDefaults']) {
 								options['seriesDefaults']['renderer'] = eval(options['seriesDefaults']['renderer']);
 							}
@@ -51,6 +51,7 @@ define(['jquery', 'jqplot/jquery.jqplot'], function($) {
 							if (options['axesDefaults']) {
 								options['axesDefaults']['tickRenderer'] = eval(options['axesDefaults']['tickRenderer']);
 							}
+							console.log(options);
 							
 							if (result.data[0].length) {
 								$target.html(''); // remove loader

@@ -59,6 +59,8 @@ return [
 	'advanced_statistics:content:subscriptions' => 'Content subscriptions',
 	'advanced_statistics:content:subscriptions:help' => 'Shows the number of subscribers on content over time, excluding the owner subscriptions.',
 	'advanced_statistics:content:block_subscriptions' => 'Content block subscriptions',
+	'advanced_statistics:content:active_groups' => 'Top 10 groups with the most new content',
+	'advanced_statistics:content:commenting_groups' => 'Top 10 groups with the most comments',
 
 	// system
 	'advanced_statistics:system:files:users' => 'Users with the most files and photos',
