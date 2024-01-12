@@ -1,6 +1,10 @@
 Version history
 ===============
 
+9.1 (2024-01-12):
+
+- added: charts for top 10 groups with most content and comments
+
 9.0.4 (2023-11-30):
 
 - several small chores/fixes
