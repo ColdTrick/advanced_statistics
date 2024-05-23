@@ -1,8 +1,6 @@
 <?php
 
-$result = [
-	'options' => advanced_statistics_get_default_chart_options('pie'),
-];
+$result = advanced_statistics_get_default_chart_options('pie');
 
 $total_user_count = elgg_count_entities([
 	'type' => 'user',
@@ -72,25 +70,16 @@ $scheduled = elgg_count_entities([
 
 $not_configured = $total_user_count - $previously_used - $active - $scheduled;
 
-$data = [
-	[
-		elgg_echo('advanced_statistics:notifications:not_configured') . " [{$not_configured}]",
-		$not_configured,
-	],
-	[
-		elgg_echo('advanced_statistics:notifications:timed_muting:previous') . " [{$previously_used}]",
-		$previously_used,
-	],
-	[
-		elgg_echo('advanced_statistics:notifications:timed_muting:active') . " [{$active}]",
-		$active,
-	],
-	[
-		elgg_echo('advanced_statistics:notifications:timed_muting:scheduled') . " [{$scheduled}]",
-		$scheduled,
-	],
+$labels = [
+	elgg_echo('advanced_statistics:notifications:not_configured') . " [{$not_configured}]",
+	elgg_echo('advanced_statistics:notifications:timed_muting:previous') . " [{$previously_used}]",
+	elgg_echo('advanced_statistics:notifications:timed_muting:active') . " [{$active}]",
+	elgg_echo('advanced_statistics:notifications:timed_muting:scheduled') . " [{$scheduled}]",
 ];
 
-$result['data'] = [$data];
+$data = [$not_configured, $previously_used, $active, $scheduled];
+
+$result['data']['labels'] = $labels;
+$result['data']['datasets'][] = ['data' => $data];
 
 echo json_encode($result);

@@ -9,7 +9,21 @@
 		"source": "https://github.com/ColdTrick/advanced_statistics",
 		"issues": "https://github.com/ColdTrick/advanced_statistics/issues"
 	},
+	"require": {
+		"npm-asset/chart.js": "~4.4.0"
+	},
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://asset-packagist.org"
+		}
+	],
+	"config": {
+		"fxp-asset": {
+			"enabled": false
+		}
+	},
 	"conflict": {
-		"elgg/elgg": "<5.0"
+		"elgg/elgg": "<6.0"
 	}
 }

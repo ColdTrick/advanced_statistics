@@ -2,9 +2,7 @@
 
 use Elgg\Database\Select;
 
-$result = [
-	'options' => advanced_statistics_get_default_chart_options('pie'),
-];
+$result = advanced_statistics_get_default_chart_options('pie');
 
 $qb = Select::fromTable('entities', 'e');
 $qb->select('e.guid');
@@ -20,7 +18,8 @@ $rel->select('count(*)')
 $qb->select("({$rel->getSQL()}) as total");
 
 $qb->where($qb->compare('e.type', '=', 'user', ELGG_VALUE_STRING))
-	->andWhere($qb->compare('e.enabled', '=', 'yes', ELGG_VALUE_STRING));
+	->andWhere($qb->compare('e.enabled', '=', 'yes', ELGG_VALUE_STRING))
+	->andWhere($qb->compare('e.deleted', '=', 'no', ELGG_VALUE_STRING));
 
 if (!(bool) elgg_extract('include_banned_users', $vars, true)) {
 	$md = $qb->joinMetadataTable('e');
@@ -28,6 +27,7 @@ if (!(bool) elgg_extract('include_banned_users', $vars, true)) {
 		->andWhere($qb->compare("{$md}.value", '=', 'no', ELGG_VALUE_STRING));
 }
 
+$labels = [];
 $data = [];
 
 $havings = [
@@ -44,12 +44,12 @@ foreach ($havings as $key => $having) {
 
 	$db_result = $qb->executeQuery();
 	$count = $db_result->rowCount();
-	$data[] = [
-		"{$key} [{$count}]",
-		$count,
-	];
+	
+	$labels[] = $key;
+	$data[] = $count;
 }
 
-$result['data'] = [$data];
+$result['data']['labels'] = $labels;
+$result['data']['datasets'][] = ['data' => $data];
 
 echo json_encode($result);

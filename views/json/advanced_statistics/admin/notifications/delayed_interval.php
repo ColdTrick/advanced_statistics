@@ -2,9 +2,7 @@
 
 use Elgg\Database\Select;
 
-$result = [
-	'options' => advanced_statistics_get_default_chart_options('pie'),
-];
+$result = advanced_statistics_get_default_chart_options('pie');
 
 $qb = Select::fromTable('metadata', 'md');
 $qb->select('md.value');
@@ -19,6 +17,7 @@ $qb->groupBy('md.value');
 $qb->orderBy('total', 'desc');
 
 $data = [];
+$labels = [];
 $intervals = [];
 
 $total_user_count = elgg_count_entities([
@@ -50,19 +49,16 @@ foreach ($intervals as $interval => $count) {
 		$label = elgg_echo("interval:{$interval}");
 	}
 	
-	$data[] = [
-		"{$label} [{$count}]",
-		$count,
-	];
+	$labels[] = $label;
+	$data[] = $count;
 }
 
 if (!$daily_found) {
-	$data[] = [
-		elgg_echo('interval:daily') . " {$total_user_count}",
-		$total_user_count,
-	];
+	$labels[] = elgg_echo('interval:daily');
+	$data[] = $total_user_count;
 }
 
-$result['data'] = [$data];
+$result['data']['labels'] = $labels;
+$result['data']['datasets'][] = ['data' => $data];
 
 echo json_encode($result);

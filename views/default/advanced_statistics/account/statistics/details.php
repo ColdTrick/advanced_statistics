@@ -15,7 +15,7 @@ if (empty($user_guid) || empty($type) || empty($subtype)) {
 }
 
 $user = get_user($user_guid);
-if (!$user instanceof ElggUser || !$user->canEdit()) {
+if (!$user instanceof \ElggUser || !$user->canEdit()) {
 	throw new EntityPermissionsException();
 }
 
@@ -41,25 +41,19 @@ $result .= '</tr>';
 // this week
 $result .= '<tr>';
 $result .= '<th>' . elgg_echo('advanced_statistics:account:statistics:details:week') . '</th>';
-$result .= '<td>' . $get_count([
-	'created_after' => 'today -7 days',
-]) . '</td>';
+$result .= '<td>' . $get_count(['created_after' => 'today -7 days']) . '</td>';
 $result .= '</tr>';
 
 // this month
 $result .= '<tr>';
 $result .= '<th>' . elgg_echo('advanced_statistics:account:statistics:details:month') . '</th>';
-$result .= '<td>' . $get_count([
-	'created_after' => 'today -30 days',
-]) . '</td>';
+$result .= '<td>' . $get_count(['created_after' => 'today -30 days']) . '</td>';
 $result .= '</tr>';
 
 // this year
 $result .= '<tr>';
 $result .= '<th>' . elgg_echo('advanced_statistics:account:statistics:details:this_year') . '</th>';
-$result .= '<td>' . $get_count([
-	'created_after' => 'first day of january this year',
-]) . '</td>';
+$result .= '<td>' . $get_count(['created_after' => 'first day of january this year']) . '</td>';
 $result .= '</tr>';
 
 // last year

@@ -2,6 +2,11 @@
 
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
+$composer_path = '';
+if (is_dir(__DIR__ . '/vendor')) {
+	$composer_path = __DIR__ . '/';
+}
+
 use Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper;
 
 return [
@@ -36,15 +41,21 @@ return [
 	],
 	'views' => [
 		'default' => [
-			'js/jqplot/' => __DIR__ . '/vendors/jqplot',
+			'chartjs.mjs' => $composer_path . 'vendor/npm-asset/chart.js/dist/chart.umd.js',
 		],
 	],
 	'view_extensions' => [
+		'admin.css' => [
+			'advanced_statistics/charts.css' => [],
+		],
 		'advanced_statistics/account/statistics/likes' => [
 			'advanced_statistics/account/statistics/likes_graph' => [],
 		],
 		'core/settings/statistics' => [
 			'advanced_statistics/account/statistics/likes' => [],
+		],
+		'elgg.css' => [
+			'advanced_statistics/charts.css' => [],
 		],
 	],
 	'view_options' => [
@@ -53,7 +64,6 @@ return [
 		'advanced_statistics/account' => ['ajax' => true],
 		'advanced_statistics/admin_data' => ['ajax' => true],
 		'advanced_statistics/group_data' => ['ajax' => true],
-		'css/advanced_statistics/jqplot' => ['simplecache' => true],
 	],
 	'widgets' => [
 		'advanced_statistics' => [

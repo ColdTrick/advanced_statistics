@@ -1,8 +1,6 @@
 <?php
 
-$result = [
-	'options' => advanced_statistics_get_default_chart_options('bar'),
-];
+$result = advanced_statistics_get_default_chart_options('bar');
 
 $entities = elgg_get_entities_from_relationship_count([
 	'type' => 'user',
@@ -12,21 +10,15 @@ $entities = elgg_get_entities_from_relationship_count([
 ]);
 
 $data = [];
-$ticks = [];
 if ($entities) {
 	foreach ($entities as $user) {
-		$data[] = (int) $user->countEntitiesFromRelationship('friend', true);
-		$ticks[] = elgg_get_excerpt($user->getDisplayName(), 25);
+		$data[] = [
+			'x' => elgg_get_excerpt($user->getDisplayName(), 25),
+			'y' => (int) $user->countEntitiesFromRelationship('friend', true),
+		];
 	}
 }
 
-$result['data'] = [$data];
-
-$result['options']['axes']['xaxis']['ticks'] = $ticks;
-$result['options']['axes']['xaxis']['tickRenderer'] = '$.jqplot.CanvasAxisTickRenderer';
-$result['options']['axes']['xaxis']['tickOptions'] = [
-	'angle' => '-70',
-	'fontSize' => '8pt',
-];
+$result['data']['datasets'][] = ['data' => $data];
 
 echo json_encode($result);

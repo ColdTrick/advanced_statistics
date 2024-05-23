@@ -2,9 +2,7 @@
 
 use Elgg\Database\Select;
 
-$result = [
-	'options' => advanced_statistics_get_default_chart_options('date'),
-];
+$result = advanced_statistics_get_default_chart_options('date');
 
 $qb = Select::fromTable('entities', 'e');
 $qb->select("FROM_UNIXTIME(e.last_action, '%Y-%m-01') AS month");
@@ -21,15 +19,14 @@ if ($ts_limit) {
 $query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
-if ($query_result) {
-	foreach ($query_result as $row) {
-		$data[] = [
-			$row['month'],
-			(int) $row['total'],
-		];
-	}
+
+foreach ($query_result as $row) {
+	$data[] = [
+		'x' => $row['month'],
+		'y' => (int) $row['total'],
+	];
 }
 
-$result['data'] = [$data];
+$result['data']['datasets'][] = ['data' => $data];
 
 echo json_encode($result);

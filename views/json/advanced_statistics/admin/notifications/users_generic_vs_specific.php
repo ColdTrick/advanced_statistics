@@ -3,9 +3,7 @@
 use Elgg\Database\Select;
 use Elgg\Notifications\SubscriptionsService;
 
-$result = [
-	'options' => advanced_statistics_get_default_chart_options('bar'),
-];
+$result = advanced_statistics_get_default_chart_options('bar');
 
 $qb = Select::fromTable('entity_relationships', 'r');
 $qb->select('r.guid_one');
@@ -56,13 +54,7 @@ $ticks[] = elgg_echo('advanced_statistics:notifications:generic_count');
 $data[] = $specific_result->rowCount();
 $ticks[] = elgg_echo('advanced_statistics:notifications:specific_count');
 
-$result['data'] = [$data];
-
-$result['options']['axes']['xaxis']['ticks'] = $ticks;
-$result['options']['axes']['xaxis']['tickRenderer'] = '$.jqplot.CanvasAxisTickRenderer';
-$result['options']['axes']['xaxis']['tickOptions'] = [
-	'angle' => '-70',
-	'fontSize' => '8pt',
-];
+$result['data']['labels'] = $ticks;
+$result['data']['datasets'][] = ['data' => $data];
 
 echo json_encode($result);

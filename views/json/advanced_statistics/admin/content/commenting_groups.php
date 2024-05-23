@@ -2,9 +2,7 @@
 
 use Elgg\Database\Select;
 
-$result = [
-	'options' => advanced_statistics_get_default_chart_options('bar'),
-];
+$result = advanced_statistics_get_default_chart_options('bar');
 
 $searchable_subtypes = elgg_extract('object', elgg_entity_types_with_capability('searchable'), []);
 $key = array_search('comment', $searchable_subtypes);
@@ -18,6 +16,8 @@ $qb->addSelect('count(*) AS total');
 $qb->join('e', 'entities', 'e2', 'e.container_guid = e2.guid');
 $qb->join('e2', 'entities', 'ge', 'e2.container_guid = ge.guid');
 $qb->where($qb->compare('ge.type', '=', 'group', ELGG_VALUE_STRING));
+$qb->andWhere("ge.enabled = 'yes'");
+$qb->andWhere("ge.deleted = 'no'");
 $qb->andWhere($qb->compare('e.subtype', '=', 'comment', ELGG_VALUE_STRING));
 $qb->groupBy('ge.guid');
 $qb->orderBy('total', 'desc');
@@ -28,33 +28,16 @@ if ($ts_limit) {
 	$qb->andWhere($ts_limit);
 }
 
-$query_result = array_reverse($qb->execute()->fetchAllAssociative()); // we want to show from large to small
+$query_result = $qb->execute()->fetchAllAssociative(); // we want to show from large to small
 
 $data = [];
-if ($query_result) {
-	foreach ($query_result as $row) {
-		$data[] = [
-			$row['total'],
-			get_entity($row['guid'])->getDisplayName(),
-		];
-	}
+foreach ($query_result as $row) {
+	$data[] = [
+		'y' => get_entity((int) $row['guid'])->getDisplayName(),
+		'x' => $row['total'],
+	];
 }
-
-$result['data'] = [$data];
-
-$result['options']['seriesDefaults']['rendererOptions'] = [
-	'barDirection' => 'horizontal',
-];
-
-$result['options']['seriesDefaults']['pointLabels'] = [
-	'show' => false,
-];
-
-$result['options']['highlighter'] = [
-	'show' => false
-];
-
-$result['options']['axes']['xaxis']['renderer'] = '$.jqplot.LinearAxisRenderer';
-$result['options']['axes']['yaxis']['renderer'] = '$.jqplot.CategoryAxisRenderer';
+$result['options']['indexAxis'] = 'y';
+$result['data']['datasets'][] = ['data' => $data];
 
 echo json_encode($result);

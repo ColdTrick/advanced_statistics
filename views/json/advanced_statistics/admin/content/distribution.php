@@ -2,9 +2,7 @@
 
 use Elgg\Database\Select;
 
-$result = [
-	'options' => advanced_statistics_get_default_chart_options('pie'),
-];
+$result = advanced_statistics_get_default_chart_options('pie');
 
 $searchable_subtypes = elgg_extract('object', elgg_entity_types_with_capability('searchable'), []);
 
@@ -25,15 +23,14 @@ if ($ts_limit) {
 $query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
-if ($query_result) {
-	foreach ($query_result as $row) {
-		$data[] = [
-			$row['type'],
-			(int) $row['total'],
-		];
-	}
+$labels = [];
+
+foreach ($query_result as $row) {
+	$labels[] = $row['type'];
+	$data[] = (int) $row['total'];
 }
 
-$result['data'] = [$data];
+$result['data']['labels'] = $labels;
+$result['data']['datasets'][] = ['data' => $data];
 
 echo json_encode($result);

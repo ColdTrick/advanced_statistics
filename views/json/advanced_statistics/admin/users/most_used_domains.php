@@ -2,9 +2,7 @@
 
 use Elgg\Database\Select;
 
-$result = [
-	'options' => advanced_statistics_get_default_chart_options('pie'),
-];
+$result = advanced_statistics_get_default_chart_options('pie');
 
 $qb = Select::fromTable('entities', 'e');
 $md1 = $qb->joinMetadataTable('e', 'guid', 'email');
@@ -24,16 +22,14 @@ if (!(bool) elgg_extract('include_banned_users', $vars, true)) {
 $query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
-if ($query_result) {
-	foreach ($query_result as $row) {
-		$total = (int) $row['total'];
-		$data[] = [
-			$row['domain'] . " [{$total}]",
-			$total,
-		];
-	}
+$labels = [];
+
+foreach ($query_result as $row) {
+	$labels[] = $row['domain'];
+	$data[] = (int) $row['total'];
 }
 
-$result['data'] = [$data];
+$result['data']['labels'] = $labels;
+$result['data']['datasets'][] = ['data' => $data];
 
 echo json_encode($result);

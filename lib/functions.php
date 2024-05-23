@@ -45,59 +45,50 @@ function advanced_statistics_get_timestamp_query_part(string $field_name): strin
  * @return array
  */
 function advanced_statistics_get_default_chart_options(string $type): array {
+	
 	$defaults = [
-		'pie' => [
-			'seriesDefaults' => [
-				'renderer' => '$.jqplot.PieRenderer',
-				'rendererOptions' => [
-					'showDataLabels' => true
+		'options' => [
+			'maintainAspectRatio' => false,
+			'plugins' => [
+				'legend' => [
+					'display' => false,
 				],
-			],
-			'legend' => [
-				'show' => true,
-				'location' => 'e',
-			],
-		],
-		'bar' => [
-			'seriesDefaults' => [
-				'renderer' => '$.jqplot.BarRenderer',
-				'pointLabels' => [
-					'show' => true,
-					'stackedValue' => true,
-				],
-			],
-			'legend' => [
-				'show' => false,
-			],
-			'axes' => [
-				'xaxis' => [
-					'renderer' => '$.jqplot.CategoryAxisRenderer',
-				],
-			],
-		],
-		'date' => [
-			'axes' => [
-				'xaxis' => [
-					'renderer' => '$.jqplot.DateAxisRenderer',
-				],
-				'yaxis' => [
-					'autoscale' => true,
-					'min' => 0,
-				],
-				'y2axis' => [
-					'autoscale' => true,
-					'min' => 0,
-					'tickOptions' => [
-						'showGridline' => false,
-					],
-				],
-			],
-			'highlighter' => [
-				'show' => true,
-				'sizeAdjust' => 7.5,
 			],
 		],
 	];
 	
-	return $defaults[$type];
+	$type_defaults = [
+		'pie' => [
+			'type' => 'pie',
+			'options' => [
+				'plugins' => [
+					'legend' => [
+						'display' => true,
+					],
+				],
+			],
+		],
+		'bar' => [
+			'type' => 'bar',
+			'options' => [
+				'scales' => [
+					'y' => [
+						'min' => 0,
+					],
+				],
+			],
+		],
+		'date' => [
+			'type' => 'line',
+			'options' => [
+				'scales' => [
+					'y' => [
+						'min' => 0,
+					],
+				],
+			],
+		],
+	];
+	
+	return array_merge_recursive($defaults, $type_defaults[$type]);
 }

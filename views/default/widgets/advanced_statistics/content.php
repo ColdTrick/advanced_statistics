@@ -9,8 +9,7 @@ if (empty($chart)) {
 	return;
 }
 
-elgg_require_js('advanced_statistics/charts');
-elgg_require_css('advanced_statistics/jqplot');
+elgg_import_esm('advanced_statistics/charts');
 
 list($id, $text) = explode('|', $chart);
 list($section, $chart_src) = explode(':', $text);

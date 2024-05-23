@@ -2,13 +2,12 @@
 
 use Elgg\Database\Select;
 
-$result = [
-	'options' => advanced_statistics_get_default_chart_options('pie'),
-];
+$result = advanced_statistics_get_default_chart_options('pie');
 
 $group_tools = elgg()->group_tools->all();
 
 $data = [];
+$labels = [];
 $order = [];
 
 foreach ($group_tools as $key => $tool) {
@@ -18,24 +17,21 @@ foreach ($group_tools as $key => $tool) {
 	$qb->where("md.name = '{$tool->name}_enable'");
 	$qb->andWhere("e.type = 'group'");
 	$qb->andWhere("e.enabled = 'yes'");
+	$qb->andWhere("e.deleted = 'no'");
 	$qb->andWhere("md.value = 'yes'");
 	
 	$query_result = $qb->execute()->fetchAllAssociative();
-
-	if ($query_result) {
-		foreach ($query_result as $row) {
-			$total = (int) $row['total'];
-			$order[$key] = $total;
-			$data[$key] = [
-				$tool->name . " [{$total}]",
-				$total,
-			];
-		}
+	foreach ($query_result as $row) {
+		$order[$key] = (int) $row['total'];
+		$data[$key] = (int) $row['total'];
+		$labels[$key] = $tool->name;
 	}
 }
 
 array_multisort($order, $data);
+array_multisort($order, $labels);
 
-$result['data'] = [array_values($data)];
+$result['data']['labels'] = array_values($labels);
+$result['data']['datasets'][] = ['data' => array_values($data)];
 
 echo json_encode($result);

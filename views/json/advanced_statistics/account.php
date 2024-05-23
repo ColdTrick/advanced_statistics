@@ -12,7 +12,7 @@ if (empty($user_guid)) {
 }
 
 $user = get_user($user_guid);
-if (!$user instanceof ElggUser || !$user->canEdit()) {
+if (!$user instanceof \ElggUser || !$user->canEdit()) {
 	throw new EntityPermissionsException();
 }
 

@@ -2,9 +2,7 @@
 
 use Elgg\Database\Select;
 
-$result = [
-	'options' => advanced_statistics_get_default_chart_options('date'),
-];
+$result = advanced_statistics_get_default_chart_options('date');
 
 $qb = Select::fromTable('entities', 'e');
 $qb->select("FROM_UNIXTIME(r.time_created, '%Y-%m-%d') AS date_created");
@@ -24,12 +22,11 @@ $query_result = elgg()->db->getData($qb);
 $data = [];
 foreach ($query_result as $row) {
 	$data[] = [
-		$row->date_created,
-		(int) $row->total,
+		'x' => $row->date_created,
+		'y' => (int) $row->total,
 	];
 }
 
-$result['data'] = [$data];
-$result['options']['series'] = [['showMarker' => false]];
+$result['data']['datasets'][] = ['data' => $data];
 
 echo json_encode($result);

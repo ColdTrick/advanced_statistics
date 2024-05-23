@@ -2,11 +2,10 @@
 
 use Elgg\Database\Select;
 
-$result = [
-	'options' => advanced_statistics_get_default_chart_options('pie'),
-];
+$result = advanced_statistics_get_default_chart_options('pie');
 
 $data = [];
+$labels = [];
 
 // banned users
 
@@ -20,10 +19,8 @@ $qb->andWhere("md.value = 'yes'");
 
 $banned = (int) $qb->execute()->fetchOne();
 
-$data[] = [
-	"banned [{$banned}]",
-	$banned,
-];
+$labels[] = elgg_echo('banned');
+$data[] = $banned;
 
 // unvalidated users
 
@@ -40,10 +37,8 @@ $qb->andWhere($qb->compare('e.guid', 'NOT IN', $subquery->getSQL()));
 
 $unvalidated = (int) $qb->execute()->fetchOne();
 
-$data[] = [
-	"unvalidated [{$unvalidated}]",
-	$unvalidated,
-];
+$labels[] = elgg_echo('unvalidated');
+$data[] = $unvalidated;
 
 // disabled
 $qb = Select::fromTable('entities', 'e');
@@ -55,10 +50,8 @@ $disabled = (int) $qb->execute()->fetchOne();
 
 $disabled = $disabled - $unvalidated;
 
-$data[] = [
-	"disabled [{$disabled}]",
-	$disabled,
-];
+$labels[] = elgg_echo('status:disabled');
+$data[] = $disabled;
 
 // active
 $qb = Select::fromTable('entities', 'e');
@@ -68,11 +61,10 @@ $qb->where("e.type = 'user'");
 $active = (int) $qb->execute()->fetchOne();
 $active = $active - $disabled - $unvalidated - $banned;
 
-$data[] = [
-	"active [{$active}]",
-	$active,
-];
+$labels[] = elgg_echo('status:active');
+$data[] = $active;
 
-$result['data'] = [$data];
+$result['data']['labels'] = $labels;
+$result['data']['datasets'][] = ['data' => $data];
 
 echo json_encode($result);

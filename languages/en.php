@@ -74,17 +74,16 @@ return [
 	'advanced_statistics:groups:most_active' => "Most active groups (last week)",
 	'advanced_statistics:groups:least_active' => "Least active groups",
 	'advanced_statistics:groups:dead_vs_alive' => "Dead vs. Alive",
-	'advanced_statistics:groups:dead_vs_alive:last_month' => "< 1 month [%d]",
-	'advanced_statistics:groups:dead_vs_alive:3_months' => "< 3 months [%d]",
-	'advanced_statistics:groups:dead_vs_alive:6_months' => "< 6 months [%d]",
-	'advanced_statistics:groups:dead_vs_alive:year' => "< 1 year [%d]",
-	'advanced_statistics:groups:dead_vs_alive:more_year' => "> 1 year [%d]",
+	'advanced_statistics:groups:dead_vs_alive:last_month' => "< 1 month",
+	'advanced_statistics:groups:dead_vs_alive:3_months' => "< 3 months",
+	'advanced_statistics:groups:dead_vs_alive:6_months' => "< 6 months",
+	'advanced_statistics:groups:dead_vs_alive:year' => "< 1 year",
+	'advanced_statistics:groups:dead_vs_alive:more_year' => "> 1 year",
 
 	// widgets
 	'widgets:advanced_statistics:name' => "Advanced Statistics",
 	'widgets:advanced_statistics:description' => "Show some advanced statistics",
 	'advanced_statistics:widgets:advanced_statistics:content:no_chart' => "Edit the widget to select a chart.",
-	'advanced_statistics:widgets:advanced_statistics:content:no_jqplot' => "Please refresh the page to make this widget work.",
 	
 	'widgets:online_user_count:name' => "Online Users Counter",
 	'widgets:online_user_count:description' => "Show the amount of online users and will automatically refresh",

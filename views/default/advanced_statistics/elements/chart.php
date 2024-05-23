@@ -15,8 +15,7 @@
  * @uses $vars['allow_export']         Is it allowed to export the graph data as an CSV-file (default: true)
  */
 
-elgg_require_js('advanced_statistics/charts');
-elgg_require_css('advanced_statistics/jqplot');
+elgg_import_esm('advanced_statistics/charts');
 
 $id = elgg_extract('id', $vars);
 $title = elgg_extract('title', $vars);
@@ -62,11 +61,10 @@ if (!(bool) elgg_extract('include_banned_users', $vars, true)) {
 	$title .= ' - ' . elgg_echo('advanced_statistics:chart:exclude_banned_users');
 }
 
-$body = elgg_format_element('div', [
+$body = elgg_format_element('div', ['class' => 'advanced-statistics-plot-container'], elgg_format_element('canvas', [
 	'id' => $id,
-	'class' => 'advanced-statistics-plot-container',
 	'data-chart-href' => elgg_http_add_url_query_elements("advanced_statistics/{$page}", $url_elements),
-], elgg_view('graphics/ajax_loader', ['hidden' => false]));
+]));
 
 
 $help = elgg_extract('help', $vars);
@@ -92,9 +90,9 @@ if ((bool) elgg_extract('allow_export', $vars, true)) {
 echo elgg_view_module('info', $title, $body, $params);
 ?>
 <script>
-	require(['advanced_statistics/charts'], function (advancedStatistics) {
+	import('advanced_statistics/charts').then(function (advancedStatistics) {
 		setTimeout(function() {
-			advancedStatistics.init('#<?php echo $id; ?>');
+			advancedStatistics.default.init('#<?php echo $id; ?>');
 		}, 500);
 	});
 </script>

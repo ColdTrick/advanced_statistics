@@ -9,7 +9,7 @@ if (empty($container_guid)) {
 }
 
 $group = get_entity($container_guid);
-if (!$group instanceof ElggGroup || !$group->canEdit()) {
+if (!$group instanceof \ElggGroup || !$group->canEdit()) {
 	throw new EntityPermissionsException();
 }
 

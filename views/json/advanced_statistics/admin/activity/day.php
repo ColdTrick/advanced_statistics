@@ -2,9 +2,7 @@
 
 use Elgg\Database\Select;
 
-$result = [
-	'options' => advanced_statistics_get_default_chart_options('bar'),
-];
+$result = advanced_statistics_get_default_chart_options('bar');
 
 $qb = Select::fromTable('entities', 'e');
 $qb->select('DAYOFWEEK(FROM_UNIXTIME(r.posted)) AS day_of_the_week');
@@ -21,19 +19,16 @@ if ($ts_limit) {
 $query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
-if ($query_result) {
-	foreach ($query_result as $row) {
-		$dotw = (int) $row['day_of_the_week'] - 1; // Mysql starts at 1, PHP at 0
-		$dotw = elgg_echo("date:weekday:{$dotw}");
-		
-		$total = (int) $row['total'];
-		$data[] = [
-			$dotw . " [{$total}]",
-			$total,
-		];
-	}
+foreach ($query_result as $row) {
+	$dotw = (int) $row['day_of_the_week'] - 1; // Mysql starts at 1, PHP at 0
+	$dotw = elgg_echo("date:weekday:{$dotw}");
+	
+	$data[] = [
+		'x' => $dotw,
+		'y' => (int) $row['total'],
+	];
 }
 
-$result['data'] = [$data];
+$result['data']['datasets'][] = ['data' => $data];
 
 echo json_encode($result);

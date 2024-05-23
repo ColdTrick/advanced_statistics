@@ -2,9 +2,7 @@
 
 use Elgg\Database\Select;
 
-$result = [
-	'options' => advanced_statistics_get_default_chart_options('bar'),
-];
+$result = advanced_statistics_get_default_chart_options('bar');
 
 $searchable_subtypes = elgg_extract('object', elgg_entity_types_with_capability('searchable'), []);
 
@@ -24,25 +22,13 @@ if ($ts_limit) {
 $query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
-if ($query_result) {
-	foreach ($query_result as $row) {
-		$data[] = [
-			elgg_echo("item:object:{$row['subtype']}"),
-			(int) $row['total'],
-		];
-	}
+foreach ($query_result as $row) {
+	$data[] = [
+		'x' => elgg_echo("item:object:{$row['subtype']}"),
+		'y' => (int) $row['total'],
+	];
 }
 
-$result['data'] = [$data];
-
-$result['options']['seriesDefaults']['rendererOptions'] = ['varyBarColor' => true];
-			
-$result['options']['highlighter'] = [
-	'show' => true,
-	'sizeAdjust' => 7.5,
-	'tooltipAxes' => 'y',
-];
-$result['options']['axes']['xaxis']['tickRenderer'] = '$.jqplot.CanvasAxisTickRenderer';
-$result['options']['axes']['xaxis']['tickOptions'] = ['angle' => '-30', 'fontSize' => '8pt'];
+$result['data']['datasets'][] = ['data' => $data];
 
 echo json_encode($result);

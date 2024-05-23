@@ -2,10 +2,7 @@
 
 use Elgg\Database\Select;
 
-$result = [
-	'options' => advanced_statistics_get_default_chart_options('bar'),
-	'data' => [],
-];
+$result = advanced_statistics_get_default_chart_options('bar');
 
 $qb = Select::fromTable('entities', 'e');
 $qb->select("FROM_UNIXTIME(r.posted, '%k') AS hour_of_the_day");
@@ -23,18 +20,21 @@ $query_result = $qb->execute()->fetchAllAssociative();
 // make sure every hour is present
 $data = [];
 for ($i = 0; $i < 24; $i++) {
-	$data[$i] = [$i, 0];
+	$data[$i] = [
+		'x' => "{$i}",
+		'y' => 0,
+	];
 }
 
-if ($query_result) {
-	foreach ($query_result as $row) {
-		$hotd = $row['hour_of_the_day'];
-		$total = (int) $row['total'];
-		
-		$data[(int) $hotd] = [$hotd, $total];
-	}
+foreach ($query_result as $row) {
+	$hotd = $row['hour_of_the_day'];
+	
+	$data[(int) $hotd] = [
+		'x' => $hotd,
+		'y' => (int) $row['total'],
+	];
 }
 
-$result['data'] = [$data];
+$result['data']['datasets'][] = ['data' => $data];
 
 echo json_encode($result);

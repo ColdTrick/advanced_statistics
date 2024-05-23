@@ -3,9 +3,7 @@
 use Elgg\Database\Select;
 use Elgg\Values;
 
-$result = [
-	'options' => advanced_statistics_get_default_chart_options('date'),
-];
+$result = advanced_statistics_get_default_chart_options('date');
 $result['options']['axes']['xaxis']['tickOptions']['formatString'] = '%Y-%m';
 
 $qb = Select::fromTable('entities', 'e');
@@ -27,28 +25,18 @@ if ($query_result) {
 		$date_total = (int) $row->total;
 		$total += $date_total;
 		
-		$data[] = [$row->date_created, $date_total];
-		$data2[] = [$row->date_created, $total];
+		$data[] = ['x' => $row->date_created, 'y' => $date_total];
+		$data2[] = ['x' => $row->date_created, 'y' => $total];
 	}
 }
 
-$result['data'] = [$data, $data2];
-
-$result['options']['series'] = [
-	[
-		'showMarker' => false,
-		'label' => elgg_echo('advanced_statistics:groups:created:new'),
-	],
-	[
-		'showMarker' => false,
-		'label' => elgg_echo('total') . ' ' . strtolower(elgg_echo('collection:group:group')),
-		'yaxis' => 'y2axis',
-	],
+$result['data']['datasets'][] = [
+	'label' => elgg_echo('advanced_statistics:groups:created:new'),
+	'data' => $data,
 ];
-
-$result['options']['legend'] = [
-	'show' => true,
-	'position' => 'e',
+$result['data']['datasets'][] = [
+	'label' => elgg_echo('total') . ' ' . strtolower(elgg_echo('collection:group:group')),
+	'data' => $data2,
 ];
 
 echo json_encode($result);

@@ -2,9 +2,8 @@
 
 use Elgg\Database\Select;
 
-$result = [
-	'options' => advanced_statistics_get_default_chart_options('date'),
-];
+$result = advanced_statistics_get_default_chart_options('date');
+$result['options']['plugins']['legend']['display'] = true;
 
 $qb = Select::fromTable('entities', 'e');
 $qb->select("FROM_UNIXTIME(e.time_created, '%Y-%m-%d') AS date_created");
@@ -23,35 +22,24 @@ $query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
 $data2 = [];
-if ($query_result) {
-	$total = 0;
+
+$total = 0;
+
+foreach ($query_result as $row) {
+	$date_total = (int) $row['total'];
+	$total += $date_total;
 	
-	foreach ($query_result as $row) {
-		$date_total = (int) $row['total'];
-		$total += $date_total;
-		
-		$data[] = [$row['date_created'], $date_total];
-		$data2[] = [$row['date_created'], $total];
-	}
+	$data[] = ['x' => $row['date_created'], 'y' => $date_total];
+	$data2[] = ['x' => $row['date_created'], 'y' => $total];
 }
 
-$result['data'] = [$data, $data2];
-
-
-$result['options']['series'] = [
-	[
-		'showMarker' => false,
-		'label' => elgg_echo('admin:widget:new_users'),
-	],
-	[
-		'showMarker' => false,
-		'label' => elgg_echo('total') . ' ' . strtolower(elgg_echo('collection:user:user')),
-		'yaxis' => 'y2axis',
-	],
+$result['data']['datasets'][] = [
+	'label' => elgg_echo('admin:widget:new_users'),
+	'data' => $data,
 ];
-$result['options']['legend'] = [
-	'show' => true,
-	'position' => 'e',
+$result['data']['datasets'][] = [
+	'label' => elgg_echo('total') . ' ' . strtolower(elgg_echo('collection:user:user')),
+	'data' => $data2,
 ];
 
 echo json_encode($result);
