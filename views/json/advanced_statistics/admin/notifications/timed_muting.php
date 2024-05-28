@@ -71,10 +71,10 @@ $scheduled = elgg_count_entities([
 $not_configured = $total_user_count - $previously_used - $active - $scheduled;
 
 $labels = [
-	elgg_echo('advanced_statistics:notifications:not_configured') . " [{$not_configured}]",
-	elgg_echo('advanced_statistics:notifications:timed_muting:previous') . " [{$previously_used}]",
-	elgg_echo('advanced_statistics:notifications:timed_muting:active') . " [{$active}]",
-	elgg_echo('advanced_statistics:notifications:timed_muting:scheduled') . " [{$scheduled}]",
+	elgg_echo('advanced_statistics:notifications:not_configured'),
+	elgg_echo('advanced_statistics:notifications:timed_muting:previous'),
+	elgg_echo('advanced_statistics:notifications:timed_muting:active'),
+	elgg_echo('advanced_statistics:notifications:timed_muting:scheduled'),
 ];
 
 $data = [$not_configured, $previously_used, $active, $scheduled];

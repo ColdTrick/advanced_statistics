@@ -27,7 +27,7 @@ $labels = [];
 
 foreach ($query_result as $row) {
 	$labels[] = elgg_echo($row['language']);
-	$data[] =  (int) $row['total'];;
+	$data[] = (int) $row['total'];
 }
 
 $result['data']['labels'] = $labels;

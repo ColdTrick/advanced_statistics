@@ -23,30 +23,25 @@ if (empty($json_data)) {
 }
 
 $graph_data = json_decode($json_data, true);
-$data = elgg_extract('data', $graph_data);
-if (empty($data)) {
+$datasets = elgg_extract('datasets', elgg_extract('data', $graph_data));
+$labels = elgg_extract('labels', elgg_extract('data', $graph_data), []);
+if (empty($datasets)) {
 	return elgg_error_response(elgg_echo('notfound'));
 }
 
 $result = [];
-$append = false;
-if (isset($graph_data['options']['axes']['xaxis']['ticks'])) {
-	$ticks = $graph_data['options']['axes']['xaxis']['ticks'];
-	foreach ($ticks as $index => $tick) {
-		$result[$index][] = $tick;
-	}
+foreach ($datasets as $series => $series_data) {
+	$serie_label = elgg_extract('label', $series_data);
+	$data = elgg_extract('data', $series_data);
 	
-	$append = true;
-}
-
-foreach ($data as $series => $series_data) {
-	foreach ($series_data as $index => $point) {
-		if ($append) {
-			$result[$index][] = $point;
-		} elseif ($series > 0) {
-			$result[$index][] = $point[1];
+	foreach ($data as $index => $point) {
+		$label = elgg_extract('x', $point, elgg_extract($index, $labels));
+		$value = elgg_extract('y', $point, $point);
+		
+		if (!array_key_exists($index, $result)) {
+			$result[$index] = [$label, $value];
 		} else {
-			$result[$index] = $point;
+			$result[$index][] = $value;
 		}
 	}
 }

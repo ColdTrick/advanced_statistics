@@ -37,6 +37,7 @@ foreach ($query_result as $row) {
 		'x' => $row['total'],
 	];
 }
+
 $result['options']['indexAxis'] = 'y';
 $result['data']['datasets'][] = ['data' => $data];
 

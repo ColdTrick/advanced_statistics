@@ -58,7 +58,6 @@ echo elgg_view('advanced_statistics/elements/chart', [
 	'title' => elgg_echo('advanced_statistics:content:active_groups'),
 	'id' => 'advanced-statistics-content-active-groups',
 	'date_limited' => true,
-	'allow_export' => false,
 	'page' => 'admin_data',
 	'section' => 'content',
 	'chart' => 'active_groups',
