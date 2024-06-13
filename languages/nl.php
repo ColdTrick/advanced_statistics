@@ -85,8 +85,6 @@ return array (
   'widgets:advanced_statistics:name' => 'Geavanceerde Statistieken',
   'widgets:advanced_statistics:description' => 'Toon enkele geavanceerde statistieken',
   'advanced_statistics:widgets:advanced_statistics:content:no_chart' => 'Bewerk de widget om een grafiek te selecteren',
-  'widgets:online_user_count:name' => 'Online gebruikers teller',
-  'widgets:online_user_count:description' => 'Toont het aantal online gebruikers en zal dit automatisch verversen',
   'advanced_statistics:users:friend_bundled' => 'Gegroepeerde aantallen vrienden',
   'advanced_statistics:users:groups_bundled' => 'Gegroepeerde groepslidmaatschappen',
 );

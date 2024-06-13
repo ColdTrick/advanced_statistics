@@ -59,7 +59,6 @@ return [
 		],
 	],
 	'view_options' => [
-		'widgets/online_user_count/content' => ['ajax' => true],
 		'advanced_statistics/account/statistics/details' => ['ajax' => true],
 		'advanced_statistics/account' => ['ajax' => true],
 		'advanced_statistics/admin_data' => ['ajax' => true],
@@ -69,9 +68,6 @@ return [
 		'advanced_statistics' => [
 			'context' => ['admin'],
 			'multiple' => true,
-		],
-		'online_user_count' => [
-			'context' => ['admin'],
 		],
 	],
 ];

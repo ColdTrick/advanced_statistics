@@ -85,9 +85,6 @@ return [
 	'widgets:advanced_statistics:description' => "Show some advanced statistics",
 	'advanced_statistics:widgets:advanced_statistics:content:no_chart' => "Edit the widget to select a chart.",
 	
-	'widgets:online_user_count:name' => "Online Users Counter",
-	'widgets:online_user_count:description' => "Show the amount of online users and will automatically refresh",
-	
 	// user statistics
 	'advanced_statistics:numentities:admin_help' => "* non searchable entities, only shown to site administrators",
 	

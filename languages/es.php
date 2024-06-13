@@ -41,6 +41,4 @@ return array (
   'widgets:advanced_statistics:name' => 'Estadísticas avanzadas',
   'widgets:advanced_statistics:description' => 'Mostrar algunas estadísticas avanzadas',
   'advanced_statistics:widgets:advanced_statistics:content:no_chart' => 'Editar el widget para elegir un gráfico.',
-  'widgets:online_user_count:name' => 'Contador de usuarios en linea',
-  'widgets:online_user_count:description' => 'Mostrar la cantidad de usuario en linea y actualizar automáticamente',
 );

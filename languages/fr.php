@@ -41,6 +41,4 @@ return array (
   'widgets:advanced_statistics:name' => 'Statistiques avancées',
   'widgets:advanced_statistics:description' => 'Afficher quelques statistiques avancées',
   'advanced_statistics:widgets:advanced_statistics:content:no_chart' => 'Configurer le widget pour sélectionner un graphique.',
-  'widgets:online_user_count:name' => 'Compteur de membres connectés',
-  'widgets:online_user_count:description' => 'Affiche le nombre de membres connectés et se rafraîchit automatiquement',
 );
