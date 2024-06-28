@@ -1,6 +1,11 @@
 Version history
 ===============
 
+10.0 (2024-06-28):
+
+- changed: updated for Elgg 6
+- removed: online users count has been made obsolete by Elgg admin menu
+
 9.1.1 (2024-03-14):
 
 - several small chores/fixes
