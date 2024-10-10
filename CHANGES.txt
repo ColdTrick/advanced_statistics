@@ -1,6 +1,10 @@
 Version history
 ===============
 
+10.0.1 (2024-10-10):
+
+- several small chores/fixes
+
 10.0 (2024-06-28):
 
 - changed: updated for Elgg 6
