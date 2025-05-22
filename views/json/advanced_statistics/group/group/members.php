@@ -48,12 +48,12 @@ foreach ($query_result as $row) {
 	$total += $date_total;
 	
 	$data[] = [
-		$row['date_created'],
-		$date_total,
+		'x' => $row['date_created'],
+		'y' => $date_total,
 	];
 	$data2[] = [
-		$row['date_created'],
-		$total,
+		'x' => $row['date_created'],
+		'y' => $total,
 	];
 }
 
