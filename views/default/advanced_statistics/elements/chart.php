@@ -61,11 +61,10 @@ if (!(bool) elgg_extract('include_banned_users', $vars, true)) {
 	$title .= ' - ' . elgg_echo('advanced_statistics:chart:exclude_banned_users');
 }
 
-$body = elgg_format_element('div', ['class' => 'advanced-statistics-plot-container'], elgg_format_element('canvas', [
+$body = elgg_format_element('div', ['class' => 'advanced-statistics-plot-container'], elgg_view('graphics/ajax_loader', ['hidden' => false]) . elgg_format_element('canvas', [
 	'id' => $id,
 	'data-chart-href' => elgg_http_add_url_query_elements("advanced_statistics/{$page}", $url_elements),
 ]));
-
 
 $help = elgg_extract('help', $vars);
 if (!elgg_is_empty($help)) {

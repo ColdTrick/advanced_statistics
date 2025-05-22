@@ -1,4 +1,11 @@
 .advanced-statistics-plot-container {
 	height: 50vh;
 	width: 100%;
+	
+	display: flex;
+	align-items: center;
+	
+	> .elgg-ajax-loader:not(.hidden) + canvas {
+		display: none;
+	}
 }

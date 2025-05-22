@@ -12,6 +12,8 @@ var advancedStatistics = {
 			ajax.view($(this).data().chartHref, {
 				success: function(result){
 					new Chart($target, result);
+					
+					$target.prev('.elgg-ajax-loader').addClass('hidden');
 				},
 				data: {
 					view: 'json'
