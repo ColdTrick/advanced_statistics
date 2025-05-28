@@ -1,6 +1,11 @@
 Version history
 ===============
 
+10.1 (2025-05-28):
+
+- added: loading indicator when fetching chart data
+- fixed: group member data not exportable
+
 10.0.1 (2024-10-10):
 
 - several small chores/fixes
