@@ -4,9 +4,7 @@ use Elgg\Database\Select;
 
 $user = elgg_extract('user', $vars);
 
-$result = [
-	'options' => advanced_statistics_get_default_chart_options('date'),
-];
+$result = advanced_statistics_get_default_chart_options('date');
 
 $qb = Select::fromTable('annotations', 'a');
 $qb->select("FROM_UNIXTIME(a.time_created, '%x-%v') AS yearweek");
@@ -25,12 +23,12 @@ if ($query_result) {
 		list ($year, $week) = explode('-', $row['yearweek']);
 
 		$data[] = [
-			date('Y-m-d', strtotime("first monday of january {$year} + {$week} weeks")),
-			(int) $row['total'],
+			'x' => date('Y-m-d', strtotime("first monday of january {$year} + {$week} weeks")),
+			'y' => (int) $row['total'],
 		];
 	}
 }
 
-$result['data'] = [$data];
+$result['data']['datasets'][] = ['data' => $data];
 
 echo json_encode($result);
