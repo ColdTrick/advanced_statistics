@@ -13,7 +13,13 @@ var advancedStatistics = {
 				success: function(result) {
 
 					// check if it has empty results
-					if (typeof result.data.datasets !== 'undefined') {
+					if (typeof result.data === 'undefined') {
+						import('elgg/i18n').then((i18n) => {
+							$target.parent().replaceWith('<p class="elgg-no-results">' + i18n.default.echo('notfound') + '</p>');
+						});
+
+						return;
+					} else if (typeof result.data.datasets !== 'undefined') {
 						var totalData = 0;
 						result.data.datasets.forEach((elem) => {
 							if (typeof elem.data !== 'undefined') {
