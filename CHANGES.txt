@@ -1,6 +1,11 @@
 Version history
 ===============
 
+10.2 (2025-08-20):
+
+- changed: show no results message if chart data is empty
+- fixed: correct json data for likes graph on account statistics
+
 10.1 (2025-05-28):
 
 - added: loading indicator when fetching chart data
