@@ -22,7 +22,6 @@ if ($ts_limit) {
 $query_result = $qb->execute()->fetchAllAssociative();
 
 $data = [];
-
 foreach ($query_result as $row) {
 	$data[] = [
 		'x' => elgg_language_key_exists("item:object:{$row['subtype']}") ? elgg_echo("item:object:{$row['subtype']}") : ucfirst($row['subtype']),

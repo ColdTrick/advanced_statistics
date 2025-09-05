@@ -54,7 +54,7 @@ $fh_temp = new \ElggTempFile();
 $fh = $fh_temp->open('write');
 
 foreach ($result as $point) {
-	fputcsv($fh, $point, ';', '"');
+	fputcsv($fh, $point, ';', '"', '\\');
 }
 
 $contents = $fh_temp->grabFile();
