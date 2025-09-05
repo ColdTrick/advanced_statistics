@@ -22,7 +22,7 @@ $data = [];
 foreach ($query_result as $row) {
 	$context = $row['context'] ?: 'unknown';
 	
-	$labels[] = elgg_echo($context);
+	$labels[] = elgg_language_key_exists($context) ? elgg_echo($context) : $context;
 	$data[] = (int) $row['total'];
 }
 
