@@ -10,7 +10,7 @@
 		"issues": "https://github.com/ColdTrick/advanced_statistics/issues"
 	},
 	"require": {
-		"npm-asset/chart.js": "~4.4.0"
+		"npm-asset/chart.js": "~4.5.0"
 	},
 	"repositories": [
 		{

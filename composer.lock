@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0c623af7a6554759749e8a67949d440",
+    "content-hash": "41cebad9266480a0ddd6320a3d033604",
     "packages": [
         {
             "name": "npm-asset/chart.js",
-            "version": "4.4.2",
+            "version": "4.5.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/chart.js/-/chart.js-4.4.2.tgz"
+                "url": "https://registry.npmjs.org/chart.js/-/chart.js-4.5.0.tgz"
             },
             "require": {
                 "npm-asset/kurkle--color": ">=0.3.0,<0.4.0"
@@ -23,10 +23,10 @@
         },
         {
             "name": "npm-asset/kurkle--color",
-            "version": "0.3.2",
+            "version": "0.3.4",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/@kurkle/color/-/color-0.3.2.tgz"
+                "url": "https://registry.npmjs.org/@kurkle/color/-/color-0.3.4.tgz"
             },
             "type": "npm-asset",
             "license": [
@@ -37,10 +37,10 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
+    "platform": {},
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
