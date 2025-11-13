@@ -11,7 +11,7 @@ use Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper;
 
 return [
 	'plugin' => [
-		'version' => '10.2',
+		'version' => '10.3',
 	],
 	'settings' => [
 		'enable_group_stats' => 'no',
