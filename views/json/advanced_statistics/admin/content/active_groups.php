@@ -42,6 +42,8 @@ $result['data']['labels'] = $labels;
 $data = [];
 if ($query_result) {
 	$series = [];
+	$ts_limit = advanced_statistics_get_timestamp_query_part('e.time_created');
+	
 	foreach ($searchable_subtypes as $subtype) {
 		$qb = Select::fromTable('entities', 'e');
 		$qb->select('e.container_guid');
@@ -50,6 +52,10 @@ if ($query_result) {
 		$qb->andWhere($qb->compare('e.type', '=', 'object', ELGG_VALUE_STRING));
 		$qb->andWhere($qb->compare('e.subtype', '=', $subtype, ELGG_VALUE_STRING));
 		$qb->groupBy('e.container_guid');
+			
+		if ($ts_limit) {
+			$qb->andWhere($ts_limit);
+		}
 		
 		$container_values = [];
 		$container_results = $qb->execute()->fetchAllAssociative();
