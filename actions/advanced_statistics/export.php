@@ -63,9 +63,4 @@ $fh_temp->close();
 $title = elgg_extract('title', $request_data, elgg_echo('unknown'));
 $title = elgg_get_friendly_title($title);
 
-header('Content-Type: text/csv;charset=utf-8');
-header("Content-Disposition: attachment;filename={$title}.csv");
-header('Content-Length: ' . strlen($contents));
-
-echo $contents;
-exit();
+return elgg_download_response($contents, "{$title}.csv");
