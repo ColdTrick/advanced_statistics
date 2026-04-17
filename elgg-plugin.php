@@ -37,6 +37,9 @@ return [
 			'middleware' => [
 				GroupPageOwnerCanEditGatekeeper::class,
 			],
+			'required_plugins' => [
+				'groups',
+			],
 		],
 	],
 	'views' => [
