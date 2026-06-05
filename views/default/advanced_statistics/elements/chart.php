@@ -88,10 +88,10 @@ if ((bool) elgg_extract('allow_export', $vars, true)) {
 
 echo elgg_view_module('info', $title, $body, $params);
 ?>
-<script>
-	import('advanced_statistics/charts').then(function (advancedStatistics) {
-		setTimeout(function() {
-			advancedStatistics.default.init('#<?php echo $id; ?>');
-		}, 500);
-	});
+<script type="module">
+	import advancedStatistics from 'advanced_statistics/charts';
+	
+	setTimeout(function() {
+		advancedStatistics.init('#<?php echo $id; ?>');
+	}, 500);
 </script>
