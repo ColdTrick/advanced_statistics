@@ -55,9 +55,11 @@ foreach ($entity_stats as $type => $subtypes) {
 		
 		$cells[] = elgg_format_element('td', ['class' => 'center'], elgg_view('output/url', [
 			'text' => elgg_echo('more_info'),
-			'href' => elgg_http_add_url_query_elements('ajax/view/advanced_statistics/account/statistics/details', [
-				'type' => $type,
-				'subtype' => $subtype,
+			'href' => elgg_generate_url('ajax', [
+				'type' => 'view',
+				'segments' => 'advanced_statistics/account/statistics/details',
+				'entity_type' => $type,
+				'entity_subtype' => $subtype,
 				'user_guid' => $user->guid,
 			]),
 			'class' => 'elgg-lightbox',

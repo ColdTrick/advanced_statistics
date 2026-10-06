@@ -7,8 +7,8 @@ use Elgg\Exceptions\Http\BadRequestException;
 use Elgg\Exceptions\Http\EntityPermissionsException;
 
 $user_guid = (int) elgg_extract('user_guid', $vars);
-$type = elgg_extract('type', $vars);
-$subtype = elgg_extract('subtype', $vars);
+$type = elgg_extract('entity_type', $vars);
+$subtype = elgg_extract('entity_subtype', $vars);
 
 if (empty($user_guid) || empty($type) || empty($subtype)) {
 	throw new BadRequestException();
