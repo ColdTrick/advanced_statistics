@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "41cebad9266480a0ddd6320a3d033604",
+    "content-hash": "370e0d7908551b7bf0785de7aee44d45",
     "packages": [
         {
             "name": "npm-asset/chart.js",
-            "version": "4.5.0",
+            "version": "4.5.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/chart.js/-/chart.js-4.5.0.tgz"
+                "url": "https://registry.npmjs.org/chart.js/-/chart.js-4.5.1.tgz"
             },
             "require": {
                 "npm-asset/kurkle--color": ">=0.3.0,<0.4.0"
@@ -42,5 +42,5 @@
     "prefer-lowest": false,
     "platform": {},
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
