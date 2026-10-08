@@ -84,8 +84,8 @@ if ($get_count(['created_before' => 'first day of january this year'])) {
 		'chart' => 'years',
 		'url_elements' => [
 			'user_guid' => $user->guid,
-			'type' => $type,
-			'subtype' => $subtype,
+			'entity_type' => $type,
+			'entity_subtype' => $subtype,
 		],
 	]);
 }

@@ -4,8 +4,8 @@ use Elgg\Database\Select;
 use Elgg\Exceptions\Http\BadRequestException;
 
 $user = elgg_extract('user', $vars);
-$type = elgg_extract('type', $vars);
-$subtype = elgg_extract('subtype', $vars);
+$type = elgg_extract('entity_type', $vars);
+$subtype = elgg_extract('entity_subtype', $vars);
 
 if (empty($type) || empty($subtype)) {
 	throw new BadRequestException();
